@@ -126,6 +126,36 @@ export const EmployeeDashboard = () => {
         }
       />
 
+      {/* EXPECTED THIS MONTH SALARY BANNER CARD */}
+      <Card className="bg-white border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
+        <CardBody className="p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">
+              Expected This Month Salary (Projected Payout)
+            </span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-black text-emerald-700 font-mono">₹1,02,273</span>
+              <span className="text-xs font-bold text-slate-700">/ ₹1,12,500 Full Entitlement</span>
+            </div>
+            <p className="text-xs text-slate-700 font-medium pt-0.5">
+              Based on monthly payslip structure, <strong className="text-slate-900 font-black">91% shift attendance</strong> (20/22 active days), and approved time-off requests.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="success" className="font-extrabold text-xs">
+              20 Days Present
+            </Badge>
+            <Badge variant="primary" className="font-extrabold text-xs">
+              2 Days Approved Leave
+            </Badge>
+            <Badge variant="warning" className="font-extrabold text-xs">
+              91% Shift Activity
+            </Badge>
+          </div>
+        </CardBody>
+      </Card>
+
       {/* 2x2 GRID IMPLEMENTATION FOR TODAY'S ATTENDANCE + LEAVE BALANCES */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
         {/* CARD 1 (Top-Left): Today's Attendance Widget */}

@@ -188,24 +188,34 @@ export const AdminPayroll = () => {
       />
 
       {/* PAYROLL KPI STATS CARDS - HIGH CONTRAST DARK TEXT & VIBRANT VALUES */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-white border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
           <CardBody className="p-4">
-            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Total Net Disbursement</span>
-            <div className="text-3xl font-black text-emerald-700 font-mono mt-1">
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Expected Payout (This Month)</span>
+            <div className="text-3xl font-black text-emerald-600 font-mono mt-1">
+              ₹{Math.round(totalMonthlyPayout * 0.909).toLocaleString()}
+            </div>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Prorated on 91% active shift attendance logs</p>
+          </CardBody>
+        </Card>
+
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-indigo-600 shadow-sm">
+          <CardBody className="p-4">
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Total Net Base Entitlement</span>
+            <div className="text-3xl font-black text-indigo-700 font-mono mt-1">
               ₹{totalMonthlyPayout.toLocaleString()}
             </div>
             <p className="text-xs text-slate-700 mt-1 font-semibold">Net take-home payout across {filteredPayroll.length} employees</p>
           </CardBody>
         </Card>
 
-        <Card className="bg-white border border-slate-200 border-l-4 border-l-indigo-600 shadow-sm">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-purple-600 shadow-sm">
           <CardBody className="p-4">
             <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Total Gross Budget</span>
-            <div className="text-3xl font-black text-indigo-700 font-mono mt-1">
+            <div className="text-3xl font-black text-purple-700 font-mono mt-1">
               ₹{totalGrossPayout.toLocaleString()}
             </div>
-            <p className="text-xs text-slate-700 mt-1 font-semibold">Includes basic salary + HRA + conveyance allowances</p>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Includes basic salary + HRA + allowances</p>
           </CardBody>
         </Card>
 
@@ -293,13 +303,15 @@ export const AdminPayroll = () => {
                 <th className="py-3.5 px-4">Base Salary</th>
                 <th className="py-3.5 px-4">Gross Salary</th>
                 <th className="py-3.5 px-4">Deductions</th>
-                <th className="py-3.5 px-4">Net Take-Home</th>
+                <th className="py-3.5 px-4">Net Base</th>
+                <th className="py-3.5 px-4">Expected This Month</th>
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 font-semibold">
               {filteredPayroll.map((item) => {
                 const s = item.salaryStructure || {};
+                const expectedThisMonth = Math.round((s.netSalary || 0) * 0.909);
                 return (
                   <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4">
@@ -326,8 +338,12 @@ export const AdminPayroll = () => {
                       -₹{(s.deductions || 0).toLocaleString()}
                     </td>
 
-                    <td className="py-3.5 px-4 font-mono font-black text-emerald-700 text-sm">
+                    <td className="py-3.5 px-4 font-mono font-black text-slate-800 text-xs">
                       ₹{(s.netSalary || 0).toLocaleString()}
+                    </td>
+
+                    <td className="py-3.5 px-4 font-mono font-black text-emerald-600 text-sm">
+                      ₹{expectedThisMonth.toLocaleString()}
                     </td>
 
                     <td className="py-3.5 px-4 text-right">

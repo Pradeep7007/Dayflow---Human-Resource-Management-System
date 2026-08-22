@@ -269,18 +269,18 @@ export const AdminDashboard = () => {
           <Calendar size={15} className="text-indigo-600" />
           Today's Live Snapshot
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           <Card hoverable className="bg-white border border-slate-200 border-l-4 border-l-indigo-600 shadow-sm">
             <CardBody className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Total Workforce</span>
-                <div className="p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
+                <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600">
                   <Users size={18} />
                 </div>
               </div>
-              <div className="text-3xl font-black text-indigo-700 leading-none">{summary.totalEmployees}</div>
-              <div className="text-xs font-bold text-emerald-700 mt-2 flex items-center gap-1">
-                <TrendingUp size={13} /> {overview.activeRate}% Active Shift Participation
+              <div className="text-2xl font-black text-indigo-700 leading-none">{summary.totalEmployees}</div>
+              <div className="text-[11px] font-bold text-emerald-700 mt-2 flex items-center gap-1">
+                <TrendingUp size={12} /> {overview.activeRate}% Shift Participation
               </div>
             </CardBody>
           </Card>
@@ -289,12 +289,25 @@ export const AdminDashboard = () => {
             <CardBody className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Present Today</span>
-                <div className="p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
+                <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600">
                   <CalendarCheck size={18} />
                 </div>
               </div>
-              <div className="text-3xl font-black text-emerald-600 leading-none">{summary.presentToday}</div>
-              <div className="text-xs font-semibold text-slate-700 mt-2">Checked in across all departments</div>
+              <div className="text-2xl font-black text-emerald-600 leading-none">{summary.presentToday}</div>
+              <div className="text-[11px] font-semibold text-slate-700 mt-2">Checked in across shifts</div>
+            </CardBody>
+          </Card>
+
+          <Card hoverable className="bg-white border border-slate-200 border-l-4 border-l-teal-600 shadow-sm">
+            <CardBody className="p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Expected Payout</span>
+                <div className="p-2 rounded-lg bg-teal-50 text-teal-600">
+                  <TrendingUp size={18} />
+                </div>
+              </div>
+              <div className="text-2xl font-black text-teal-700 font-mono leading-none">₹4,05,000</div>
+              <div className="text-[11px] font-bold text-teal-700 mt-2">Prorated on 91% activity</div>
             </CardBody>
           </Card>
 
@@ -302,12 +315,12 @@ export const AdminDashboard = () => {
             <CardBody className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-black text-slate-900 uppercase tracking-wider">On Leave Today</span>
-                <div className="p-2.5 rounded-lg bg-purple-50 text-purple-600">
+                <div className="p-2 rounded-lg bg-purple-50 text-purple-600">
                   <Clock size={18} />
                 </div>
               </div>
-              <div className="text-3xl font-black text-purple-600 leading-none">{summary.onLeaveToday}</div>
-              <div className="text-xs font-semibold text-slate-700 mt-2">Approved & active leave status</div>
+              <div className="text-2xl font-black text-purple-600 leading-none">{summary.onLeaveToday}</div>
+              <div className="text-[11px] font-semibold text-slate-700 mt-2">Approved active leave</div>
             </CardBody>
           </Card>
 
@@ -315,12 +328,12 @@ export const AdminDashboard = () => {
             <CardBody className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Pending Approvals</span>
-                <div className="p-2.5 rounded-lg bg-amber-50 text-amber-600">
+                <div className="p-2 rounded-lg bg-amber-50 text-amber-600">
                   <AlertTriangle size={18} />
                 </div>
               </div>
-              <div className="text-3xl font-black text-amber-600 leading-none">{summary.pendingLeaveApprovals}</div>
-              <div className="text-xs font-semibold text-slate-700 mt-2">Awaiting HR manager review</div>
+              <div className="text-2xl font-black text-amber-600 leading-none">{summary.pendingLeaveApprovals}</div>
+              <div className="text-[11px] font-semibold text-slate-700 mt-2">Awaiting manager review</div>
             </CardBody>
           </Card>
         </div>

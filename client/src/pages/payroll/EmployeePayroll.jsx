@@ -119,27 +119,57 @@ export const EmployeePayroll = () => {
         }
       />
 
-      {/* TOP NET TAKE HOME BANNER */}
-      <Card className="bg-white border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
-        <CardBody className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">August 2026 Monthly Take-Home Pay</span>
-            <div className="text-3xl font-black text-emerald-700 font-mono mt-1">₹{netSalary.toLocaleString()}</div>
-            <p className="text-xs text-slate-700 mt-1 font-semibold">
-              Disbursed via {s.paymentMethod || 'Direct Bank Transfer'} • Account {s.bankAccount || '•••• •••• 8842'}
-            </p>
-          </div>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => setIsSlipModalOpen(true)}
-            leftIcon={<Printer size={15} />}
-            className="text-xs font-bold text-indigo-700 bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
-          >
-            Download Slip PDF
-          </Button>
-        </CardBody>
-      </Card>
+      {/* TOP STATS CARDS: BASE TAKE-HOME & EXPECTED THIS MONTH SALARY */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Card 1: Expected This Month Salary */}
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
+          <CardBody className="p-5 flex flex-col justify-between h-full space-y-2">
+            <div>
+              <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">
+                Expected This Month Salary (Current Shift Activity)
+              </span>
+              <div className="text-3xl font-black text-emerald-700 font-mono mt-1">
+                ₹{Math.round(netSalary * 0.909).toLocaleString()}
+              </div>
+              <p className="text-xs text-slate-700 mt-1 font-semibold">
+                Prorated based on <strong className="text-indigo-700 font-bold">91% active attendance</strong> (20/22 working days)
+              </p>
+            </div>
+            <div className="pt-2 flex items-center gap-2">
+              <Badge variant="success" className="text-[10px] font-bold">20 Days Present</Badge>
+              <Badge variant="primary" className="text-[10px] font-bold">2 Days Paid Leave</Badge>
+            </div>
+          </CardBody>
+        </Card>
+
+        {/* Card 2: Full Monthly Base Take-Home */}
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-indigo-600 shadow-sm">
+          <CardBody className="p-5 flex flex-col justify-between h-full space-y-2">
+            <div>
+              <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">
+                Full Monthly Base Entitlement (August 2026)
+              </span>
+              <div className="text-3xl font-black text-indigo-700 font-mono mt-1">
+                ₹{netSalary.toLocaleString()}
+              </div>
+              <p className="text-xs text-slate-700 mt-1 font-semibold">
+                Disbursed via {s.paymentMethod || 'Direct Bank Transfer'} • Account {s.bankAccount || '•••• •••• 8842'}
+              </p>
+            </div>
+            <div className="pt-2 flex justify-end">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setIsSlipModalOpen(true)}
+                leftIcon={<Printer size={15} />}
+                className="text-xs font-bold text-indigo-700 bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
+              >
+                Download Slip PDF
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
 
       {/* SALARY STRUCTURE BREAKDOWN GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

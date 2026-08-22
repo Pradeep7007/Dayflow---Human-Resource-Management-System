@@ -90,3 +90,9 @@ DEVELOPMENT RUN INSTRUCTIONS
 ================================================================================
 Developed for Odoo Hackathon - DayFlow HRMS
 ================================================================================
+
+
+git status
+git stash
+git pull --rebase origin main
+git stash pop
