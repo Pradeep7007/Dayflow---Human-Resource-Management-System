@@ -121,7 +121,7 @@ The client application will run automatically at `http://localhost:3000`.
 
 | Role | Email | Password |
 |---|---|---|
-| **Admin** | `admin@dayflow.com` | `admin123` |
+| **Admin** | `admin@dayflow.com` | `adminpass123` |
 | **Employee** | `alex@dayflow.com` | `employee123` |
 
 ---
