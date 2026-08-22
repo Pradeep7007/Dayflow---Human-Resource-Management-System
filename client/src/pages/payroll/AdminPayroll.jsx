@@ -180,58 +180,58 @@ export const AdminPayroll = () => {
                 type: 'success',
               })
             }
-            className="text-emerald-300 border-emerald-500/40 font-bold"
+            className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 font-bold"
           >
             Verify August Cycle
           </Button>
         }
       />
 
-      {/* PAYROLL KPI STATS CARDS - HIGH CONTRAST NON-MUTED TEXT */}
+      {/* PAYROLL KPI STATS CARDS - HIGH CONTRAST DARK TEXT & VIBRANT VALUES */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-emerald-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
           <CardBody className="p-4">
-            <span className="text-xs font-extrabold text-emerald-300 uppercase tracking-wider block">Total Net Disbursement</span>
-            <div className="text-3xl font-black text-white font-mono mt-1">
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Total Net Disbursement</span>
+            <div className="text-3xl font-black text-emerald-700 font-mono mt-1">
               ₹{totalMonthlyPayout.toLocaleString()}
             </div>
-            <p className="text-xs text-slate-100 mt-1 font-bold">Net take-home payout across {filteredPayroll.length} employees</p>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Net take-home payout across {filteredPayroll.length} employees</p>
           </CardBody>
         </Card>
 
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-indigo-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-indigo-600 shadow-sm">
           <CardBody className="p-4">
-            <span className="text-xs font-extrabold text-indigo-300 uppercase tracking-wider block">Total Gross Budget</span>
-            <div className="text-3xl font-black text-indigo-200 font-mono mt-1">
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Total Gross Budget</span>
+            <div className="text-3xl font-black text-indigo-700 font-mono mt-1">
               ₹{totalGrossPayout.toLocaleString()}
             </div>
-            <p className="text-xs text-slate-100 mt-1 font-bold">Includes basic salary + HRA + conveyance allowances</p>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Includes basic salary + HRA + conveyance allowances</p>
           </CardBody>
         </Card>
 
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-rose-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-rose-600 shadow-sm">
           <CardBody className="p-4">
-            <span className="text-xs font-extrabold text-rose-300 uppercase tracking-wider block">Statutory Deductions</span>
-            <div className="text-3xl font-black text-rose-300 font-mono mt-1">
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Statutory Deductions</span>
+            <div className="text-3xl font-black text-rose-700 font-mono mt-1">
               ₹{totalDeductions.toLocaleString()}
             </div>
-            <p className="text-xs text-slate-100 mt-1 font-bold">Provident Fund & Income Tax (TDS) withheld</p>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Provident Fund & Income Tax (TDS) withheld</p>
           </CardBody>
         </Card>
       </div>
 
       {/* SEARCH & FILTERS */}
-      <Card className="bg-slate-800 border border-slate-700">
+      <Card className="bg-white border border-slate-200 shadow-sm">
         <CardBody className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
             <div className="md:col-span-8 relative">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
                 placeholder="Search employee name, ID, or department..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 font-medium"
+                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 font-medium"
               />
             </div>
 
@@ -239,7 +239,7 @@ export const AdminPayroll = () => {
               <select
                 value={departmentFilter}
                 onChange={(e) => setDepartmentFilter(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer font-medium"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer font-bold"
               >
                 <option value="all">All Departments</option>
                 <option value="Engineering">Engineering</option>
@@ -256,9 +256,9 @@ export const AdminPayroll = () => {
 
       {/* ERROR STATE */}
       {error && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-between text-red-300 text-xs font-semibold">
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 flex items-center justify-between text-red-800 text-xs font-bold">
           <div className="flex items-center gap-2">
-            <AlertCircle size={18} />
+            <AlertCircle size={18} className="text-red-600" />
             <span>{error}</span>
           </div>
           <Button variant="ghost" size="sm" onClick={fetchPayroll} leftIcon={<RefreshCw size={14} />}>
@@ -269,25 +269,25 @@ export const AdminPayroll = () => {
 
       {/* PAYROLL TABLE */}
       {loading ? (
-        <div className="py-16 text-center text-slate-200">
-          <RefreshCw size={32} className="animate-spin mx-auto text-indigo-400 mb-3" />
+        <div className="py-16 text-center text-slate-700">
+          <RefreshCw size={32} className="animate-spin mx-auto text-indigo-600 mb-3" />
           <p className="text-xs font-bold">Calculating payroll records...</p>
         </div>
       ) : filteredPayroll.length === 0 ? (
-        <Card className="bg-slate-800 border border-slate-700 py-12 text-center">
+        <Card className="bg-white border border-slate-200 py-12 text-center shadow-sm">
           <CardBody className="space-y-3">
             <FileText size={40} className="text-slate-400 mx-auto" />
-            <h3 className="text-sm font-bold text-white">No Payroll Records Found</h3>
-            <p className="text-xs text-slate-200 max-w-sm mx-auto font-medium">
+            <h3 className="text-sm font-black text-slate-900">No Payroll Records Found</h3>
+            <p className="text-xs text-slate-600 max-w-sm mx-auto font-medium">
               No employee matches the selected search filters.
             </p>
           </CardBody>
         </Card>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-slate-700 bg-slate-800 shadow-xl">
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-800 text-slate-100 border-b border-slate-700 uppercase tracking-wider font-extrabold text-[11px]">
+              <tr className="bg-slate-50 text-slate-900 border-b border-slate-200 uppercase tracking-wider font-black text-[11px]">
                 <th className="py-3.5 px-4">Employee</th>
                 <th className="py-3.5 px-4">Department</th>
                 <th className="py-3.5 px-4">Base Salary</th>
@@ -297,36 +297,36 @@ export const AdminPayroll = () => {
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700/70">
+            <tbody className="divide-y divide-slate-100 font-semibold">
               {filteredPayroll.map((item) => {
                 const s = item.salaryStructure || {};
                 return (
-                  <tr key={item.id} className="hover:bg-slate-700/40 transition-colors">
+                  <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-3">
-                        <Avatar name={item.name} size="md" />
+                        <Avatar name={item.name} size="md" className="ring-2 ring-indigo-100" />
                         <div>
-                          <div className="font-bold text-white text-xs">{item.name}</div>
-                          <div className="text-[11px] font-mono text-indigo-300 font-semibold">{item.employeeId}</div>
+                          <div className="font-extrabold text-slate-900 text-xs sm:text-sm">{item.name}</div>
+                          <div className="text-[11px] font-mono text-indigo-600 font-bold">{item.employeeId}</div>
                         </div>
                       </div>
                     </td>
 
-                    <td className="py-3.5 px-4 text-slate-100 font-semibold">{item.department}</td>
+                    <td className="py-3.5 px-4 text-slate-700 font-bold">{item.department}</td>
 
-                    <td className="py-3.5 px-4 font-mono text-slate-100 font-bold">
+                    <td className="py-3.5 px-4 font-mono text-slate-900 font-extrabold">
                       ₹{(s.baseSalary || 0).toLocaleString()}
                     </td>
 
-                    <td className="py-3.5 px-4 font-mono font-bold text-emerald-400">
+                    <td className="py-3.5 px-4 font-mono font-black text-indigo-700">
                       ₹{(s.grossSalary || 0).toLocaleString()}
                     </td>
 
-                    <td className="py-3.5 px-4 font-mono font-bold text-rose-400">
+                    <td className="py-3.5 px-4 font-mono font-black text-rose-700">
                       -₹{(s.deductions || 0).toLocaleString()}
                     </td>
 
-                    <td className="py-3.5 px-4 font-mono font-black text-white text-sm">
+                    <td className="py-3.5 px-4 font-mono font-black text-emerald-700 text-sm">
                       ₹{(s.netSalary || 0).toLocaleString()}
                     </td>
 
@@ -334,13 +334,13 @@ export const AdminPayroll = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleEditSalary(item)}
-                          className="px-2.5 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 text-xs font-bold flex items-center gap-1 cursor-pointer"
+                          className="px-2.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-bold flex items-center gap-1 cursor-pointer transition-all"
                         >
                           <Edit size={13} /> Edit Structure
                         </button>
                         <button
                           onClick={() => handleOpenSlip(item)}
-                          className="px-2.5 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold flex items-center gap-1 cursor-pointer"
+                          className="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold flex items-center gap-1 cursor-pointer transition-all"
                         >
                           <Printer size={13} /> Payslip
                         </button>

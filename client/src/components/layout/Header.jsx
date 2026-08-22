@@ -1,5 +1,5 @@
-import React from 'react';
-import { Search, Bell, Sparkles, LogOut, ArrowRightLeft, Shield } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Search, Bell, Sparkles, LogOut, CheckCheck, ArrowRight, Clock, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '../ui/Avatar';
 import { Badge } from '../ui/Badge';
@@ -12,12 +12,76 @@ export const Header = ({ isSidebarCollapsed }) => {
   const navigate = useNavigate();
   const { user, logout, role } = useAuth();
 
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const notifRef = useRef(null);
+
+  const fetchNotifications = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch('http://localhost:5000/api/notifications', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setNotifications(data.notifications || []);
+        setUnreadCount(data.unreadCount || 0);
+      }
+    } catch (err) {
+      console.error('Error fetching notifications header:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setIsNotifOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleMarkAllRead = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:5000/api/notifications/read-all', {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setNotifications(data.notifications);
+        setUnreadCount(0);
+      }
+    } catch (err) {
+      console.error('Error marking all as read:', err);
+    }
+  };
+
   const handleLogout = async () => {
     await logout();
     navigate(ROUTES.AUTH.LOGIN, { replace: true });
   };
 
   const userDropdownItems = [
+    {
+      label: 'Notifications Hub',
+      icon: <Bell size={16} className="text-indigo-500" />,
+      onClick: () => navigate(ROUTES.NOTIFICATIONS || '/notifications'),
+    },
+    {
+      label: 'HR Help Center',
+      icon: <Shield size={16} className="text-emerald-500" />,
+      onClick: () => navigate(ROUTES.HELP_CENTER),
+    },
     {
       label: 'UI System Gallery',
       icon: <Sparkles size={16} className="text-purple-500" />,
@@ -45,7 +109,7 @@ export const Header = ({ isSidebarCollapsed }) => {
           <input
             type="text"
             placeholder="Search employees, attendance, payroll..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-800 placeholder-slate-400"
+            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-800 placeholder-slate-400 font-medium"
           />
         </div>
       </div>
@@ -56,13 +120,93 @@ export const Header = ({ isSidebarCollapsed }) => {
           {role || 'Employee'}
         </Badge>
 
-        <button
-          className="relative p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-          title="Notifications"
-        >
-          <Bell size={20} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
-        </button>
+        {/* NOTIFICATION POPOVER DROPDOWN */}
+        <div className="relative" ref={notifRef}>
+          <button
+            onClick={() => setIsNotifOpen(!isNotifOpen)}
+            className="relative p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+            title="Notifications"
+          >
+            <Bell size={20} />
+            {unreadCount > 0 && (
+              <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-red-500 text-white font-bold text-[10px] rounded-full flex items-center justify-center ring-2 ring-white">
+                {unreadCount}
+              </span>
+            )}
+          </button>
+
+          {isNotifOpen && (
+            <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden text-left animate-in fade-in slide-in-from-top-2 duration-150">
+              {/* Header */}
+              <div className="p-3.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold text-sm text-slate-800">Notifications</span>
+                  {unreadCount > 0 && (
+                    <span className="bg-indigo-100 text-indigo-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">
+                      {unreadCount} new
+                    </span>
+                  )}
+                </div>
+                {unreadCount > 0 && (
+                  <button
+                    onClick={handleMarkAllRead}
+                    className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer"
+                  >
+                    <CheckCheck size={14} /> Mark all read
+                  </button>
+                )}
+              </div>
+
+              {/* List */}
+              <div className="max-h-80 overflow-y-auto divide-y divide-slate-100">
+                {notifications.length === 0 ? (
+                  <div className="py-8 text-center text-slate-400 text-xs font-semibold">
+                    No new notifications
+                  </div>
+                ) : (
+                  notifications.slice(0, 4).map((n) => (
+                    <div
+                      key={n.id}
+                      onClick={() => {
+                        setIsNotifOpen(false);
+                        if (n.link) navigate(n.link);
+                      }}
+                      className={`p-3.5 hover:bg-slate-50 transition-colors cursor-pointer space-y-1 ${
+                        !n.isRead ? 'bg-indigo-50/40' : ''
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-extrabold uppercase font-mono text-indigo-600">
+                          {n.type}
+                        </span>
+                        <span className="text-[10px] text-slate-400 flex items-center gap-1 font-medium">
+                          <Clock size={11} /> {n.time}
+                        </span>
+                      </div>
+                      <h4 className="text-xs font-bold text-slate-900 leading-snug">{n.title}</h4>
+                      <p className="text-[11px] text-slate-600 line-clamp-2 leading-relaxed font-medium">
+                        {n.message}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className="p-2.5 bg-slate-50 border-t border-slate-100 text-center">
+                <button
+                  onClick={() => {
+                    setIsNotifOpen(false);
+                    navigate(ROUTES.NOTIFICATIONS || '/notifications');
+                  }}
+                  className="text-xs font-extrabold text-indigo-600 hover:text-indigo-800 flex items-center justify-center gap-1 w-full py-1 cursor-pointer"
+                >
+                  View All Notifications & Timeline <ArrowRight size={14} />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
 
         <div className="h-6 w-px bg-slate-200 mx-1" />
 

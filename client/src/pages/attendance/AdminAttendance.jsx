@@ -162,44 +162,54 @@ export const AdminAttendance = () => {
       />
 
       {/* Analytics KPI Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-        <Card>
-          <CardBody className="p-4 flex flex-col justify-between h-full">
-            <span className="text-xs font-semibold text-slate-500 uppercase">Total Records</span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">{analytics.totalRecords || 0}</div>
-            <p className="text-[11px] text-slate-400 mt-1">Logged shifts</p>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <Card className="hover:shadow-sm transition-all border border-slate-200">
+          <CardBody className="p-3.5 flex flex-col justify-between h-full">
+            <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-tight truncate">Total Records</span>
+            <div className="mt-2">
+              <div className="text-xl sm:text-2xl font-black text-slate-900 leading-none">{analytics.totalRecords || 0}</div>
+              <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Logged shifts</p>
+            </div>
           </CardBody>
         </Card>
 
-        <Card>
-          <CardBody className="p-4 flex flex-col justify-between h-full">
-            <span className="text-xs font-semibold text-emerald-600 uppercase">Present</span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-700 mt-2">{analytics.present || 0}</div>
-            <p className="text-[11px] text-slate-400 mt-1">Full shift work</p>
+        <Card className="hover:shadow-sm transition-all border border-slate-200">
+          <CardBody className="p-3.5 flex flex-col justify-between h-full">
+            <span className="text-[11px] font-extrabold text-emerald-600 uppercase tracking-tight truncate">Present</span>
+            <div className="mt-2">
+              <div className="text-xl sm:text-2xl font-black text-emerald-700 leading-none">{analytics.present || 0}</div>
+              <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Full shift work</p>
+            </div>
           </CardBody>
         </Card>
 
-        <Card>
-          <CardBody className="p-4 flex flex-col justify-between h-full">
-            <span className="text-xs font-semibold text-amber-600 uppercase">Half-Day</span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-amber-700 mt-2">{analytics.halfDay || 0}</div>
-            <p className="text-[11px] text-slate-400 mt-1">Late arrivals</p>
+        <Card className="hover:shadow-sm transition-all border border-slate-200">
+          <CardBody className="p-3.5 flex flex-col justify-between h-full">
+            <span className="text-[11px] font-extrabold text-amber-600 uppercase tracking-tight truncate">Half-Day</span>
+            <div className="mt-2">
+              <div className="text-xl sm:text-2xl font-black text-amber-700 leading-none">{analytics.halfDay || 0}</div>
+              <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Late arrivals</p>
+            </div>
           </CardBody>
         </Card>
 
-        <Card>
-          <CardBody className="p-4 flex flex-col justify-between h-full">
-            <span className="text-xs font-semibold text-indigo-600 uppercase">On Leave</span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-indigo-700 mt-2">{analytics.leave || 0}</div>
-            <p className="text-[11px] text-slate-400 mt-1">Approved time-off</p>
+        <Card className="hover:shadow-sm transition-all border border-slate-200">
+          <CardBody className="p-3.5 flex flex-col justify-between h-full">
+            <span className="text-[11px] font-extrabold text-indigo-600 uppercase tracking-tight truncate">On Leave</span>
+            <div className="mt-2">
+              <div className="text-xl sm:text-2xl font-black text-indigo-700 leading-none">{analytics.leave || 0}</div>
+              <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Approved time-off</p>
+            </div>
           </CardBody>
         </Card>
 
-        <Card>
-          <CardBody className="p-4 flex flex-col justify-between h-full">
-            <span className="text-xs font-semibold text-red-600 uppercase">Absent</span>
-            <div className="text-2xl sm:text-3xl font-extrabold text-red-700 mt-2">{analytics.absent || 0}</div>
-            <p className="text-[11px] text-slate-400 mt-1">Unexcused</p>
+        <Card className="hover:shadow-sm transition-all border border-slate-200">
+          <CardBody className="p-3.5 flex flex-col justify-between h-full">
+            <span className="text-[11px] font-extrabold text-red-600 uppercase tracking-tight truncate">Absent</span>
+            <div className="mt-2">
+              <div className="text-xl sm:text-2xl font-black text-red-700 leading-none">{analytics.absent || 0}</div>
+              <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Unexcused</p>
+            </div>
           </CardBody>
         </Card>
       </div>

@@ -34,6 +34,14 @@ const leaveSchema = new mongoose.Schema(
       type: Date,
       required: [true, 'End date is required'],
     },
+    fromTime: {
+      type: String,
+      default: '09:00',
+    },
+    toTime: {
+      type: String,
+      default: '18:00',
+    },
     daysCount: {
       type: Number,
       required: true,

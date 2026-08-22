@@ -229,18 +229,19 @@
 .df-auth-input-icon {
   position: absolute;
   left: 0.875rem;
-  color: #64748b;
+  color: #475569;
   pointer-events: none;
 }
 
 .df-auth-input {
   width: 100%;
   padding: 0.625rem 0.875rem 0.625rem 2.5rem;
-  background-color: rgba(2, 6, 23, 0.8);
-  border: 1px solid #1e293b;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 0.625rem;
   font-size: 0.8125rem;
-  color: #ffffff;
+  color: #0f172a;
+  font-weight: 600;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -251,7 +252,7 @@
 }
 
 .df-auth-input::placeholder {
-  color: #475569;
+  color: #64748b;
 }
 
 .df-auth-eye-btn {

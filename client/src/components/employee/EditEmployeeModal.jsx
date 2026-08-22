@@ -168,7 +168,7 @@ export const EditEmployeeModal = ({ isOpen, onClose, employee, onSuccess }) => {
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
                 required
               />
             </div>
@@ -178,7 +178,7 @@ export const EditEmployeeModal = ({ isOpen, onClose, employee, onSuccess }) => {
               <select
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
               >
                 <option value="employee">Employee</option>
                 <option value="hr">HR Manager</option>
@@ -194,7 +194,7 @@ export const EditEmployeeModal = ({ isOpen, onClose, employee, onSuccess }) => {
               <select
                 value={formData.department}
                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
               >
                 <option value="Engineering">Engineering</option>
                 <option value="Human Resources">Human Resources</option>
@@ -211,7 +211,7 @@ export const EditEmployeeModal = ({ isOpen, onClose, employee, onSuccess }) => {
                 type="text"
                 value={formData.jobTitle}
                 onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
               />
             </div>
           </div>
@@ -223,7 +223,7 @@ export const EditEmployeeModal = ({ isOpen, onClose, employee, onSuccess }) => {
               <select
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
               >
                 <option value="active">Active (On Duty)</option>
                 <option value="on_leave">On Leave</option>
@@ -236,7 +236,7 @@ export const EditEmployeeModal = ({ isOpen, onClose, employee, onSuccess }) => {
               <select
                 value={formData.employmentType}
                 onChange={(e) => setFormData({ ...formData, employmentType: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
               >
                 <option value="Full-Time">Full-Time</option>
                 <option value="Part-Time">Part-Time</option>
@@ -254,7 +254,7 @@ export const EditEmployeeModal = ({ isOpen, onClose, employee, onSuccess }) => {
                 type="text"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
               />
             </div>
 
@@ -264,7 +264,7 @@ export const EditEmployeeModal = ({ isOpen, onClose, employee, onSuccess }) => {
                 type="text"
                 value={formData.workLocation}
                 onChange={(e) => setFormData({ ...formData, workLocation: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
               />
             </div>
           </div>

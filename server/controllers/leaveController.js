@@ -19,7 +19,7 @@ exports.createLeaveRequest = async (req, res) => {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    const { leaveType, startDate, endDate, reason } = req.body;
+    const { leaveType, startDate, endDate, fromTime, toTime, reason } = req.body;
 
     if (!leaveType || !startDate || !endDate || !reason) {
       return res.status(400).json({ success: false, message: 'All leave fields are required.' });
@@ -42,6 +42,8 @@ exports.createLeaveRequest = async (req, res) => {
       leaveType,
       startDate: start,
       endDate: end,
+      fromTime: fromTime || '09:00',
+      toTime: toTime || '18:00',
       daysCount,
       reason,
       status: 'Pending',

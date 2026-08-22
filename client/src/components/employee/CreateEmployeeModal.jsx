@@ -114,7 +114,7 @@ export const CreateEmployeeModal = ({ isOpen, onClose, onSuccess }) => {
                 placeholder="EMP-4921"
                 value={formData.employeeId}
                 onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-                className="w-full pl-9 pr-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
                 required
               />
             </div>
@@ -128,7 +128,7 @@ export const CreateEmployeeModal = ({ isOpen, onClose, onSuccess }) => {
               <select
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full pl-9 pr-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
+                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
               >
                 <option value="employee">Employee (Self-Service Portal)</option>
                 <option value="hr">HR Manager (Governance)</option>
@@ -149,7 +149,7 @@ export const CreateEmployeeModal = ({ isOpen, onClose, onSuccess }) => {
                 placeholder="Rajesh V"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full pl-9 pr-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
                 required
               />
             </div>
@@ -165,7 +165,7 @@ export const CreateEmployeeModal = ({ isOpen, onClose, onSuccess }) => {
                 placeholder="rajesh@dayflow.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full pl-9 pr-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
                 required
               />
             </div>
@@ -180,7 +180,7 @@ export const CreateEmployeeModal = ({ isOpen, onClose, onSuccess }) => {
             <select
               value={formData.department}
               onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
             >
               <option value="Engineering">Engineering</option>
               <option value="Human Resources">Human Resources</option>
@@ -200,7 +200,7 @@ export const CreateEmployeeModal = ({ isOpen, onClose, onSuccess }) => {
                 placeholder="Senior Full Stack Lead"
                 value={formData.jobTitle}
                 onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
-                className="w-full pl-9 pr-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
               />
             </div>
           </div>
@@ -216,7 +216,7 @@ export const CreateEmployeeModal = ({ isOpen, onClose, onSuccess }) => {
               placeholder="TempPass123!"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full pl-9 pr-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
               required
             />
           </div>

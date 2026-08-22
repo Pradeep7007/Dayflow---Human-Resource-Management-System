@@ -32,11 +32,11 @@ export const SmartInsightsWidget = () => {
   if (insights.length === 0) return null;
 
   return (
-    <Card className="bg-slate-800 border border-slate-700">
+    <Card className="bg-white border border-slate-200 shadow-sm">
       <CardHeader
         title={
-          <div className="flex items-center gap-2 text-white font-extrabold text-sm">
-            <Sparkles size={16} className="text-cyan-400" />
+          <div className="flex items-center gap-2 text-slate-900 font-extrabold text-sm">
+            <Sparkles size={16} className="text-cyan-600" />
             DayFlow Smart Insights
           </div>
         }
@@ -46,7 +46,7 @@ export const SmartInsightsWidget = () => {
             variant="ghost"
             size="sm"
             onClick={() => navigate('/admin/insights')}
-            className="text-xs text-indigo-400 hover:text-white font-bold"
+            className="text-xs text-indigo-600 hover:text-indigo-800 font-bold"
             rightIcon={<ArrowRight size={14} />}
           >
             View All ({insights.length}+)
@@ -57,20 +57,20 @@ export const SmartInsightsWidget = () => {
         {insights.map((ins) => (
           <div
             key={ins.id}
-            className="p-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-slate-600 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs"
+            className="p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs"
           >
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
-                <span className="font-mono font-bold text-[10px] text-cyan-300 uppercase">{ins.category}</span>
-                <span className="font-bold text-white text-xs">{ins.title}</span>
+                <span className="font-mono font-black text-[10px] text-cyan-800 uppercase">{ins.category}</span>
+                <span className="font-extrabold text-slate-900 text-xs">{ins.title}</span>
               </div>
-              <p className="text-slate-300 font-medium text-[11px]">{ins.observation}</p>
+              <p className="text-slate-700 font-semibold text-[11px]">{ins.observation}</p>
             </div>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate(ins.actionRoute)}
-              className="bg-indigo-600/20 text-indigo-300 border border-indigo-500/40 hover:bg-indigo-600/30 text-xs font-bold py-1 px-3 self-end sm:self-center"
+              className="bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 text-xs font-bold py-1 px-3 self-end sm:self-center"
             >
               {ins.actionText}
             </Button>

@@ -136,16 +136,16 @@ export const EmployeeAttendance = () => {
         breadcrumbs={['DayFlow', 'Employee', 'Attendance']}
       />
 
-      {/* Top Banner & Quick Check In / Out Widget */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-1 border-indigo-100 bg-gradient-to-br from-indigo-50/60 via-white to-purple-50/30">
+      {/* Top Banner & Quick Check In / Out Widget + Separate Stats Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <Card className="lg:col-span-4 border-indigo-100 bg-gradient-to-br from-indigo-50/60 via-white to-purple-50/30">
           <CardHeader
             title="Today's Attendance Status"
             subtitle={new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
           />
-          <CardBody className="p-6 flex flex-col items-center text-center">
+          <CardBody className="p-5 flex flex-col items-center text-center">
             <div
-              className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-3 transition-all ${
+              className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-3 transition-all ${
                 isCheckedOut
                   ? 'bg-purple-100 text-purple-700 ring-4 ring-purple-50'
                   : isCheckedIn
@@ -153,10 +153,10 @@ export const EmployeeAttendance = () => {
                   : 'bg-indigo-100 text-indigo-700'
               }`}
             >
-              <Clock size={32} />
+              <Clock size={28} />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-3">
               {todayRecord ? (
                 renderStatusBadge(todayRecord.status)
               ) : (
@@ -165,14 +165,14 @@ export const EmployeeAttendance = () => {
             </div>
 
             {/* Check in / Check out Timestamps */}
-            <div className="grid grid-cols-2 gap-3 w-full bg-white p-3 rounded-xl border border-slate-200 text-xs mb-5">
+            <div className="grid grid-cols-2 gap-3 w-full bg-white p-3 rounded-xl border border-slate-200 text-xs mb-4">
               <div className="text-left border-r border-slate-100 pr-2">
-                <span className="text-slate-400 font-semibold block">CHECK IN</span>
-                <span className="font-mono font-bold text-slate-800 text-sm">{todayRecord?.checkIn || '--:--'}</span>
+                <span className="text-slate-400 font-semibold block text-[10px]">CHECK IN</span>
+                <span className="font-mono font-bold text-slate-800 text-xs">{todayRecord?.checkIn || '--:--'}</span>
               </div>
               <div className="text-left pl-2">
-                <span className="text-slate-400 font-semibold block">CHECK OUT</span>
-                <span className="font-mono font-bold text-slate-800 text-sm">{todayRecord?.checkOut || '--:--'}</span>
+                <span className="text-slate-400 font-semibold block text-[10px]">CHECK OUT</span>
+                <span className="font-mono font-bold text-slate-800 text-xs">{todayRecord?.checkOut || '--:--'}</span>
               </div>
             </div>
 
@@ -180,86 +180,103 @@ export const EmployeeAttendance = () => {
             {!isCheckedIn ? (
               <Button
                 variant="primary"
-                size="lg"
-                className="w-full"
+                size="md"
+                className="w-full font-bold"
                 onClick={handleCheckIn}
                 isLoading={isSubmitting}
-                leftIcon={<Clock size={18} />}
+                leftIcon={<Clock size={16} />}
               >
                 Check In Now
               </Button>
             ) : !isCheckedOut ? (
               <Button
                 variant="destructive"
-                size="lg"
-                className="w-full"
+                size="md"
+                className="w-full font-bold"
                 onClick={handleCheckOut}
                 isLoading={isSubmitting}
-                leftIcon={<Clock size={18} />}
+                leftIcon={<Clock size={16} />}
               >
                 Check Out Now
               </Button>
             ) : (
-              <Button variant="secondary" size="lg" className="w-full" disabled leftIcon={<CheckCircle2 size={18} />}>
+              <Button variant="secondary" size="md" className="w-full" disabled leftIcon={<CheckCircle2 size={16} />}>
                 Shift Completed Today
               </Button>
             )}
           </CardBody>
         </Card>
 
-        {/* Attendance Summary Analytics Metrics */}
-        <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <Card>
-            <CardBody className="p-5 flex flex-col justify-between h-full">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500 uppercase">Days Present</span>
-                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                  <UserCheck size={18} />
-                </div>
-              </div>
-              <div className="text-3xl font-extrabold text-slate-900 mt-3">{stats.presentCount || 0}</div>
-              <p className="text-[11px] text-slate-400 mt-1">Full shift records</p>
-            </CardBody>
-          </Card>
+        {/* Separate Attendance Analytics Metrics Section */}
+        <div className="lg:col-span-8 space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-200/80 pb-2">
+            <h3 className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">Attendance Performance Metrics</h3>
+            <span className="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100">
+              Current Month Overview
+            </span>
+          </div>
 
-          <Card>
-            <CardBody className="p-5 flex flex-col justify-between h-full">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500 uppercase">Half-Days</span>
-                <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
-                  <Clock size={18} />
+          <div className="grid grid-cols-2 gap-3">
+            <Card className="hover:shadow-sm transition-all border border-slate-200">
+              <CardBody className="p-3.5 flex flex-col justify-between">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-tight truncate">Days Present</span>
+                  <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                    <UserCheck size={16} />
+                  </div>
                 </div>
-              </div>
-              <div className="text-3xl font-extrabold text-slate-900 mt-3">{stats.halfDayCount || 0}</div>
-              <p className="text-[11px] text-slate-400 mt-1">Late / Partial shifts</p>
-            </CardBody>
-          </Card>
+                <div className="mt-2.5">
+                  <div className="text-2xl font-black text-slate-900 leading-none">{stats.presentCount || 0}</div>
+                  <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Full shift records</p>
+                </div>
+              </CardBody>
+            </Card>
 
-          <Card>
-            <CardBody className="p-5 flex flex-col justify-between h-full">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500 uppercase">Approved Leave</span>
-                <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                  <Calendar size={18} />
+            <Card className="hover:shadow-sm transition-all border border-slate-200">
+              <CardBody className="p-3.5 flex flex-col justify-between">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-tight truncate">Half-Days</span>
+                  <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+                    <Clock size={16} />
+                  </div>
                 </div>
-              </div>
-              <div className="text-3xl font-extrabold text-slate-900 mt-3">{stats.leaveCount || 0}</div>
-              <p className="text-[11px] text-slate-400 mt-1">Time-off days</p>
-            </CardBody>
-          </Card>
+                <div className="mt-2.5">
+                  <div className="text-2xl font-black text-slate-900 leading-none">{stats.halfDayCount || 0}</div>
+                  <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Late / Partial shifts</p>
+                </div>
+              </CardBody>
+            </Card>
 
-          <Card>
-            <CardBody className="p-5 flex flex-col justify-between h-full">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500 uppercase">Avg Hours / Day</span>
-                <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
-                  <Briefcase size={18} />
+            <Card className="hover:shadow-sm transition-all border border-slate-200">
+              <CardBody className="p-3.5 flex flex-col justify-between">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-tight truncate">Approved Leave</span>
+                  <div className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
+                    <Calendar size={16} />
+                  </div>
                 </div>
-              </div>
-              <div className="text-3xl font-extrabold text-slate-900 mt-3">{stats.averageHours || 0}h</div>
-              <p className="text-[11px] text-slate-400 mt-1">Productive work hours</p>
-            </CardBody>
-          </Card>
+                <div className="mt-2.5">
+                  <div className="text-2xl font-black text-slate-900 leading-none">{stats.leaveCount || 0}</div>
+                  <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Time-off days</p>
+                </div>
+              </CardBody>
+            </Card>
+
+            <Card className="hover:shadow-sm transition-all border border-slate-200">
+              <CardBody className="p-3.5 flex flex-col justify-between">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-tight truncate">Avg Hours / Day</span>
+                  <div className="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0">
+                    <Briefcase size={16} />
+                  </div>
+                </div>
+                <div className="mt-2.5">
+                  <div className="text-2xl font-black text-slate-900 leading-none">{stats.averageHours || 0}h</div>
+                  <p className="text-[10px] font-medium text-slate-400 mt-1 truncate">Productive work hours</p>
+                </div>
+              </CardBody>
+            </Card>
+          </div>
         </div>
       </div>
 

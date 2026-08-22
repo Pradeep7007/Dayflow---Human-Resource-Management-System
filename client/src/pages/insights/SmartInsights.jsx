@@ -79,8 +79,8 @@ export const SmartInsights = () => {
         breadcrumbs={['DayFlow', 'Admin', 'Smart Insights']}
         action={
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-indigo-300 bg-slate-800 border border-indigo-500/40 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
-              <Sparkles size={14} className="text-cyan-400 animate-pulse" /> Statistical Engine Active
+            <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
+              <Sparkles size={14} className="text-cyan-600 animate-pulse" /> Statistical Engine Active
             </span>
             <Button
               variant="secondary"
@@ -97,84 +97,84 @@ export const SmartInsights = () => {
 
       {/* TOP ANALYTICAL KPI METRICS */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-cyan-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-cyan-600 shadow-sm">
           <CardBody className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Discovered Insights</span>
-              <div className="p-2 rounded-lg bg-cyan-500/20 text-cyan-300">
+              <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Discovered Insights</span>
+              <div className="p-2 rounded-lg bg-cyan-50 text-cyan-700">
                 <Zap size={18} />
               </div>
             </div>
-            <div className="text-3xl font-black text-white mt-1">{data.summary.totalInsights}</div>
-            <p className="text-xs text-slate-300 mt-1 font-medium">Computed across attendance, leave & payroll</p>
+            <div className="text-3xl font-black text-slate-900 font-mono mt-1">{data.summary.totalInsights}</div>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Computed across attendance, leave & payroll</p>
           </CardBody>
         </Card>
 
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-amber-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-amber-600 shadow-sm">
           <CardBody className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Action Items</span>
-              <div className="p-2 rounded-lg bg-amber-500/20 text-amber-300">
+              <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Action Items</span>
+              <div className="p-2 rounded-lg bg-amber-50 text-amber-700">
                 <AlertTriangle size={18} />
               </div>
             </div>
-            <div className="text-3xl font-black text-amber-300 mt-1">{data.summary.criticalAlerts}</div>
-            <p className="text-xs text-slate-300 mt-1 font-medium">High priority HR interventions recommended</p>
+            <div className="text-3xl font-black text-amber-700 font-mono mt-1">{data.summary.criticalAlerts}</div>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">High priority HR interventions recommended</p>
           </CardBody>
         </Card>
 
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-emerald-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
           <CardBody className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Workforce Bandwidth</span>
-              <div className="p-2 rounded-lg bg-emerald-500/20 text-emerald-300">
+              <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Workforce Bandwidth</span>
+              <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700">
                 <TrendingUp size={18} />
               </div>
             </div>
-            <div className="text-3xl font-black text-emerald-400 mt-1">{data.summary.averageAttendanceRate}%</div>
-            <p className="text-xs text-slate-300 mt-1 font-medium">Average 30-day shift attendance rate</p>
+            <div className="text-3xl font-black text-emerald-700 font-mono mt-1">{data.summary.averageAttendanceRate}%</div>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Average 30-day shift attendance rate</p>
           </CardBody>
         </Card>
       </div>
 
       {/* FILTER TABS */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-slate-700 pb-3">
+      <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3">
         <button
           onClick={() => setActiveTab('all')}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
             activeTab === 'all'
               ? 'bg-indigo-600 text-white shadow-md'
-              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+              : 'bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 shadow-sm'
           }`}
         >
           All Observations ({data.insights.length})
         </button>
         <button
           onClick={() => setActiveTab('attendance')}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
             activeTab === 'attendance'
               ? 'bg-indigo-600 text-white shadow-md'
-              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+              : 'bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 shadow-sm'
           }`}
         >
           Attendance Patterns
         </button>
         <button
           onClick={() => setActiveTab('leave')}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
             activeTab === 'leave'
               ? 'bg-indigo-600 text-white shadow-md'
-              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+              : 'bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 shadow-sm'
           }`}
         >
           Leave Concentration
         </button>
         <button
           onClick={() => setActiveTab('payroll')}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
             activeTab === 'payroll'
               ? 'bg-indigo-600 text-white shadow-md'
-              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+              : 'bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 shadow-sm'
           }`}
         >
           Payroll & Audit
@@ -183,8 +183,8 @@ export const SmartInsights = () => {
 
       {/* INSIGHT CARDS GRID */}
       {loading ? (
-        <div className="py-16 text-center text-slate-300">
-          <RefreshCw size={32} className="animate-spin mx-auto text-indigo-400 mb-3" />
+        <div className="py-16 text-center text-slate-700">
+          <RefreshCw size={32} className="animate-spin mx-auto text-indigo-600 mb-3" />
           <p className="text-xs font-bold">Analyzing workforce dataset...</p>
         </div>
       ) : (
@@ -194,21 +194,21 @@ export const SmartInsights = () => {
             {filteredInsights.map((ins) => (
               <Card
                 key={ins.id}
-                className={`bg-slate-800 border transition-all ${
+                className={`bg-white border transition-all shadow-sm ${
                   ins.severity === 'alert'
-                    ? 'border-red-500/50 border-l-4 border-l-red-500'
+                    ? 'border-red-500/50 border-l-4 border-l-red-600'
                     : ins.severity === 'warning'
-                    ? 'border-amber-500/50 border-l-4 border-l-amber-500'
-                    : 'border-indigo-500/40 border-l-4 border-l-indigo-500'
+                    ? 'border-amber-500/50 border-l-4 border-l-amber-600'
+                    : 'border-indigo-500/40 border-l-4 border-l-indigo-600'
                 }`}
               >
                 <CardBody className="p-4 space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-1">
-                      <span className="text-[11px] font-mono font-bold text-indigo-300 uppercase tracking-wider">
+                      <span className="text-[11px] font-mono font-black text-indigo-700 uppercase tracking-wider">
                         {ins.category}
                       </span>
-                      <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+                      <h3 className="text-sm font-black text-slate-900 flex items-center gap-2">
                         {ins.title}
                       </h3>
                     </div>
@@ -226,17 +226,17 @@ export const SmartInsights = () => {
                     </Badge>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-slate-800 border border-slate-700 text-xs space-y-1.5">
-                    <div className="text-slate-200 font-medium">
-                      <strong className="text-white">Data Observation:</strong> {ins.observation}
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1.5">
+                    <div className="text-slate-800 font-semibold">
+                      <strong className="text-slate-900 font-black">Data Observation:</strong> {ins.observation}
                     </div>
-                    <div className="text-slate-300 font-medium">
-                      <strong className="text-indigo-300">Potential Impact:</strong> {ins.impact}
+                    <div className="text-slate-700 font-semibold">
+                      <strong className="text-indigo-900 font-black">Potential Impact:</strong> {ins.impact}
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between pt-1">
-                    <span className="text-[11px] text-slate-300 font-medium">
+                    <span className="text-[11px] text-slate-600 font-semibold">
                       DayFlow Smart HR Analysis
                     </span>
                     <Button
@@ -256,7 +256,7 @@ export const SmartInsights = () => {
 
           {/* Department Availability Side Analytics */}
           <div className="lg:col-span-4 space-y-4">
-            <Card className="bg-slate-800 border border-slate-700">
+            <Card className="bg-white border border-slate-200 shadow-sm">
               <CardHeader
                 title="Departmental Availability Rate"
                 subtitle="Live 30-day shift participation by team"
@@ -264,17 +264,17 @@ export const SmartInsights = () => {
               <CardBody className="p-4 space-y-4">
                 {data.departmentAvailability.map((dept, i) => (
                   <div key={i} className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs font-bold">
-                      <span className="text-white">{dept.department}</span>
-                      <span className="text-emerald-400 font-mono">{dept.rate}%</span>
+                    <div className="flex items-center justify-between text-xs font-extrabold">
+                      <span className="text-slate-900">{dept.department}</span>
+                      <span className="text-emerald-700 font-mono font-black">{dept.rate}%</span>
                     </div>
-                    <div className="w-full h-2.5 rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
+                    <div className="w-full h-2.5 rounded-full bg-slate-100 border border-slate-200 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+                        className="h-full rounded-full bg-emerald-600 transition-all duration-500"
                         style={{ width: `${dept.rate}%` }}
                       />
                     </div>
-                    <div className="flex justify-between text-[10px] text-slate-300 font-medium">
+                    <div className="flex justify-between text-[10px] text-slate-600 font-semibold">
                       <span>Present: {dept.present}</span>
                       <span>Total: {dept.total} members</span>
                     </div>

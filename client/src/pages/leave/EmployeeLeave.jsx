@@ -37,6 +37,8 @@ export const EmployeeLeave = () => {
     leaveType: 'Paid',
     startDate: '',
     endDate: '',
+    fromTime: '09:00',
+    toTime: '18:00',
     reason: '',
   });
 
@@ -65,8 +67,8 @@ export const EmployeeLeave = () => {
   // Handle Submit Leave Request
   const handleSubmitLeave = async (e) => {
     e.preventDefault();
-    if (!formData.startDate || !formData.endDate || !formData.reason.trim()) {
-      addToast({ title: 'Validation Error', message: 'Please fill in all leave details.', type: 'warning' });
+    if (!formData.startDate || !formData.endDate || !formData.fromTime || !formData.toTime || !formData.reason.trim()) {
+      addToast({ title: 'Validation Error', message: 'Please fill in all leave and time details.', type: 'warning' });
       return;
     }
 
@@ -75,7 +77,7 @@ export const EmployeeLeave = () => {
       const res = await API.post('/leaves/request', formData);
       setIsSubmitting(false);
       setIsModalOpen(false);
-      setFormData({ leaveType: 'Paid', startDate: '', endDate: '', reason: '' });
+      setFormData({ leaveType: 'Paid', startDate: '', endDate: '', fromTime: '09:00', toTime: '18:00', reason: '' });
       addToast({ title: 'Request Submitted', message: res.data.message, type: 'success' });
       fetchLeaveData();
     } catch (err) {
@@ -234,7 +236,10 @@ export const EmployeeLeave = () => {
                         </span>
                       </td>
                       <td className="text-xs text-slate-700 font-mono">
-                        {new Date(r.startDate).toLocaleDateString()} - {new Date(r.endDate).toLocaleDateString()}
+                        <div>{new Date(r.startDate).toLocaleDateString()} - {new Date(r.endDate).toLocaleDateString()}</div>
+                        <div className="text-[11px] font-mono text-indigo-700 font-bold mt-0.5">
+                          {r.fromTime || '09:00'} to {r.toTime || '18:00'}
+                        </div>
                       </td>
                       <td className="font-semibold text-slate-900 text-xs">
                         {r.daysCount} {r.daysCount === 1 ? 'Day' : 'Days'}
@@ -299,6 +304,23 @@ export const EmployeeLeave = () => {
               type="date"
               value={formData.endDate}
               onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+              required
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Input
+              label="From Time"
+              type="time"
+              value={formData.fromTime}
+              onChange={(e) => setFormData({ ...formData, fromTime: e.target.value })}
+              required
+            />
+            <Input
+              label="To Time"
+              type="time"
+              value={formData.toTime}
+              onChange={(e) => setFormData({ ...formData, toTime: e.target.value })}
               required
             />
           </div>

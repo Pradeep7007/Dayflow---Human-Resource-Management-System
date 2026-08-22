@@ -38,7 +38,7 @@ export const EmployeeProfile = () => {
   const { user: currentUser, role } = useAuth();
   const { addToast } = useToast();
 
-  const isAdminOrHr = role === 'admin' || role === 'hr';
+  const isAdmin = role === 'admin';
 
   const [activeTab, setActiveTab] = useState('personal'); // 'personal' | 'job' | 'salary' | 'documents'
   const [isEditing, setIsEditing] = useState(false);
@@ -265,11 +265,11 @@ export const EmployeeProfile = () => {
 
       {/* Permission Context Notice */}
       <div className={`p-4 rounded-xl border flex items-start gap-3 text-xs leading-relaxed ${
-        isAdminOrHr ? 'bg-purple-50 border-purple-200 text-purple-900' : 'bg-indigo-50/70 border-indigo-200 text-indigo-900'
+        isAdmin ? 'bg-purple-50 border-purple-200 text-purple-900' : 'bg-indigo-50/70 border-indigo-200 text-indigo-900'
       }`}>
         <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
         <div>
-          {isAdminOrHr ? (
+          {isAdmin ? (
             <p>
               <strong>Administrative Mode:</strong> You possess full HR & Admin authorization to view and modify all sections of this employee profile, including salary structures, official documents, and job assignments.
             </p>
@@ -348,9 +348,9 @@ export const EmployeeProfile = () => {
                   label="Full Name"
                   value={formData.name || ''}
                   onChange={(e) => handleInputChange('name', e.target.value)}
-                  disabled={!isEditing || !isAdminOrHr}
+                  disabled={!isEditing || !isAdmin}
                   leftIcon={<User size={18} />}
-                  helpText={!isAdminOrHr && isEditing ? 'Name changes require Admin approval' : ''}
+                  helpText={!isAdmin && isEditing ? 'Name changes require Admin approval' : ''}
                 />
 
                 <Input
@@ -375,7 +375,7 @@ export const EmployeeProfile = () => {
                   label="Gender"
                   value={formData.gender || 'Female'}
                   onChange={(e) => handleInputChange('gender', e.target.value)}
-                  disabled={!isEditing || !isAdminOrHr}
+                  disabled={!isEditing || !isAdmin}
                   options={[
                     { value: 'Female', label: 'Female' },
                     { value: 'Male', label: 'Male' },
@@ -389,7 +389,7 @@ export const EmployeeProfile = () => {
                   type="date"
                   value={formData.dob ? new Date(formData.dob).toISOString().split('T')[0] : ''}
                   onChange={(e) => handleInputChange('dob', e.target.value)}
-                  disabled={!isEditing || !isAdminOrHr}
+                  disabled={!isEditing || !isAdmin}
                   leftIcon={<Calendar size={18} />}
                 />
               </div>
@@ -456,33 +456,33 @@ export const EmployeeProfile = () => {
                 label="Job Designation / Title"
                 value={formData.jobTitle || ''}
                 onChange={(e) => handleInputChange('jobTitle', e.target.value)}
-                disabled={!isEditing || !isAdminOrHr}
+                disabled={!isEditing || !isAdmin}
                 leftIcon={<Briefcase size={18} />}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Input
                 label="Department"
                 value={formData.department || ''}
                 onChange={(e) => handleInputChange('department', e.target.value)}
-                disabled={!isEditing || !isAdminOrHr}
+                disabled={!isEditing || !isAdmin}
                 leftIcon={<Building size={18} />}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Input
                 label="Reporting Manager"
                 value={formData.manager || ''}
                 onChange={(e) => handleInputChange('manager', e.target.value)}
-                disabled={!isEditing || !isAdminOrHr}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                disabled={!isEditing || !isAdmin}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Select
                 label="Employment Type"
                 value={formData.employmentType || 'Full-Time'}
                 onChange={(e) => handleInputChange('employmentType', e.target.value)}
-                disabled={!isEditing || !isAdminOrHr}
+                disabled={!isEditing || !isAdmin}
                 options={[
                   { value: 'Full-Time', label: 'Full-Time Permanent' },
                   { value: 'Part-Time', label: 'Part-Time' },
@@ -495,7 +495,7 @@ export const EmployeeProfile = () => {
                 label="Work Location"
                 value={formData.workLocation || ''}
                 onChange={(e) => handleInputChange('workLocation', e.target.value)}
-                disabled={!isEditing || !isAdminOrHr}
+                disabled={!isEditing || !isAdmin}
               />
 
               <Input
@@ -503,16 +503,16 @@ export const EmployeeProfile = () => {
                 type="date"
                 value={formData.dateOfJoining ? new Date(formData.dateOfJoining).toISOString().split('T')[0] : ''}
                 onChange={(e) => handleInputChange('dateOfJoining', e.target.value)}
-                disabled={!isEditing || !isAdminOrHr}
+                disabled={!isEditing || !isAdmin}
                 leftIcon={<Calendar size={18} />}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Select
                 label="Employment Status"
                 value={formData.status || 'active'}
                 onChange={(e) => handleInputChange('status', e.target.value)}
-                disabled={!isEditing || !isAdminOrHr}
+                disabled={!isEditing || !isAdmin}
                 options={[
                   { value: 'active', label: 'Active Service' },
                   { value: 'on_leave', label: 'On Leave' },
@@ -545,8 +545,8 @@ export const EmployeeProfile = () => {
                 type="number"
                 value={sal.baseSalary || 0}
                 onChange={(e) => handleNestedInputChange('salaryStructure', 'baseSalary', Number(e.target.value))}
-                disabled={!isEditing || !isAdminOrHr}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                disabled={!isEditing || !isAdmin}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Input
@@ -554,8 +554,8 @@ export const EmployeeProfile = () => {
                 type="number"
                 value={sal.housingAllowance || 0}
                 onChange={(e) => handleNestedInputChange('salaryStructure', 'housingAllowance', Number(e.target.value))}
-                disabled={!isEditing || !isAdminOrHr}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                disabled={!isEditing || !isAdmin}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Input
@@ -563,8 +563,8 @@ export const EmployeeProfile = () => {
                 type="number"
                 value={sal.transportAllowance || 0}
                 onChange={(e) => handleNestedInputChange('salaryStructure', 'transportAllowance', Number(e.target.value))}
-                disabled={!isEditing || !isAdminOrHr}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                disabled={!isEditing || !isAdmin}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Input
@@ -572,8 +572,8 @@ export const EmployeeProfile = () => {
                 type="number"
                 value={sal.bonus || 0}
                 onChange={(e) => handleNestedInputChange('salaryStructure', 'bonus', Number(e.target.value))}
-                disabled={!isEditing || !isAdminOrHr}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                disabled={!isEditing || !isAdmin}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Input
@@ -581,15 +581,15 @@ export const EmployeeProfile = () => {
                 type="number"
                 value={sal.deductions || 0}
                 onChange={(e) => handleNestedInputChange('salaryStructure', 'deductions', Number(e.target.value))}
-                disabled={!isEditing || !isAdminOrHr}
-                rightIcon={!isAdminOrHr && <Lock size={16} className="text-slate-400" />}
+                disabled={!isEditing || !isAdmin}
+                rightIcon={!isAdmin && <Lock size={16} className="text-slate-400" />}
               />
 
               <Input
                 label="Payment Disbursement Method"
                 value={sal.paymentMethod || 'Direct Bank Transfer'}
                 onChange={(e) => handleNestedInputChange('salaryStructure', 'paymentMethod', e.target.value)}
-                disabled={!isEditing || !isAdminOrHr}
+                disabled={!isEditing || !isAdmin}
               />
             </div>
 
@@ -598,7 +598,7 @@ export const EmployeeProfile = () => {
                 <h4 className="text-xs font-bold text-slate-700 uppercase">Primary Bank Account</h4>
                 <p className="text-sm font-mono text-slate-900 font-semibold mt-0.5">{sal.bankAccount || 'Not Specified'}</p>
               </div>
-              {!isAdminOrHr && (
+              {!isAdmin && (
                 <div className="flex items-center gap-1.5 text-xs text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
                   <Lock size={14} className="text-slate-400" /> Contact payroll to update bank account details
                 </div>
@@ -684,7 +684,7 @@ export const EmployeeProfile = () => {
                             >
                               <Eye size={16} />
                             </a>
-                            {isAdminOrHr && (
+                            {isAdmin && (
                               <button
                                 type="button"
                                 onClick={() => handleDeleteDocument(doc._id)}

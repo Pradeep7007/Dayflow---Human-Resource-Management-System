@@ -182,52 +182,52 @@ export const WorkforceHealthAlerts = () => {
 
       {/* KPI SUMMARY CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <Card className="bg-slate-800 border border-slate-700">
+        <Card className="bg-white border border-slate-200 shadow-sm">
           <CardBody className="p-4">
-            <span className="text-xs font-extrabold text-slate-300 uppercase tracking-wider block">Total Open Risks</span>
-            <div className="text-3xl font-black text-white mt-1">{alerts.length}</div>
-            <p className="text-xs text-slate-200 mt-1 font-semibold">Active operational flags</p>
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Total Open Risks</span>
+            <div className="text-3xl font-black text-slate-900 font-mono mt-1">{alerts.length}</div>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Active operational flags</p>
           </CardBody>
         </Card>
 
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-rose-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-rose-600 shadow-sm">
           <CardBody className="p-4">
-            <span className="text-xs font-extrabold text-rose-300 uppercase tracking-wider block">Critical Risks</span>
-            <div className="text-3xl font-black text-rose-400 mt-1">{criticalCount}</div>
-            <p className="text-xs text-slate-100 mt-1 font-semibold">Immediate intervention required</p>
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Critical Risks</span>
+            <div className="text-3xl font-black text-rose-700 font-mono mt-1">{criticalCount}</div>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Immediate intervention required</p>
           </CardBody>
         </Card>
 
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-amber-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-amber-600 shadow-sm">
           <CardBody className="p-4">
-            <span className="text-xs font-extrabold text-amber-300 uppercase tracking-wider block">Warning Alerts</span>
-            <div className="text-3xl font-black text-amber-300 mt-1">{warningCount}</div>
-            <p className="text-xs text-slate-100 mt-1 font-semibold">Requires HR follow-up</p>
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Warning Alerts</span>
+            <div className="text-3xl font-black text-amber-700 font-mono mt-1">{warningCount}</div>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">Requires HR follow-up</p>
           </CardBody>
         </Card>
 
-        <Card className="bg-slate-800 border border-slate-700 border-l-4 border-l-indigo-500">
+        <Card className="bg-white border border-slate-200 border-l-4 border-l-indigo-600 shadow-sm">
           <CardBody className="p-4">
-            <span className="text-xs font-extrabold text-indigo-300 uppercase tracking-wider block">Informational</span>
-            <div className="text-3xl font-black text-indigo-300 mt-1">{infoCount}</div>
-            <p className="text-xs text-slate-100 mt-1 font-semibold">System guidance flags</p>
+            <span className="text-xs font-black text-slate-900 uppercase tracking-wider block">Informational</span>
+            <div className="text-3xl font-black text-indigo-700 font-mono mt-1">{infoCount}</div>
+            <p className="text-xs text-slate-700 mt-1 font-semibold">System guidance flags</p>
           </CardBody>
         </Card>
       </div>
 
       {/* FILTER CONTROLS BAR */}
-      <Card className="bg-slate-800 border border-slate-700">
+      <Card className="bg-white border border-slate-200 shadow-sm">
         <CardBody className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
             {/* Search Input */}
             <div className="md:col-span-5 relative">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
                 placeholder="Search alerts, rules, or employee..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 font-medium"
+                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 font-medium"
               />
             </div>
 
@@ -236,7 +236,7 @@ export const WorkforceHealthAlerts = () => {
               <button
                 onClick={() => setSeverityFilter('all')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  severityFilter === 'all' ? 'bg-indigo-600 text-white' : 'bg-slate-700/60 text-slate-200 hover:bg-slate-700'
+                  severityFilter === 'all' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
                 }`}
               >
                 All ({alerts.length})
@@ -244,7 +244,7 @@ export const WorkforceHealthAlerts = () => {
               <button
                 onClick={() => setSeverityFilter('critical')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  severityFilter === 'critical' ? 'bg-rose-600 text-white' : 'bg-slate-700/60 text-rose-300 hover:bg-slate-700'
+                  severityFilter === 'critical' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200'
                 }`}
               >
                 Critical ({criticalCount})
@@ -252,7 +252,7 @@ export const WorkforceHealthAlerts = () => {
               <button
                 onClick={() => setSeverityFilter('warning')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  severityFilter === 'warning' ? 'bg-amber-600 text-white' : 'bg-slate-700/60 text-amber-300 hover:bg-slate-700'
+                  severityFilter === 'warning' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200'
                 }`}
               >
                 Warning ({warningCount})
@@ -260,7 +260,7 @@ export const WorkforceHealthAlerts = () => {
               <button
                 onClick={() => setSeverityFilter('informational')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  severityFilter === 'informational' ? 'bg-indigo-600 text-white' : 'bg-slate-700/60 text-indigo-300 hover:bg-slate-700'
+                  severityFilter === 'informational' ? 'bg-indigo-600 text-white' : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200'
                 }`}
               >
                 Info ({infoCount})
@@ -272,7 +272,7 @@ export const WorkforceHealthAlerts = () => {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer font-medium"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer font-bold"
               >
                 <option value="all">All Categories</option>
                 <option value="attendance">Attendance Rules</option>
@@ -287,16 +287,16 @@ export const WorkforceHealthAlerts = () => {
 
       {/* ALERT LIST OR EMPTY STATE */}
       {loading ? (
-        <div className="py-16 text-center text-slate-200">
-          <RefreshCw size={32} className="animate-spin mx-auto text-indigo-400 mb-3" />
+        <div className="py-16 text-center text-slate-700">
+          <RefreshCw size={32} className="animate-spin mx-auto text-indigo-600 mb-3" />
           <p className="text-xs font-bold">Scanning HR operational dataset for risks...</p>
         </div>
       ) : filteredAlerts.length === 0 ? (
-        <Card className="bg-slate-800 border border-slate-700 py-16 text-center">
+        <Card className="bg-white border border-slate-200 py-16 text-center shadow-sm">
           <CardBody className="space-y-3">
-            <CheckCircle2 size={48} className="text-emerald-400 mx-auto" />
-            <h3 className="text-base font-extrabold text-white">No HR risks or actions require your attention.</h3>
-            <p className="text-xs text-slate-200 max-w-md mx-auto font-medium">
+            <CheckCircle2 size={48} className="text-emerald-600 mx-auto" />
+            <h3 className="text-base font-black text-slate-900">No HR risks or actions require your attention.</h3>
+            <p className="text-xs text-slate-600 max-w-md mx-auto font-medium">
               All attendance logs, leave request queues, compliance documents, and administrative workflows are operating smoothly.
             </p>
           </CardBody>
@@ -310,32 +310,32 @@ export const WorkforceHealthAlerts = () => {
             return (
               <Card
                 key={item.id}
-                className={`bg-slate-800 border transition-all ${
+                className={`bg-white border transition-all shadow-sm ${
                   isCritical
-                    ? 'border-rose-500/40 border-l-4 border-l-rose-500'
+                    ? 'border-rose-500/40 border-l-4 border-l-rose-600'
                     : isWarning
-                    ? 'border-amber-500/40 border-l-4 border-l-amber-500'
-                    : 'border-indigo-500/40 border-l-4 border-l-indigo-500'
+                    ? 'border-amber-500/40 border-l-4 border-l-amber-600'
+                    : 'border-indigo-500/40 border-l-4 border-l-indigo-600'
                 }`}
               >
                 <CardBody className="p-4 space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-2.5">
                       {isCritical ? (
-                        <ShieldAlert size={20} className="text-rose-400 flex-shrink-0" />
+                        <ShieldAlert size={20} className="text-rose-600 flex-shrink-0" />
                       ) : isWarning ? (
-                        <AlertTriangle size={20} className="text-amber-400 flex-shrink-0" />
+                        <AlertTriangle size={20} className="text-amber-600 flex-shrink-0" />
                       ) : (
-                        <Info size={20} className="text-indigo-400 flex-shrink-0" />
+                        <Info size={20} className="text-indigo-600 flex-shrink-0" />
                       )}
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-mono font-bold uppercase text-slate-300">
+                          <span className="text-[11px] font-mono font-black uppercase text-slate-700">
                             {item.category} Rule
                           </span>
-                          <span className="text-[10px] text-slate-400">• {item.date}</span>
+                          <span className="text-[10px] text-slate-500 font-bold">• {item.date}</span>
                         </div>
-                        <h3 className="text-sm font-extrabold text-white">{item.title}</h3>
+                        <h3 className="text-sm font-black text-slate-900">{item.title}</h3>
                       </div>
                     </div>
 
@@ -347,7 +347,7 @@ export const WorkforceHealthAlerts = () => {
                         {item.severity}
                       </Badge>
                       {item.relatedEmployee && (
-                        <span className="text-xs font-semibold text-indigo-300 bg-slate-700 px-2.5 py-0.5 rounded-lg border border-slate-600">
+                        <span className="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-lg border border-indigo-200">
                           {item.relatedEmployee}
                         </span>
                       )}
@@ -355,11 +355,11 @@ export const WorkforceHealthAlerts = () => {
                   </div>
 
                   {/* Explanation Box */}
-                  <div className="p-3 rounded-xl bg-slate-800 border border-slate-700/80 text-xs space-y-1">
-                    <p className="text-slate-100 font-medium">{item.explanation}</p>
-                    <div className="text-slate-200 font-semibold pt-1 border-t border-slate-700/60 flex items-center gap-1.5">
-                      <Sparkles size={13} className="text-indigo-300" />
-                      <strong className="text-indigo-200">Recommended Action:</strong> {item.recommendedAction}
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1">
+                    <p className="text-slate-800 font-semibold">{item.explanation}</p>
+                    <div className="text-slate-700 font-semibold pt-1 border-t border-slate-200 flex items-center gap-1.5">
+                      <Sparkles size={13} className="text-indigo-600" />
+                      <strong className="text-indigo-900 font-black">Recommended Action:</strong> {item.recommendedAction}
                     </div>
                   </div>
 
@@ -367,7 +367,7 @@ export const WorkforceHealthAlerts = () => {
                   <div className="flex items-center justify-between pt-1">
                     <button
                       onClick={() => setSelectedAlert(item)}
-                      className="text-xs font-bold text-indigo-300 hover:text-white flex items-center gap-1 cursor-pointer"
+                      className="text-xs font-bold text-indigo-700 hover:text-indigo-900 flex items-center gap-1 cursor-pointer"
                     >
                       <Eye size={14} /> View Rule Details
                     </button>
@@ -377,7 +377,7 @@ export const WorkforceHealthAlerts = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDismissAlert(item.id)}
-                        className="bg-slate-700 text-slate-200 hover:bg-slate-600 text-xs font-bold px-3 py-1"
+                        className="bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200 text-xs font-bold px-3 py-1"
                       >
                         Dismiss
                       </Button>
@@ -385,7 +385,7 @@ export const WorkforceHealthAlerts = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleResolveAlert(item.id, item.title)}
-                        className="bg-emerald-600/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-600/30 text-xs font-bold px-3 py-1"
+                        className="bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 text-xs font-bold px-3 py-1"
                       >
                         Mark Resolved
                       </Button>
@@ -417,36 +417,36 @@ export const WorkforceHealthAlerts = () => {
           size="md"
         >
           <div className="space-y-4 pt-1 text-xs">
-            <div className="p-3.5 rounded-xl bg-slate-800 border border-slate-700 space-y-2">
-              <div className="flex justify-between items-center text-slate-300 font-semibold">
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="flex justify-between items-center text-slate-700 font-bold">
                 <span>Rule Category:</span>
-                <span className="font-mono text-white font-bold">{selectedAlert.category}</span>
+                <span className="font-mono text-slate-900 font-black">{selectedAlert.category}</span>
               </div>
-              <div className="flex justify-between items-center text-slate-300 font-semibold">
+              <div className="flex justify-between items-center text-slate-700 font-bold">
                 <span>Severity Assessment:</span>
-                <span className="capitalize font-bold text-rose-300">{selectedAlert.severity}</span>
+                <span className="capitalize font-black text-rose-700">{selectedAlert.severity}</span>
               </div>
-              <div className="flex justify-between items-center text-slate-300 font-semibold">
+              <div className="flex justify-between items-center text-slate-700 font-bold">
                 <span>Date Logged:</span>
-                <span className="font-mono text-white font-bold">{selectedAlert.date}</span>
+                <span className="font-mono text-slate-900 font-black">{selectedAlert.date}</span>
               </div>
-              <div className="flex justify-between items-center text-slate-300 font-semibold">
+              <div className="flex justify-between items-center text-slate-700 font-bold">
                 <span>Affected Employee/Team:</span>
-                <span className="font-bold text-indigo-300">{selectedAlert.relatedEmployee || 'Organization-wide'}</span>
+                <span className="font-black text-indigo-700">{selectedAlert.relatedEmployee || 'Organization-wide'}</span>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-800 border border-slate-700 space-y-1">
-              <span className="text-slate-200 font-extrabold uppercase text-[10px] block">Operational Context</span>
-              <p className="text-slate-100 font-medium">{selectedAlert.explanation}</p>
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <span className="text-slate-900 font-black uppercase text-[10px] block">Operational Context</span>
+              <p className="text-slate-800 font-semibold">{selectedAlert.explanation}</p>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-indigo-950/60 border border-indigo-500/40 space-y-1">
-              <span className="text-indigo-300 font-extrabold uppercase text-[10px] block">Suggested Governance Step</span>
-              <p className="text-white font-bold">{selectedAlert.recommendedAction}</p>
+            <div className="p-3.5 rounded-xl bg-indigo-50 border border-indigo-200 space-y-1">
+              <span className="text-indigo-900 font-black uppercase text-[10px] block">Suggested Governance Step</span>
+              <p className="text-indigo-950 font-black">{selectedAlert.recommendedAction}</p>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-700">
+            <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
               <Button variant="ghost" size="sm" onClick={() => setSelectedAlert(null)}>
                 Close
               </Button>

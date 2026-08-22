@@ -102,41 +102,41 @@ export const UpdateSalaryModal = ({ isOpen, onClose, employee, onSuccess }) => {
         )}
 
         {/* Live Calculation Preview Banner */}
-        <div className="p-3.5 rounded-xl bg-slate-800 border border-slate-700 grid grid-cols-3 gap-2 text-center text-xs">
+        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-3 gap-2 text-center text-xs">
           <div>
-            <span className="text-slate-300 font-semibold block text-[10px] uppercase">Gross Earnings</span>
-            <span className="font-mono font-extrabold text-emerald-400 text-sm">₹{grossSalary.toLocaleString()}</span>
+            <span className="text-slate-700 font-bold block text-[10px] uppercase">Gross Earnings</span>
+            <span className="font-mono font-black text-indigo-700 text-sm">₹{grossSalary.toLocaleString()}</span>
           </div>
           <div>
-            <span className="text-slate-300 font-semibold block text-[10px] uppercase">Deductions</span>
-            <span className="font-mono font-extrabold text-rose-400 text-sm">₹{Number(formData.deductions).toLocaleString()}</span>
+            <span className="text-slate-700 font-bold block text-[10px] uppercase">Deductions</span>
+            <span className="font-mono font-black text-rose-700 text-sm">₹{Number(formData.deductions).toLocaleString()}</span>
           </div>
           <div>
-            <span className="text-indigo-300 font-semibold block text-[10px] uppercase">Net Take-Home</span>
-            <span className="font-mono font-black text-white text-sm">₹{netSalary.toLocaleString()}</span>
+            <span className="text-indigo-900 font-bold block text-[10px] uppercase">Net Take-Home</span>
+            <span className="font-mono font-black text-emerald-700 text-sm">₹{netSalary.toLocaleString()}</span>
           </div>
         </div>
 
         {/* Base Salary & HRA */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-bold text-slate-200 mb-1">Basic Base Salary (₹/yr)</label>
+            <label className="block text-xs font-black text-slate-900 mb-1">Basic Base Salary (₹/yr)</label>
             <input
               type="number"
               value={formData.baseSalary}
               onChange={(e) => setFormData({ ...formData, baseSalary: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-200 mb-1">House Rent Allowance (HRA)</label>
+            <label className="block text-xs font-black text-slate-900 mb-1">House Rent Allowance (HRA)</label>
             <input
               type="number"
               value={formData.housingAllowance}
               onChange={(e) => setFormData({ ...formData, housingAllowance: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
             />
           </div>
         </div>
@@ -144,22 +144,22 @@ export const UpdateSalaryModal = ({ isOpen, onClose, employee, onSuccess }) => {
         {/* Transport & Bonus */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-bold text-slate-200 mb-1">Transport & Conveyance</label>
+            <label className="block text-xs font-black text-slate-900 mb-1">Transport & Conveyance</label>
             <input
               type="number"
               value={formData.transportAllowance}
               onChange={(e) => setFormData({ ...formData, transportAllowance: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-200 mb-1">Performance Bonus</label>
+            <label className="block text-xs font-black text-slate-900 mb-1">Performance Bonus</label>
             <input
               type="number"
               value={formData.bonus}
               onChange={(e) => setFormData({ ...formData, bonus: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
             />
           </div>
         </div>
@@ -167,21 +167,21 @@ export const UpdateSalaryModal = ({ isOpen, onClose, employee, onSuccess }) => {
         {/* Deductions & Bank Account */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-bold text-slate-200 mb-1">Statutory Deductions (PF/Tax)</label>
+            <label className="block text-xs font-black text-slate-900 mb-1">Statutory Deductions (PF/Tax)</label>
             <input
               type="number"
               value={formData.deductions}
               onChange={(e) => setFormData({ ...formData, deductions: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-200 mb-1">Payment Disbursement Method</label>
+            <label className="block text-xs font-black text-slate-900 mb-1">Payment Disbursement Method</label>
             <select
               value={formData.paymentMethod}
               onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30 cursor-pointer"
             >
               <option value="Direct Bank Transfer">Direct Bank Transfer</option>
               <option value="NEFT / RTGS">NEFT / RTGS</option>
@@ -192,17 +192,17 @@ export const UpdateSalaryModal = ({ isOpen, onClose, employee, onSuccess }) => {
 
         {/* Bank Account */}
         <div>
-          <label className="block text-xs font-bold text-slate-200 mb-1">Disbursement Bank Account Detail</label>
+          <label className="block text-xs font-black text-slate-900 mb-1">Disbursement Bank Account Detail</label>
           <input
             type="text"
             value={formData.bankAccount}
             onChange={(e) => setFormData({ ...formData, bankAccount: e.target.value })}
-            className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+            className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
           />
         </div>
 
         {/* Footer Buttons */}
-        <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-700">
+        <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
           <Button variant="ghost" type="button" onClick={onClose} size="sm">
             Cancel
           </Button>

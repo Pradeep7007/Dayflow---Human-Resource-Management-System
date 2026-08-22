@@ -214,6 +214,7 @@ export const AdminDashboard = () => {
               size="sm"
               leftIcon={<Plus size={15} />}
               onClick={() => setIsCreateModalOpen(true)}
+              className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold"
             >
               Add Employee
             </Button>
@@ -222,35 +223,35 @@ export const AdminDashboard = () => {
       />
 
       {/* QUICK ACTIONS BAR */}
-      <Card className="bg-slate-800 border border-slate-700">
+      <Card className="bg-white border border-slate-200 shadow-sm">
         <CardBody className="p-3.5 sm:p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <Activity size={16} className="text-indigo-400" />
+            <div className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+              <Activity size={16} className="text-indigo-600" />
               Quick Command Shortcuts:
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => setIsCreateModalOpen(true)}
-                className="px-3.5 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-200 border border-indigo-500/40 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+                className="px-3.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
               >
                 <UserPlus size={14} /> Add Employee
               </button>
               <button
                 onClick={() => navigate(ROUTES.ADMIN.LEAVES)}
-                className="px-3.5 py-1.5 rounded-lg bg-purple-600/20 hover:bg-purple-600/30 text-purple-200 border border-purple-500/40 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+                className="px-3.5 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
               >
                 <CalendarCheck size={14} /> Review Leaves ({summary.pendingLeaveApprovals})
               </button>
               <button
                 onClick={() => navigate(ROUTES.ADMIN.ATTENDANCE)}
-                className="px-3.5 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-200 border border-emerald-500/40 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+                className="px-3.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
               >
                 <Clock size={14} /> Attendance Board
               </button>
               <button
                 onClick={() => navigate(ROUTES.ADMIN.PAYROLL)}
-                className="px-3.5 py-1.5 rounded-lg bg-amber-600/20 hover:bg-amber-600/30 text-amber-200 border border-amber-500/40 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+                className="px-3.5 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
               >
                 <FileText size={14} /> Payroll & Slips
               </button>
@@ -264,62 +265,62 @@ export const AdminDashboard = () => {
 
       {/* QUESTION 1: WHAT IS HAPPENING TODAY? (TOP SUMMARY KPI METRICS) */}
       <div>
-        <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-          <Calendar size={15} className="text-indigo-400" />
+        <div className="text-xs font-black text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+          <Calendar size={15} className="text-indigo-600" />
           Today's Live Snapshot
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card hoverable className="bg-slate-800 border border-slate-700 border-l-4 border-l-indigo-500">
+          <Card hoverable className="bg-white border border-slate-200 border-l-4 border-l-indigo-600 shadow-sm">
             <CardBody className="p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Total Workforce</span>
-                <div className="p-2.5 rounded-lg bg-indigo-500/20 text-indigo-400">
+                <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Total Workforce</span>
+                <div className="p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
                   <Users size={18} />
                 </div>
               </div>
-              <div className="text-3xl font-extrabold text-white">{summary.totalEmployees}</div>
-              <div className="text-xs font-semibold text-emerald-400 mt-1 flex items-center gap-1">
+              <div className="text-3xl font-black text-indigo-700 leading-none">{summary.totalEmployees}</div>
+              <div className="text-xs font-bold text-emerald-700 mt-2 flex items-center gap-1">
                 <TrendingUp size={13} /> {overview.activeRate}% Active Shift Participation
               </div>
             </CardBody>
           </Card>
 
-          <Card hoverable className="bg-slate-800 border border-slate-700 border-l-4 border-l-emerald-500">
+          <Card hoverable className="bg-white border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
             <CardBody className="p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Present Today</span>
-                <div className="p-2.5 rounded-lg bg-emerald-500/20 text-emerald-400">
+                <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Present Today</span>
+                <div className="p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
                   <CalendarCheck size={18} />
                 </div>
               </div>
-              <div className="text-3xl font-extrabold text-emerald-400">{summary.presentToday}</div>
-              <div className="text-xs font-medium text-slate-300 mt-1">Checked in across all departments</div>
+              <div className="text-3xl font-black text-emerald-600 leading-none">{summary.presentToday}</div>
+              <div className="text-xs font-semibold text-slate-700 mt-2">Checked in across all departments</div>
             </CardBody>
           </Card>
 
-          <Card hoverable className="bg-slate-800 border border-slate-700 border-l-4 border-l-purple-500">
+          <Card hoverable className="bg-white border border-slate-200 border-l-4 border-l-purple-600 shadow-sm">
             <CardBody className="p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">On Leave Today</span>
-                <div className="p-2.5 rounded-lg bg-purple-500/20 text-purple-400">
+                <span className="text-xs font-black text-slate-900 uppercase tracking-wider">On Leave Today</span>
+                <div className="p-2.5 rounded-lg bg-purple-50 text-purple-600">
                   <Clock size={18} />
                 </div>
               </div>
-              <div className="text-3xl font-extrabold text-purple-300">{summary.onLeaveToday}</div>
-              <div className="text-xs font-medium text-slate-300 mt-1">Approved & active leave status</div>
+              <div className="text-3xl font-black text-purple-600 leading-none">{summary.onLeaveToday}</div>
+              <div className="text-xs font-semibold text-slate-700 mt-2">Approved & active leave status</div>
             </CardBody>
           </Card>
 
-          <Card hoverable className="bg-slate-800 border border-slate-700 border-l-4 border-l-amber-500">
+          <Card hoverable className="bg-white border border-slate-200 border-l-4 border-l-amber-600 shadow-sm">
             <CardBody className="p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Pending Approvals</span>
-                <div className="p-2.5 rounded-lg bg-amber-500/20 text-amber-400">
+                <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Pending Approvals</span>
+                <div className="p-2.5 rounded-lg bg-amber-50 text-amber-600">
                   <AlertTriangle size={18} />
                 </div>
               </div>
-              <div className="text-3xl font-extrabold text-amber-400">{summary.pendingLeaveApprovals}</div>
-              <div className="text-xs font-medium text-slate-300 mt-1">Awaiting HR manager review</div>
+              <div className="text-3xl font-black text-amber-600 leading-none">{summary.pendingLeaveApprovals}</div>
+              <div className="text-xs font-semibold text-slate-700 mt-2">Awaiting HR manager review</div>
             </CardBody>
           </Card>
         </div>
@@ -329,7 +330,7 @@ export const AdminDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Pending Leave Requests Queue */}
         <div className="lg:col-span-7 space-y-4">
-          <Card className="h-full bg-slate-800 border border-slate-700">
+          <Card className="h-full bg-white border border-slate-200 shadow-sm">
             <CardHeader
               title="Attention Required: Pending Approvals"
               subtitle="Leave requests requiring immediate administrative sign-off"
@@ -337,7 +338,7 @@ export const AdminDashboard = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-indigo-400 hover:text-white hover:bg-slate-700 font-semibold"
+                  className="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 font-bold"
                   onClick={() => navigate(ROUTES.ADMIN.LEAVES)}
                   rightIcon={<ArrowRight size={14} />}
                 >
@@ -347,26 +348,26 @@ export const AdminDashboard = () => {
             />
             <CardBody className="p-4 space-y-3">
               {attention.pendingLeaves.length === 0 ? (
-                <div className="py-8 text-center text-slate-300 text-xs font-medium">
-                  <CheckCircle2 size={26} className="text-emerald-400 mx-auto mb-2" />
+                <div className="py-8 text-center text-slate-700 text-xs font-bold">
+                  <CheckCircle2 size={26} className="text-emerald-600 mx-auto mb-2" />
                   No pending leave approvals! HR queue is clear.
                 </div>
               ) : (
                 attention.pendingLeaves.map((item) => (
                   <div
                     key={item._id}
-                    className="p-3.5 rounded-xl bg-slate-800 border border-slate-700 hover:border-slate-600 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                    className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
                   >
                     <div className="flex items-center gap-3">
                       <Avatar name={item.employeeName} size="md" />
                       <div>
-                        <div className="font-bold text-sm text-white flex items-center gap-2">
+                        <div className="font-extrabold text-sm text-slate-900 flex items-center gap-2">
                           {item.employeeName}
                           <Badge variant={item.leaveType === 'Sick' ? 'danger' : 'warning'} className="text-[11px] font-bold">
                             {item.leaveType} Leave ({item.daysCount} days)
                           </Badge>
                         </div>
-                        <p className="text-xs font-medium text-slate-200 mt-1">
+                        <p className="text-xs font-semibold text-slate-700 mt-1">
                           {item.startDate} to {item.endDate} • "{item.reason}"
                         </p>
                       </div>
@@ -375,7 +376,7 @@ export const AdminDashboard = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="bg-emerald-600/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-600/30 text-xs font-bold py-1.5 px-3"
+                        className="bg-emerald-100 text-emerald-800 border border-emerald-300 hover:bg-emerald-200 text-xs font-extrabold py-1.5 px-3"
                         onClick={() => handleApproveLeave(item._id, item.employeeName)}
                       >
                         Approve
@@ -383,7 +384,7 @@ export const AdminDashboard = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="bg-slate-700 text-slate-200 border border-slate-600 hover:bg-slate-600 text-xs font-bold py-1.5 px-3"
+                        className="bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 text-xs font-bold py-1.5 px-3"
                         onClick={() => navigate(ROUTES.ADMIN.LEAVES)}
                       >
                         Review
@@ -398,7 +399,7 @@ export const AdminDashboard = () => {
 
         {/* Attendance Anomalies & Document Alerts */}
         <div className="lg:col-span-5 space-y-4">
-          <Card className="h-full bg-slate-800 border border-slate-700">
+          <Card className="h-full bg-white border border-slate-200 shadow-sm">
             <CardHeader
               title="Attendance Anomalies & HR Actions"
               subtitle="System flagged exceptions requiring follow-up"
@@ -407,27 +408,27 @@ export const AdminDashboard = () => {
               {attention.anomalies.map((anom) => (
                 <div
                   key={anom.id}
-                  className="p-3.5 rounded-xl bg-slate-800 border border-red-500/40 flex items-start gap-3"
+                  className="p-3.5 rounded-xl bg-red-50/60 border border-red-200 flex items-start gap-3"
                 >
-                  <ShieldAlert size={20} className="text-red-400 flex-shrink-0 mt-0.5" />
+                  <ShieldAlert size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <div className="text-xs font-bold text-red-300 flex items-center gap-2">
-                      {anom.type} • <span className="text-white">{anom.employeeName}</span>
+                    <div className="text-xs font-black text-red-900 flex items-center gap-2">
+                      {anom.type} • <span className="text-slate-900 font-extrabold">{anom.employeeName}</span>
                     </div>
-                    <p className="text-xs font-medium text-slate-200 mt-1">{anom.detail}</p>
+                    <p className="text-xs font-semibold text-slate-700 mt-1">{anom.detail}</p>
                   </div>
                 </div>
               ))}
 
-              <div className="p-3.5 rounded-xl bg-slate-800 border border-amber-500/40 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-amber-50/60 border border-amber-200 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <FileText size={20} className="text-amber-400 flex-shrink-0" />
+                  <FileText size={20} className="text-amber-600 flex-shrink-0" />
                   <div>
-                    <div className="text-xs font-bold text-amber-300">Expiring Tax & Compliance Documents</div>
-                    <p className="text-xs font-medium text-slate-200 mt-0.5">2 employee tax forms require annual verification.</p>
+                    <div className="text-xs font-black text-amber-950">Expiring Tax & Compliance Documents</div>
+                    <p className="text-xs font-semibold text-slate-700 mt-0.5">2 employee tax forms require annual verification.</p>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm" className="bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 text-xs font-bold py-1 px-3" onClick={() => navigate(ROUTES.ADMIN.EMPLOYEES)}>
+                <Button variant="ghost" size="sm" className="bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200 text-xs font-extrabold py-1 px-3" onClick={() => navigate(ROUTES.ADMIN.EMPLOYEES)}>
                   Fix
                 </Button>
               </div>
@@ -440,7 +441,7 @@ export const AdminDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Department Distribution & Attendance Trend */}
         <div className="lg:col-span-7 space-y-4">
-          <Card className="bg-slate-800 border border-slate-700">
+          <Card className="bg-white border border-slate-200 shadow-sm">
             <CardHeader
               title="Workforce Analytics & Department Breakdown"
               subtitle="Departmental headcount distribution across the company"
@@ -452,13 +453,13 @@ export const AdminDashboard = () => {
                   const percentage = Math.round((dept.count / (summary.totalEmployees || 1)) * 100);
                   return (
                     <div key={idx} className="space-y-1">
-                      <div className="flex items-center justify-between text-xs font-bold">
-                        <span className="text-white">{dept.department}</span>
-                        <span className="text-slate-300 font-mono">{dept.count} members ({percentage}%)</span>
+                      <div className="flex items-center justify-between text-xs font-black">
+                        <span className="text-slate-900">{dept.department}</span>
+                        <span className="text-slate-700 font-mono font-bold">{dept.count} members ({percentage}%)</span>
                       </div>
-                      <div className="w-full h-2.5 rounded-full bg-slate-700 border border-slate-600 overflow-hidden">
+                      <div className="w-full h-2.5 rounded-full bg-slate-100 border border-slate-200 overflow-hidden">
                         <div
-                          className="h-full rounded-full bg-indigo-500 transition-all duration-500"
+                          className="h-full rounded-full bg-indigo-600 transition-all duration-500"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
@@ -468,27 +469,27 @@ export const AdminDashboard = () => {
               </div>
 
               {/* 7-Day Weekly Attendance Trend Visualization */}
-              <div className="pt-4 border-t border-slate-700 space-y-2">
+              <div className="pt-4 border-t border-slate-200 space-y-2">
                 <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="font-bold text-slate-200 flex items-center gap-1.5">
-                    <BarChart3 size={15} className="text-emerald-400" />
+                  <span className="font-black text-slate-900 flex items-center gap-1.5">
+                    <BarChart3 size={15} className="text-emerald-600" />
                     7-Day Attendance Volume Trend
                   </span>
-                  <span className="text-xs font-medium text-slate-300">Weekly Shift Logs</span>
+                  <span className="text-xs font-bold text-slate-600">Weekly Shift Logs</span>
                 </div>
-                <div className="flex items-end justify-between gap-2.5 h-24 pt-3 px-3.5 bg-slate-800 rounded-xl border border-slate-700">
+                <div className="flex items-end justify-between gap-2.5 h-24 pt-3 px-3.5 bg-slate-50 rounded-xl border border-slate-200">
                   {overview.attendanceTrend.map((t, i) => {
                     const maxVal = Math.max(...overview.attendanceTrend.map((x) => x.presentCount || 1), 25);
                     const barHeight = Math.max(14, Math.round(((t.presentCount || 0) / maxVal) * 100));
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
-                        <span className="text-[11px] font-mono font-bold text-emerald-400">{t.presentCount}</span>
+                        <span className="text-[11px] font-mono font-black text-emerald-700">{t.presentCount}</span>
                         <div
-                          className="w-full rounded-t-md bg-emerald-500 transition-all duration-500"
+                          className="w-full rounded-t-md bg-emerald-600 transition-all duration-500"
                           style={{ height: `${barHeight}%` }}
                           title={`${t.day}: ${t.presentCount} present`}
                         />
-                        <span className="text-[11px] font-bold text-slate-300">{t.day}</span>
+                        <span className="text-[11px] font-black text-slate-800">{t.day}</span>
                       </div>
                     );
                   })}
@@ -496,12 +497,12 @@ export const AdminDashboard = () => {
               </div>
 
               {/* Leave Breakdown Pills */}
-              <div className="pt-3 border-t border-slate-700 flex items-center justify-between text-xs font-bold">
-                <span className="text-slate-300">Leave Mix this Month:</span>
+              <div className="pt-3 border-t border-slate-200 flex items-center justify-between text-xs font-extrabold">
+                <span className="text-slate-800">Leave Mix this Month:</span>
                 <div className="flex items-center gap-3">
-                  <span className="text-indigo-300 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-lg">Paid ({overview.leaveTrend.Paid})</span>
-                  <span className="text-amber-300 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-lg">Sick ({overview.leaveTrend.Sick})</span>
-                  <span className="text-slate-300 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-lg">Unpaid ({overview.leaveTrend.Unpaid})</span>
+                  <span className="text-indigo-800 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-lg">Paid ({overview.leaveTrend.Paid})</span>
+                  <span className="text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg">Sick ({overview.leaveTrend.Sick})</span>
+                  <span className="text-slate-800 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg">Unpaid ({overview.leaveTrend.Unpaid})</span>
                 </div>
               </div>
             </CardBody>
@@ -510,19 +511,19 @@ export const AdminDashboard = () => {
 
         {/* Recent Audit Activity Stream */}
         <div className="lg:col-span-5 space-y-4">
-          <Card className="h-full bg-slate-800 border border-slate-700">
+          <Card className="h-full bg-white border border-slate-200 shadow-sm">
             <CardHeader title="Recent Audit Activity" subtitle="Chronological stream of system updates" />
             <CardBody className="p-4 space-y-3">
               {recentActivity.map((act) => (
-                <div key={act.id} className="flex items-start gap-3.5 p-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-slate-600 transition-all">
-                  <div className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center flex-shrink-0 font-bold text-xs mt-0.5">
+                <div key={act.id} className="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center flex-shrink-0 font-extrabold text-xs mt-0.5">
                     <Activity size={16} />
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs font-bold text-white">{act.title}</div>
-                    <p className="text-xs font-medium text-slate-200 mt-0.5">{act.subtitle}</p>
+                    <div className="text-xs font-extrabold text-slate-900">{act.title}</div>
+                    <p className="text-xs font-semibold text-slate-700 mt-0.5">{act.subtitle}</p>
                   </div>
-                  <span className="text-[10px] font-bold text-slate-300 bg-slate-700 border border-slate-600 px-2.5 py-1 rounded-full font-mono flex-shrink-0">
+                  <span className="text-[10px] font-bold text-slate-700 bg-white border border-slate-200 px-2.5 py-1 rounded-full font-mono flex-shrink-0">
                     {act.time}
                   </span>
                 </div>

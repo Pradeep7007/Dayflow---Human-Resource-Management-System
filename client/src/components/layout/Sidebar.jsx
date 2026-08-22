@@ -14,7 +14,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  Zap
+  Zap,
+  ShieldAlert,
+  HelpCircle
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { ROUTES } from '../../constants/routes';
@@ -26,10 +28,12 @@ export const Sidebar = ({ isCollapsed, onToggleCollapse }) => {
   const adminNav = [
     { label: 'Dashboard', path: ROUTES.ADMIN.DASHBOARD, icon: LayoutDashboard },
     { label: 'Smart Insights', path: ROUTES.ADMIN.INSIGHTS, icon: Zap },
+    { label: 'Risk Alerts', path: ROUTES.ADMIN.ALERTS, icon: ShieldAlert },
     { label: 'Employees', path: ROUTES.ADMIN.EMPLOYEES, icon: Users },
     { label: 'Attendance', path: ROUTES.ADMIN.ATTENDANCE, icon: CalendarCheck },
     { label: 'Leave & Time-Off', path: ROUTES.ADMIN.LEAVES, icon: CalendarDays },
     { label: 'Payroll', path: ROUTES.ADMIN.PAYROLL, icon: CreditCard },
+    { label: 'HR Help Center', path: ROUTES.HELP_CENTER, icon: HelpCircle },
     { label: 'Documents', path: ROUTES.ADMIN.DOCUMENTS, icon: FileText },
     { label: 'Reports & Analytics', path: ROUTES.ADMIN.REPORTS, icon: BarChart3 },
     { label: 'System Settings', path: ROUTES.ADMIN.SETTINGS, icon: Settings },
@@ -41,6 +45,7 @@ export const Sidebar = ({ isCollapsed, onToggleCollapse }) => {
     { label: 'My Attendance', path: ROUTES.EMPLOYEE.ATTENDANCE, icon: CalendarCheck },
     { label: 'Leave Requests', path: ROUTES.EMPLOYEE.LEAVES, icon: CalendarDays },
     { label: 'My Payslips', path: ROUTES.EMPLOYEE.PAYROLL, icon: CreditCard },
+    { label: 'HR Help Center', path: ROUTES.EMPLOYEE.HELP_CENTER, icon: HelpCircle },
     { label: 'My Documents', path: ROUTES.EMPLOYEE.DOCUMENTS, icon: FileText },
   ];
 
@@ -67,7 +72,7 @@ export const Sidebar = ({ isCollapsed, onToggleCollapse }) => {
         </div>
         <button
           onClick={onToggleCollapse}
-          className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors"
+          className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
           aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}

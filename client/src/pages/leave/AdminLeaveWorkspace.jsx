@@ -12,7 +12,8 @@ import {
   AlertTriangle,
   FileCheck,
   Check,
-  X
+  X,
+  Eye,
 } from 'lucide-react';
 import { PageHeader } from '../../components/layout/PageHeader';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
@@ -44,6 +45,9 @@ export const AdminLeaveWorkspace = () => {
   const [reviewTarget, setReviewTarget] = useState(null); // { id, action: 'Approved' | 'Rejected', name }
   const [adminComment, setAdminComment] = useState('');
   const [isReviewing, setIsReviewing] = useState(false);
+
+  // Selected Detail Request for Bootstrap Modal View
+  const [selectedDetailRequest, setSelectedDetailRequest] = useState(null);
 
   // Fetch Leave Requests
   const fetchLeaves = async () => {
@@ -247,83 +251,216 @@ export const AdminLeaveWorkspace = () => {
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-slate-100">
-              {filteredRequests.map((r) => (
-                <div
-                  key={r._id}
-                  className="p-4 sm:p-6 hover:bg-slate-50/70 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
-                >
-                  {/* Left: Employee Meta & Request Info */}
-                  <div className="flex items-start gap-4">
-                    <Avatar name={r.employeeName} size="md" className="ring-2 ring-indigo-100 flex-shrink-0" />
-
-                    <div className="space-y-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h4 className="font-bold text-slate-900 text-sm sm:text-base">{r.employeeName}</h4>
-                        <span className="font-mono text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                          {r.employeeId}
-                        </span>
-                        <span className="text-xs text-slate-500">• {r.department}</span>
-                      </div>
-
-                      <div className="flex flex-wrap items-center gap-3 text-xs pt-1">
-                        <span className="font-semibold text-slate-800 flex items-center gap-1.5">
-                          <span
-                            className={`w-2 h-2 rounded-full ${
-                              r.leaveType === 'Paid' ? 'bg-indigo-600' : r.leaveType === 'Sick' ? 'bg-emerald-600' : 'bg-amber-600'
-                            }`}
-                          />
-                          {r.leaveType} Leave ({r.daysCount} {r.daysCount === 1 ? 'Day' : 'Days'})
-                        </span>
-                        <span className="text-slate-500 font-mono">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left font-sans text-xs">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 uppercase font-black tracking-wider text-[11px]">
+                  <tr>
+                    <th className="py-3.5 px-4">Employee Details</th>
+                    <th className="py-3.5 px-4">Department</th>
+                    <th className="py-3.5 px-4">Leave Type</th>
+                    <th className="py-3.5 px-4">Duration & Days</th>
+                    <th className="py-3.5 px-4">Status</th>
+                    <th className="py-3.5 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-900 font-semibold">
+                  {filteredRequests.map((r) => (
+                    <tr
+                      key={r._id}
+                      className="hover:bg-slate-50/80 transition-colors cursor-pointer"
+                      onClick={() => setSelectedDetailRequest(r)}
+                    >
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center gap-3">
+                          <Avatar name={r.employeeName} size="sm" className="ring-2 ring-indigo-100 flex-shrink-0" />
+                          <div>
+                            <div className="font-extrabold text-slate-900 text-xs sm:text-sm">{r.employeeName}</div>
+                            <div className="font-mono text-[11px] text-indigo-600 font-bold">{r.employeeId}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-3.5 px-4 text-slate-700 font-bold">{r.department || 'Operations'}</td>
+                      <td className="py-3.5 px-4">
+                        <Badge
+                          variant={r.leaveType === 'Paid' ? 'primary' : r.leaveType === 'Sick' ? 'success' : 'warning'}
+                          className="text-[11px] font-bold"
+                        >
+                          {r.leaveType} Leave
+                        </Badge>
+                      </td>
+                      <td className="py-3.5 px-4">
+                        <div className="font-mono text-slate-900 text-xs">
                           {new Date(r.startDate).toLocaleDateString()} - {new Date(r.endDate).toLocaleDateString()}
-                        </span>
-                        {renderStatusBadge(r.status)}
-                      </div>
-
-                      <p className="text-xs text-slate-600 pt-1 leading-relaxed bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                        <strong className="text-slate-800">Reason:</strong> "{r.reason}"
-                      </p>
-
-                      {r.adminComment && (
-                        <p className="text-xs text-indigo-700 pt-0.5">
-                          <strong className="text-indigo-900">Reviewer Note:</strong> {r.adminComment} ({r.reviewedBy})
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Right: Approval Actions */}
-                  <div className="flex items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 justify-end">
-                    {r.status === 'Pending' ? (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => setReviewTarget({ id: r._id, action: 'Rejected', name: r.employeeName })}
-                          className="py-2 px-3 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-semibold rounded-lg border border-red-200 transition-all flex items-center gap-1.5 cursor-pointer"
-                        >
-                          <X size={16} /> Reject
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setReviewTarget({ id: r._id, action: 'Approved', name: r.employeeName })}
-                          className="py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-all flex items-center gap-1.5 cursor-pointer border-0"
-                        >
-                          <Check size={16} /> Approve
-                        </button>
-                      </>
-                    ) : (
-                      <div className="text-right text-xs text-slate-400">
-                        Reviewed by <span className="font-semibold text-slate-700">{r.reviewedBy || 'HR Admin'}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+                        </div>
+                        <div className="text-[11px] font-mono text-indigo-700 font-bold mt-0.5">
+                          {r.fromTime || '09:00'} to {r.toTime || '18:00'}
+                        </div>
+                        <div className="text-[11px] text-slate-500 font-bold mt-0.5">
+                          {r.daysCount} {r.daysCount === 1 ? 'Day' : 'Days'} Total
+                        </div>
+                      </td>
+                      <td className="py-3.5 px-4">{renderStatusBadge(r.status)}</td>
+                      <td className="py-3.5 px-4 text-right" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedDetailRequest(r)}
+                            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition-all cursor-pointer"
+                            title="View Leave Application Details"
+                          >
+                            <Eye size={14} />
+                          </button>
+                          {r.status === 'Pending' && (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => setReviewTarget({ id: r._id, action: 'Approved', name: r.employeeName })}
+                                className="p-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-all cursor-pointer border-0"
+                                title="Approve Leave"
+                              >
+                                <Check size={14} />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setReviewTarget({ id: r._id, action: 'Rejected', name: r.employeeName })}
+                                className="p-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 transition-all cursor-pointer"
+                                title="Reject Leave"
+                              >
+                                <X size={14} />
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </CardBody>
       </Card>
+
+      {/* DETAILED LEAVE APPLICATION BOOTSTRAP-STYLE MODAL */}
+      {selectedDetailRequest && (
+        <Modal
+          isOpen={!!selectedDetailRequest}
+          onClose={() => setSelectedDetailRequest(null)}
+          title="Leave Application Details"
+          size="lg"
+        >
+          <div className="space-y-5 text-slate-900">
+            {/* Header Profile Summary Banner */}
+            <div className="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-100 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Avatar name={selectedDetailRequest.employeeName} size="lg" className="ring-2 ring-indigo-300" />
+                <div>
+                  <h4 className="font-black text-base text-slate-900">{selectedDetailRequest.employeeName}</h4>
+                  <div className="flex items-center gap-2 text-xs text-slate-600 font-semibold mt-0.5">
+                    <span className="font-mono text-indigo-700 font-bold bg-white px-2 py-0.5 rounded border border-indigo-200">
+                      {selectedDetailRequest.employeeId}
+                    </span>
+                    <span>•</span>
+                    <span>{selectedDetailRequest.department || 'Operations'}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-right">
+                {renderStatusBadge(selectedDetailRequest.status)}
+              </div>
+            </div>
+
+            {/* Metrics Breakdown Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">Leave Classification</span>
+                <span className="font-black text-slate-900 text-sm mt-0.5 block">{selectedDetailRequest.leaveType} Leave</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">Duration Window</span>
+                <span className="font-mono font-extrabold text-slate-900 text-xs mt-0.5 block">
+                  {new Date(selectedDetailRequest.startDate).toLocaleDateString()} - {new Date(selectedDetailRequest.endDate).toLocaleDateString()}
+                </span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">Time Slot / Hours</span>
+                <span className="font-mono font-extrabold text-indigo-700 text-xs mt-0.5 block">
+                  {selectedDetailRequest.fromTime || '09:00'} to {selectedDetailRequest.toTime || '18:00'}
+                </span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">Total Days</span>
+                <span className="font-black text-indigo-700 text-sm mt-0.5 block">
+                  {selectedDetailRequest.daysCount} {selectedDetailRequest.daysCount === 1 ? 'Day' : 'Days'}
+                </span>
+              </div>
+            </div>
+
+            {/* Reason / Justification Block */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                Absence Justification & Reason
+              </label>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 font-medium leading-relaxed">
+                "{selectedDetailRequest.reason}"
+              </div>
+            </div>
+
+            {/* Reviewer Information / Notes */}
+            {selectedDetailRequest.adminComment ? (
+              <div className="space-y-1.5">
+                <label className="text-xs font-black text-indigo-900 uppercase tracking-wider">
+                  Reviewer Notes & Action Log
+                </label>
+                <div className="p-3.5 rounded-xl bg-indigo-50/80 border border-indigo-200 text-xs text-indigo-950 font-semibold leading-relaxed">
+                  <p><strong>Note:</strong> {selectedDetailRequest.adminComment}</p>
+                  <p className="text-[11px] text-indigo-700 mt-1">
+                    Reviewed by: <strong>{selectedDetailRequest.reviewedBy || 'HR Manager'}</strong>
+                  </p>
+                </div>
+              </div>
+            ) : null}
+
+            {/* Footer Modal Actions */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200">
+              <Button
+                variant="secondary"
+                onClick={() => setSelectedDetailRequest(null)}
+              >
+                Close Modal
+              </Button>
+
+              {selectedDetailRequest.status === 'Pending' && (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="destructive"
+                    onClick={() => {
+                      const req = selectedDetailRequest;
+                      setSelectedDetailRequest(null);
+                      setReviewTarget({ id: req._id, action: 'Rejected', name: req.employeeName });
+                    }}
+                    leftIcon={<X size={16} />}
+                  >
+                    Reject Application
+                  </Button>
+                  <Button
+                    variant="primary"
+                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
+                    onClick={() => {
+                      const req = selectedDetailRequest;
+                      setSelectedDetailRequest(null);
+                      setReviewTarget({ id: req._id, action: 'Approved', name: req.employeeName });
+                    }}
+                    leftIcon={<Check size={16} />}
+                  >
+                    Approve Application
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </Modal>
+      )}
 
       {/* CONFIRMATION & REVIEW MODAL */}
       {reviewTarget && (
