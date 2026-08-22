@@ -148,3 +148,46 @@ exports.deleteDocument = async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to delete document.' });
   }
 };
+
+// CREATE Employee Account (Admin / HR Only)
+exports.createEmployee = async (req, res) => {
+  try {
+    const { employeeId, name, email, password, role, department, jobTitle, phone, workLocation } = req.body;
+
+    if (!employeeId || !name || !email || !password) {
+      return res.status(400).json({ success: false, message: 'Employee ID, Name, Email and Password are required.' });
+    }
+
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ success: false, message: 'Email address already registered.' });
+    }
+
+    const existingId = await User.findOne({ employeeId });
+    if (existingId) {
+      return res.status(400).json({ success: false, message: 'Employee ID already exists.' });
+    }
+
+    const newUser = await User.create({
+      employeeId,
+      name,
+      email,
+      password,
+      role: role || 'employee',
+      department: department || 'Engineering',
+      jobTitle: jobTitle || 'Software Engineer',
+      phone: phone || '',
+      workLocation: workLocation || 'Office',
+      status: 'active',
+      isEmailVerified: true,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: `${newUser.role.toUpperCase()} account created successfully for ${newUser.name}.`,
+      employee: newUser.toAuthJSON(),
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message || 'Failed to create employee account.' });
+  }
+};

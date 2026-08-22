@@ -27,12 +27,14 @@ import { StatusBadge } from '../../components/ui/StatusBadge';
 import { Avatar } from '../../components/ui/Avatar';
 import { useToast } from '../../components/feedback/ToastContext';
 import { ROUTES } from '../../constants/routes';
+import { CreateEmployeeModal } from '../../components/employee/CreateEmployeeModal';
 
 export const AdminDashboard = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
 
   const [loading, setLoading] = useState(true);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [dashboardData, setDashboardData] = useState({
     summary: {
       totalEmployees: 24,
@@ -210,7 +212,7 @@ export const AdminDashboard = () => {
               variant="primary"
               size="sm"
               leftIcon={<Plus size={15} />}
-              onClick={() => navigate(ROUTES.ADMIN.EMPLOYEES)}
+              onClick={() => setIsCreateModalOpen(true)}
             >
               Add Employee
             </Button>
@@ -228,7 +230,7 @@ export const AdminDashboard = () => {
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <button
-                onClick={() => navigate(ROUTES.ADMIN.EMPLOYEES)}
+                onClick={() => setIsCreateModalOpen(true)}
                 className="px-3 py-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer"
               >
                 <UserPlus size={14} /> Add Employee
@@ -460,6 +462,34 @@ export const AdminDashboard = () => {
                 })}
               </div>
 
+              {/* 7-Day Weekly Attendance Trend Visualization */}
+              <div className="pt-4 border-t border-slate-800 space-y-2">
+                <div className="flex items-center justify-between text-xs mb-1">
+                  <span className="font-bold text-slate-300 flex items-center gap-1.5">
+                    <BarChart3 size={14} className="text-emerald-400" />
+                    7-Day Attendance Volume Trend
+                  </span>
+                  <span className="text-[11px] text-slate-400">Weekly Shift Logs</span>
+                </div>
+                <div className="flex items-end justify-between gap-2 h-20 pt-2 px-2 bg-slate-950/60 rounded-xl border border-slate-800/80">
+                  {overview.attendanceTrend.map((t, i) => {
+                    const maxVal = Math.max(...overview.attendanceTrend.map((x) => x.presentCount || 1), 25);
+                    const barHeight = Math.max(12, Math.round(((t.presentCount || 0) / maxVal) * 100));
+                    return (
+                      <div key={i} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+                        <span className="text-[10px] font-mono text-slate-400">{t.presentCount}</span>
+                        <div
+                          className="w-full rounded-t-md bg-gradient-to-t from-emerald-600 to-teal-400 transition-all duration-500"
+                          style={{ height: `${barHeight}%` }}
+                          title={`${t.day}: ${t.presentCount} present`}
+                        />
+                        <span className="text-[10px] font-semibold text-slate-400">{t.day}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Leave Breakdown Pills */}
               <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
                 <span className="text-slate-400 font-medium">Leave Mix this Month:</span>
@@ -494,6 +524,19 @@ export const AdminDashboard = () => {
           </Card>
         </div>
       </div>
+
+      {/* ADMIN WORKFORCE ACCOUNT CREATION MODAL */}
+      <CreateEmployeeModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSuccess={() => {
+          addToast({
+            title: 'Workforce Updated',
+            message: 'New user account created successfully.',
+            type: 'success',
+          });
+        }}
+      />
     </div>
   );
 };

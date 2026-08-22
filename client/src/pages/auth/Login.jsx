@@ -150,12 +150,9 @@ export const Login = () => {
         </button>
       </form>
 
-      {/* Footer Link */}
+      {/* Enterprise Governance Notice */}
       <p className="df-auth-footer-text">
-        Don't have an account yet?{' '}
-        <Link to={ROUTES.AUTH.SIGNUP} className="df-auth-link">
-          Sign Up Now
-        </Link>
+        Need an account? Contact your <strong style={{ color: '#ffffff' }}>HR Administrator</strong> for provisioning.
       </p>
     </div>
   );
