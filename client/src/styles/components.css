@@ -496,6 +496,12 @@
   align-items: center;
   border-bottom: 1px solid var(--color-neutral-200);
   gap: var(--space-md);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.df-tabs-header::-webkit-scrollbar {
+  display: none;
 }
 
 .df-tab-btn {
@@ -514,6 +520,7 @@
   transition: color var(--transition-fast);
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
+  white-space: nowrap;
 }
 
 .df-tab-btn:hover {
@@ -623,6 +630,7 @@
 .df-table-container {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-neutral-200);
   background-color: var(--color-neutral-0);
@@ -755,4 +763,67 @@
   pointer-events: none;
   z-index: var(--z-tooltip);
   box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE MEDIA QUERIES FOR ALL DEVICES
+   -------------------------------------------------------------------------- */
+
+/* Tablet & Mobile Screens (<= 768px) */
+@media (max-width: 768px) {
+  .df-btn {
+    min-height: 44px; /* Touch target accessibility on mobile */
+  }
+
+  .df-input,
+  .df-select,
+  .df-textarea {
+    font-size: 16px; /* Prevents iOS mobile zoom */
+    height: 44px;
+  }
+
+  .df-modal {
+    max-width: 95vw;
+    margin: 0.5rem;
+    max-height: 85vh;
+  }
+
+  .df-card__header,
+  .df-card__body,
+  .df-card__footer {
+    padding: var(--space-md);
+  }
+
+  .df-pagination {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-sm);
+  }
+
+  .df-toast-container {
+    right: var(--space-sm);
+    left: var(--space-sm);
+    bottom: var(--space-sm);
+    width: auto;
+    max-width: none;
+  }
+}
+
+/* Small Mobile Screens (<= 480px) */
+@media (max-width: 480px) {
+  .df-card {
+    border-radius: var(--radius-md);
+  }
+
+  .df-modal__header,
+  .df-modal__body,
+  .df-modal__footer {
+    padding: var(--space-sm);
+  }
+
+  .df-btn--lg {
+    height: 44px;
+    font-size: var(--font-size-sm);
+  }
 }

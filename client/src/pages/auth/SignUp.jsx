@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, User, BadgeId, Shield, CheckCircle, ArrowRight } from 'lucide-react';
+import { Mail, User, CreditCard, Shield, CheckCircle, ArrowRight } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { PasswordInput } from '../../components/ui/PasswordInput';
@@ -170,7 +170,7 @@ export const SignUp = () => {
                     value={formData.employeeId}
                     onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
                     error={errors.employeeId}
-                    leftIcon={<BadgeId size={18} />}
+                    leftIcon={<CreditCard size={18} />}
                     required
                   />
                 </div>

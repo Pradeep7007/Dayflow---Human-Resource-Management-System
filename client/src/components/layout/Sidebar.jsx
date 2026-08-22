@@ -10,16 +10,18 @@ import {
   BarChart3,
   Settings,
   UserCheck,
-  Compass,
   Building2,
   ChevronLeft,
   ChevronRight,
   Sparkles
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import { ROUTES } from '../../constants/routes';
 import { ROLES } from '../../constants/roles';
 
-export const Sidebar = ({ role = ROLES.ADMIN, isCollapsed, onToggleCollapse }) => {
+export const Sidebar = ({ isCollapsed, onToggleCollapse }) => {
+  const { role, user } = useAuth();
+
   const adminNav = [
     { label: 'Dashboard', path: ROUTES.ADMIN.DASHBOARD, icon: LayoutDashboard },
     { label: 'Employees', path: ROUTES.ADMIN.EMPLOYEES, icon: Users },
@@ -70,13 +72,13 @@ export const Sidebar = ({ role = ROLES.ADMIN, isCollapsed, onToggleCollapse }) =
         </button>
       </div>
 
-      {/* Role Indicator Banner */}
+      {/* Role Indicator */}
       {!isCollapsed && (
         <div className="mx-3 mt-4 p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 flex items-center gap-2">
           <Building2 size={16} className="text-indigo-400 flex-shrink-0" />
           <div className="flex flex-col overflow-hidden">
-            <span className="text-xs font-semibold text-slate-200 truncate">Acme Tech Inc.</span>
-            <span className="text-[10px] text-slate-400 capitalize">{role} Portal</span>
+            <span className="text-xs font-semibold text-slate-200 truncate">DayFlow HRMS</span>
+            <span className="text-[10px] text-slate-400 capitalize font-medium">{role || 'Employee'} Portal</span>
           </div>
         </div>
       )}
@@ -84,7 +86,7 @@ export const Sidebar = ({ role = ROLES.ADMIN, isCollapsed, onToggleCollapse }) =
       {/* Navigation Links */}
       <nav className="flex-1 px-3 py-4 overflow-y-auto space-y-1">
         <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">
-          {!isCollapsed ? 'Main Menu' : '•'}
+          {!isCollapsed ? 'Navigation' : '•'}
         </div>
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -107,11 +109,8 @@ export const Sidebar = ({ role = ROLES.ADMIN, isCollapsed, onToggleCollapse }) =
           );
         })}
 
-        {/* Component Design System Showcase Link */}
+        {/* UI System Link */}
         <div className="pt-4 mt-4 border-t border-slate-800">
-          <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">
-            {!isCollapsed ? 'System' : '•'}
-          </div>
           <NavLink
             to={ROUTES.DESIGN_SYSTEM}
             className={({ isActive }) =>
@@ -121,7 +120,7 @@ export const Sidebar = ({ role = ROLES.ADMIN, isCollapsed, onToggleCollapse }) =
                   : 'text-purple-400 hover:bg-slate-800 hover:text-purple-300'
               } ${isCollapsed ? 'justify-center px-0' : ''}`
             }
-            title={isCollapsed ? 'UI Component System' : undefined}
+            title={isCollapsed ? 'UI Component Gallery' : undefined}
           >
             <Sparkles size={18} className="flex-shrink-0" />
             {!isCollapsed && <span>UI System Gallery</span>}
@@ -132,16 +131,16 @@ export const Sidebar = ({ role = ROLES.ADMIN, isCollapsed, onToggleCollapse }) =
       {/* User Quick Profile Bottom Bar */}
       <div className="p-3 border-t border-slate-800">
         <div className={`flex items-center gap-3 p-2 rounded-lg bg-slate-800/40 ${isCollapsed ? 'justify-center' : ''}`}>
-          <div className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
-            {role === ROLES.ADMIN ? 'AD' : 'EM'}
+          <div className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0 uppercase">
+            {user?.name ? user.name.substring(0, 2) : 'DF'}
           </div>
           {!isCollapsed && (
             <div className="flex flex-col min-w-0 flex-1">
               <span className="text-xs font-semibold text-slate-200 truncate">
-                {role === ROLES.ADMIN ? 'Sarah Jenkins' : 'Alex Morgan'}
+                {user?.name || 'DayFlow User'}
               </span>
-              <span className="text-[10px] text-slate-400 truncate">
-                {role === ROLES.ADMIN ? 'HR Director' : 'Senior Engineer'}
+              <span className="text-[10px] text-slate-400 truncate capitalize">
+                {role || 'Employee'}
               </span>
             </div>
           )}

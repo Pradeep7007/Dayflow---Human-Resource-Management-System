@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
+import { Mail, Shield, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { PasswordInput } from '../../components/ui/PasswordInput';
 import { Card, CardBody } from '../../components/ui/Card';
+import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/feedback/ToastContext';
 import { ROUTES } from '../../constants/routes';
 import { ROLES } from '../../constants/roles';
 
 export const Login = () => {
   const navigate = useNavigate();
+  const { signin } = useAuth();
   const { addToast } = useToast();
+
   const [selectedRole, setSelectedRole] = useState(ROLES.ADMIN);
   const [email, setEmail] = useState('admin@dayflow.com');
-  const [password, setPassword] = useState('password123');
+  const [password, setPassword] = useState('adminPass123!');
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -22,17 +26,20 @@ export const Login = () => {
     if (role === ROLES.ADMIN) {
       setEmail('admin@dayflow.com');
       setPassword('adminPass123!');
+    } else if (role === ROLES.HR) {
+      setEmail('hr@dayflow.com');
+      setPassword('hrPass123!');
     } else {
       setEmail('alex.morgan@dayflow.com');
       setPassword('empPass123!');
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
-    if (!email) newErrors.email = 'Email address is required';
+    if (!email.trim()) newErrors.email = 'Email address is required';
     if (!password) newErrors.password = 'Password is required';
 
     if (Object.keys(newErrors).length > 0) {
@@ -43,61 +50,86 @@ export const Login = () => {
     setErrors({});
     setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      const res = await signin(email, password);
       setIsLoading(false);
+
       addToast({
-        title: 'Welcome back!',
-        message: `Successfully logged in as ${selectedRole === ROLES.ADMIN ? 'Administrator' : 'Employee'}.`,
+        title: 'Signed In Successfully',
+        message: `Welcome back, ${res.user.name}!`,
         type: 'success',
       });
 
-      if (selectedRole === ROLES.ADMIN) {
+      // Role-based automatic routing
+      if (res.user.role === ROLES.ADMIN || res.user.role === ROLES.HR) {
         navigate(ROUTES.ADMIN.DASHBOARD);
       } else {
         navigate(ROUTES.EMPLOYEE.DASHBOARD);
       }
-    }, 800);
+    } catch (err) {
+      setIsLoading(false);
+      const message = err.message || 'Invalid email or password.';
+      setErrors({ auth: message });
+      addToast({ title: 'Authentication Failed', message, type: 'error' });
+    }
   };
 
   return (
     <div className="w-full">
-      <div className="mb-8">
+      <div className="mb-6">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
           Sign in to DayFlow
         </h2>
         <p className="text-slate-500 text-sm mt-1">
-          Select your portal role and enter your credentials to continue.
+          Select your portal role and enter your credentials to access the HRMS platform.
         </p>
       </div>
 
-      {/* Role Selection Segmented Switch */}
+      {/* Role Switcher Pills */}
       <div className="flex bg-slate-200/70 p-1 rounded-xl mb-6">
         <button
           type="button"
           onClick={() => handleRoleSelect(ROLES.ADMIN)}
-          className={`flex-1 py-2.5 px-4 rounded-lg font-semibold text-xs transition-all flex items-center justify-center gap-2 border-0 cursor-pointer ${
+          className={`flex-1 py-2 px-3 rounded-lg font-semibold text-xs transition-all border-0 cursor-pointer ${
             selectedRole === ROLES.ADMIN
               ? 'bg-white text-indigo-600 shadow-sm'
               : 'text-slate-600 hover:text-slate-900 bg-transparent'
           }`}
         >
-          <span>Admin / HR Portal</span>
+          Admin Portal
+        </button>
+        <button
+          type="button"
+          onClick={() => handleRoleSelect(ROLES.HR)}
+          className={`flex-1 py-2 px-3 rounded-lg font-semibold text-xs transition-all border-0 cursor-pointer ${
+            selectedRole === ROLES.HR
+              ? 'bg-white text-indigo-600 shadow-sm'
+              : 'text-slate-600 hover:text-slate-900 bg-transparent'
+          }`}
+        >
+          HR Portal
         </button>
         <button
           type="button"
           onClick={() => handleRoleSelect(ROLES.EMPLOYEE)}
-          className={`flex-1 py-2.5 px-4 rounded-lg font-semibold text-xs transition-all flex items-center justify-center gap-2 border-0 cursor-pointer ${
+          className={`flex-1 py-2 px-3 rounded-lg font-semibold text-xs transition-all border-0 cursor-pointer ${
             selectedRole === ROLES.EMPLOYEE
               ? 'bg-white text-indigo-600 shadow-sm'
               : 'text-slate-600 hover:text-slate-900 bg-transparent'
           }`}
         >
-          <span>Employee Self-Service</span>
+          Employee Self-Service
         </button>
       </div>
 
       <Card>
         <CardBody className="p-6">
+          {errors.auth && (
+            <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-medium">
+              {errors.auth}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               label="Work Email Address"
@@ -110,21 +142,19 @@ export const Login = () => {
               required
             />
 
-            <Input
+            <PasswordInput
               label="Password"
-              type="password"
-              placeholder="••••••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               error={errors.password}
-              leftIcon={<Lock size={18} />}
+              leftIcon={<Shield size={18} />}
               required
             />
 
             <div className="flex items-center justify-between text-xs pt-1">
               <label className="flex items-center gap-2 text-slate-600 cursor-pointer">
                 <input type="checkbox" defaultChecked className="df-checkbox-input" />
-                <span>Remember this device</span>
+                <span>Remember me</span>
               </label>
               <Link
                 to={ROUTES.AUTH.FORGOT_PASSWORD}
@@ -142,29 +172,43 @@ export const Login = () => {
               isLoading={isLoading}
               rightIcon={<ArrowRight size={18} />}
             >
-              Sign In to {selectedRole === ROLES.ADMIN ? 'Admin Portal' : 'Employee Portal'}
+              Sign In to {selectedRole.toUpperCase()} Portal
             </Button>
           </form>
 
-          {/* Quick Demo Pre-fill helper */}
+          <p className="text-center text-xs text-slate-500 mt-4">
+            Don't have an account yet?{' '}
+            <Link to={ROUTES.AUTH.SIGNUP} className="font-semibold text-indigo-600 hover:text-indigo-700">
+              Sign Up Now
+            </Link>
+          </p>
+
+          {/* Quick Demo Credentials Panel */}
           <div className="mt-6 pt-6 border-t border-slate-100 bg-slate-50/50 -mx-6 -mb-6 p-4 rounded-b-xl">
             <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 text-center">
-              Quick Demo Access
+              MongoDB Pre-Seeded Accounts
             </div>
-            <div className="flex gap-2">
+            <div className="grid grid-cols-3 gap-1.5">
               <button
                 type="button"
                 onClick={() => handleRoleSelect(ROLES.ADMIN)}
-                className="flex-1 py-1.5 px-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs rounded border border-indigo-200 font-medium transition-colors"
+                className="py-1.5 px-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] rounded border border-indigo-200 font-medium transition-colors text-center"
               >
-                Fill Admin Credentials
+                Admin
+              </button>
+              <button
+                type="button"
+                onClick={() => handleRoleSelect(ROLES.HR)}
+                className="py-1.5 px-2 bg-purple-50 hover:bg-purple-100 text-purple-700 text-[11px] rounded border border-purple-200 font-medium transition-colors text-center"
+              >
+                HR Manager
               </button>
               <button
                 type="button"
                 onClick={() => handleRoleSelect(ROLES.EMPLOYEE)}
-                className="flex-1 py-1.5 px-2 bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs rounded border border-purple-200 font-medium transition-colors"
+                className="py-1.5 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[11px] rounded border border-emerald-200 font-medium transition-colors text-center"
               >
-                Fill Employee Credentials
+                Employee
               </button>
             </div>
           </div>
