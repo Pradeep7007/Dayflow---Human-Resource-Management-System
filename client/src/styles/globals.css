@@ -194,3 +194,23 @@ a:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* --- Mobile Responsiveness Enforcements --- */
+.table-responsive,
+.df-table-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .df-modal {
+    width: 95% !important;
+    max-height: 88vh !important;
+    margin: 0 auto;
+  }
+  .df-modal__body {
+    padding: var(--space-md) !important;
+  }
+}

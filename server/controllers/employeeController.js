@@ -80,6 +80,7 @@ exports.getProfile = async (req, res) => {
 };
 
 // UPDATE Employee Profile
+// UPDATE Employee Profile (ONLY ADMIN HAS ACCESS TO CHANGE DETAILS)
 exports.updateProfile = async (req, res) => {
   try {
     const targetId = req.params.id || req.user.id;
@@ -89,14 +90,13 @@ exports.updateProfile = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Employee profile not found.' });
     }
 
-    const isSelf = req.user.id === targetId || req.user.id === user._id.toString();
     const isAdmin = req.user.role === 'admin';
 
-    // Only Admin or Self can perform updates. HR and regular employees CANNOT update other employees!
-    if (!isSelf && !isAdmin) {
+    // Strictly enforce: ONLY ADMIN can update ANY profile details (including phone, address, etc.)
+    if (!isAdmin) {
       return res.status(403).json({
         success: false,
-        message: 'Forbidden: Only system Administrators have access to modify employee details (address, phone, position, etc.).',
+        message: 'Forbidden: Only system Administrators have access to modify employee details (phone, address, etc.). Employees can submit a Data Change Request.',
       });
     }
 
@@ -119,35 +119,30 @@ exports.updateProfile = async (req, res) => {
       role,
     } = req.body;
 
-    // Contact details can be updated by self or admin
+    if (name !== undefined) user.name = name;
     if (phone !== undefined) user.phone = phone;
     if (address !== undefined) user.address = address;
+    if (dob !== undefined) user.dob = dob;
+    if (gender !== undefined) user.gender = gender;
     if (emergencyContact !== undefined) user.emergencyContact = emergencyContact;
     if (avatarUrl !== undefined) user.avatarUrl = avatarUrl;
-
-    // Official administrative details CAN ONLY be modified by ADMIN
-    if (isAdmin) {
-      if (name !== undefined) user.name = name;
-      if (dob !== undefined) user.dob = dob;
-      if (gender !== undefined) user.gender = gender;
-      if (jobTitle !== undefined) user.jobTitle = jobTitle;
-      if (department !== undefined) user.department = department;
-      if (manager !== undefined) user.manager = manager;
-      if (employmentType !== undefined) user.employmentType = employmentType;
-      if (workLocation !== undefined) user.workLocation = workLocation;
-      if (dateOfJoining !== undefined) user.dateOfJoining = dateOfJoining;
-      if (status !== undefined) user.status = status;
-      if (role !== undefined) user.role = role;
-      if (salaryStructure !== undefined) {
-        user.salaryStructure = { ...user.salaryStructure, ...salaryStructure };
-      }
+    if (jobTitle !== undefined) user.jobTitle = jobTitle;
+    if (department !== undefined) user.department = department;
+    if (manager !== undefined) user.manager = manager;
+    if (employmentType !== undefined) user.employmentType = employmentType;
+    if (workLocation !== undefined) user.workLocation = workLocation;
+    if (dateOfJoining !== undefined) user.dateOfJoining = dateOfJoining;
+    if (status !== undefined) user.status = status;
+    if (role !== undefined) user.role = role;
+    if (salaryStructure !== undefined) {
+      user.salaryStructure = { ...user.salaryStructure, ...salaryStructure };
     }
 
     await user.save();
 
     res.status(200).json({
       success: true,
-      message: 'Employee profile updated successfully.',
+      message: 'Employee profile updated successfully by Admin.',
       profile: user.toAuthJSON(),
     });
   } catch (error) {
@@ -364,3 +359,44 @@ exports.updateSalaryStructure = async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to update salary structure.' });
   }
 };
+
+// RESET / CHANGE Employee Password (Admin Only)
+exports.adminResetPassword = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: Only System Administrators can change employee passwords.',
+      });
+    }
+
+    const { id } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword || newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'New password is required and must be at least 6 characters long.',
+      });
+    }
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Employee user account not found.' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Password updated successfully for ${user.name} (${user.employeeId}).`,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to reset employee password.',
+    });
+  }
+};
+

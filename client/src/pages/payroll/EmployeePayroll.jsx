@@ -206,7 +206,7 @@ export const EmployeePayroll = () => {
       <Card className="bg-white border border-slate-200 shadow-sm">
         <CardHeader title="Salary Payment History" subtitle="Disbursed payroll slips for previous months" />
         <CardBody className="p-4">
-          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+          <div className="overflow-x-auto w-full rounded-xl border border-slate-200 bg-white">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-50 text-slate-900 border-b border-slate-200 uppercase tracking-wider font-black text-[11px]">

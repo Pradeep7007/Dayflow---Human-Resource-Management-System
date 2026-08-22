@@ -284,7 +284,7 @@ export const AdminPayroll = () => {
           </CardBody>
         </Card>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-x-auto w-full rounded-xl border border-slate-200 bg-white shadow-sm">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="bg-slate-50 text-slate-900 border-b border-slate-200 uppercase tracking-wider font-black text-[11px]">

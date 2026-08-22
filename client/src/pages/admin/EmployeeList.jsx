@@ -8,7 +8,8 @@ import {
   Eye,
   FileText,
   AlertCircle,
-  RefreshCw
+  RefreshCw,
+  KeyRound
 } from 'lucide-react';
 import { PageHeader } from '../../components/layout/PageHeader';
 import { Card, CardBody } from '../../components/ui/Card';
@@ -20,6 +21,7 @@ import { useAuth } from '../../context/AuthContext';
 import { ROUTES } from '../../constants/routes';
 import { CreateEmployeeModal } from '../../components/employee/CreateEmployeeModal';
 import { EditEmployeeModal } from '../../components/employee/EditEmployeeModal';
+import { AdminResetPasswordModal } from '../../components/employee/AdminResetPasswordModal';
 
 const fallbackEmployees = [
   {
@@ -111,6 +113,7 @@ export const EmployeeList = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
 
   const fetchEmployees = async () => {
     setLoading(true);
@@ -167,6 +170,11 @@ export const EmployeeList = () => {
   const handleEditClick = (emp) => {
     setSelectedEmployee(emp);
     setIsEditModalOpen(true);
+  };
+
+  const handleResetPasswordClick = (emp) => {
+    setSelectedEmployee(emp);
+    setIsResetPasswordModalOpen(true);
   };
 
   return (
@@ -403,6 +411,13 @@ export const EmployeeList = () => {
                               <Edit size={14} />
                             </button>
                             <button
+                              onClick={() => handleResetPasswordClick(emp)}
+                              className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-all cursor-pointer"
+                              title="Reset Password (Admin Only)"
+                            >
+                              <KeyRound size={14} />
+                            </button>
+                            <button
                               onClick={() => navigate(ROUTES.ADMIN.PAYROLL)}
                               className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 transition-all cursor-pointer"
                               title="Salary & Payroll (Admin Only)"
@@ -482,6 +497,15 @@ export const EmployeeList = () => {
                           Edit
                         </Button>
                         <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => handleResetPasswordClick(emp)}
+                          leftIcon={<KeyRound size={14} />}
+                          className="text-xs text-rose-700 font-bold"
+                        >
+                          Password
+                        </Button>
+                        <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => navigate(ROUTES.ADMIN.PAYROLL)}
@@ -516,6 +540,13 @@ export const EmployeeList = () => {
         onClose={() => setIsEditModalOpen(false)}
         employee={selectedEmployee}
         onSuccess={() => fetchEmployees()}
+      />
+
+      {/* ADMIN RESET PASSWORD MODAL */}
+      <AdminResetPasswordModal
+        isOpen={isResetPasswordModalOpen}
+        onClose={() => setIsResetPasswordModalOpen(false)}
+        employee={selectedEmployee}
       />
     </div>
   );

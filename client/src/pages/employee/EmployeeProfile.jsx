@@ -21,7 +21,8 @@ import {
   CheckCircle2,
   Clock,
   AlertCircle,
-  FileCheck
+  FileCheck,
+  KeyRound
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
@@ -32,6 +33,7 @@ import { Avatar } from '../../components/ui/Avatar';
 import { Modal } from '../../components/feedback/Modal';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/feedback/ToastContext';
+import { AdminResetPasswordModal } from '../../components/employee/AdminResetPasswordModal';
 import API from '../../services/api';
 
 export const EmployeeProfile = () => {
@@ -53,6 +55,7 @@ export const EmployeeProfile = () => {
   const [isDocModalOpen, setIsDocModalOpen] = useState(false);
   const [newDoc, setNewDoc] = useState({ name: '', type: 'Offer Letter', fileUrl: '#' });
   const [isUploadingDoc, setIsUploadingDoc] = useState(false);
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
 
   // Fetch Employee Profile Data
   const fetchProfile = async () => {
@@ -231,6 +234,16 @@ export const EmployeeProfile = () => {
 
           {/* Edit / Save Actions */}
           <div className="flex items-center gap-3">
+            {isAdmin && !isEditing && (
+              <Button
+                variant="secondary"
+                onClick={() => setIsResetPasswordModalOpen(true)}
+                leftIcon={<KeyRound size={16} />}
+                className="bg-white/10 hover:bg-white/20 text-white border-white/20"
+              >
+                Reset Password
+              </Button>
+            )}
             {!isEditing ? (
               <Button
                 variant="primary"
@@ -752,6 +765,13 @@ export const EmployeeProfile = () => {
           </div>
         </form>
       </Modal>
+
+      {/* ADMIN RESET PASSWORD MODAL */}
+      <AdminResetPasswordModal
+        isOpen={isResetPasswordModalOpen}
+        onClose={() => setIsResetPasswordModalOpen(false)}
+        employee={profile || currentUser}
+      />
     </div>
   );
 };

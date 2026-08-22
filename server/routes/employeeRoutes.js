@@ -10,6 +10,7 @@ const {
   createEmployee,
   getPayrollAll,
   updateSalaryStructure,
+  adminResetPassword,
 } = require('../controllers/employeeController');
 const { protect } = require('../middleware/authMiddleware');
 const { authorize } = require('../middleware/roleMiddleware');
@@ -20,6 +21,8 @@ router.use(protect);
 router.get('/', authorize('admin', 'hr'), getAllEmployees);
 router.post('/', authorize('admin'), createEmployee);
 router.delete('/:id', authorize('admin'), deleteEmployee);
+router.put('/:id/reset-password', authorize('admin'), adminResetPassword);
+
 
 // Profile Endpoints
 router.get('/profile/me', getProfile);

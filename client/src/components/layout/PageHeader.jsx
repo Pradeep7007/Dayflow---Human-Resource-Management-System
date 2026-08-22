@@ -29,7 +29,7 @@ export const PageHeader = ({
           </h1>
           {subtitle && <p className="text-sm text-slate-500 mt-1">{subtitle}</p>}
         </div>
-        {action && <div className="flex items-center gap-3 flex-shrink-0">{action}</div>}
+        {action && <div className="flex items-center gap-2 sm:gap-3 flex-wrap">{action}</div>}
       </div>
     </div>
   );

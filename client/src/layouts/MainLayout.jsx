@@ -36,7 +36,7 @@ export const MainLayout = () => {
         />
 
         {/* Page Main View Container */}
-        <main className="flex-1 pt-20 pb-10 px-4 sm:px-6 max-w-7xl w-full mx-auto">
+        <main className="flex-1 pt-20 pb-10 px-3 sm:px-6 max-w-7xl w-full mx-auto">
           <Outlet />
         </main>
       </div>
