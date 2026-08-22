@@ -8,6 +8,7 @@ const attendanceRoutes = require('./routes/attendanceRoutes');
 const leaveRoutes = require('./routes/leaveRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const helpCenterRoutes = require('./routes/helpCenterRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 const { protect } = require('./middleware/authMiddleware');
 const { authorize } = require('./middleware/roleMiddleware');
 
@@ -29,6 +30,7 @@ app.use('/api/attendance', attendanceRoutes);
 app.use('/api/leaves', leaveRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/help-center', helpCenterRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Protected Backend Role Enforcement Test Routes
 app.get('/api/admin/dashboard-stats', protect, authorize('admin'), (req, res) => {
