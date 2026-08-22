@@ -90,10 +90,14 @@ exports.updateProfile = async (req, res) => {
     }
 
     const isSelf = req.user.id === targetId || req.user.id === user._id.toString();
-    const isAdminOrHr = req.user.role === 'admin' || req.user.role === 'hr';
+    const isAdmin = req.user.role === 'admin';
 
-    if (!isSelf && !isAdminOrHr) {
-      return res.status(403).json({ success: false, message: 'Forbidden: Insufficient privileges.' });
+    // Only Admin or Self can perform updates. HR and regular employees CANNOT update other employees!
+    if (!isSelf && !isAdmin) {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: Only system Administrators have access to modify employee details (address, phone, position, etc.).',
+      });
     }
 
     const {
@@ -112,14 +116,17 @@ exports.updateProfile = async (req, res) => {
       dateOfJoining,
       status,
       salaryStructure,
+      role,
     } = req.body;
 
+    // Contact details can be updated by self or admin
     if (phone !== undefined) user.phone = phone;
     if (address !== undefined) user.address = address;
     if (emergencyContact !== undefined) user.emergencyContact = emergencyContact;
     if (avatarUrl !== undefined) user.avatarUrl = avatarUrl;
 
-    if (isAdminOrHr) {
+    // Official administrative details CAN ONLY be modified by ADMIN
+    if (isAdmin) {
       if (name !== undefined) user.name = name;
       if (dob !== undefined) user.dob = dob;
       if (gender !== undefined) user.gender = gender;
@@ -130,6 +137,7 @@ exports.updateProfile = async (req, res) => {
       if (workLocation !== undefined) user.workLocation = workLocation;
       if (dateOfJoining !== undefined) user.dateOfJoining = dateOfJoining;
       if (status !== undefined) user.status = status;
+      if (role !== undefined) user.role = role;
       if (salaryStructure !== undefined) {
         user.salaryStructure = { ...user.salaryStructure, ...salaryStructure };
       }

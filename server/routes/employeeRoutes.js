@@ -16,10 +16,10 @@ const { authorize } = require('../middleware/roleMiddleware');
 
 router.use(protect);
 
-// Employee Management Endpoints (Admin & HR)
+// Employee Management Endpoints (Admin Only for CRUD)
 router.get('/', authorize('admin', 'hr'), getAllEmployees);
-router.post('/', authorize('admin', 'hr'), createEmployee);
-router.delete('/:id', authorize('admin', 'hr'), deleteEmployee);
+router.post('/', authorize('admin'), createEmployee);
+router.delete('/:id', authorize('admin'), deleteEmployee);
 
 // Profile Endpoints
 router.get('/profile/me', getProfile);
@@ -30,8 +30,8 @@ router.put('/profile/:id', updateProfile);
 router.post('/profile/:id/documents', addDocument);
 router.delete('/profile/:id/documents/:docId', deleteDocument);
 
-// Payroll Management Endpoints (Admin & HR)
+// Payroll Management Endpoints (Admin Only for Salary Modifying)
 router.get('/payroll/all', authorize('admin', 'hr'), getPayrollAll);
-router.put('/:id/salary', authorize('admin', 'hr'), updateSalaryStructure);
+router.put('/:id/salary', authorize('admin'), updateSalaryStructure);
 
 module.exports = router;
