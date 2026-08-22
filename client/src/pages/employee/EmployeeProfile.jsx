@@ -29,7 +29,7 @@ import { Select } from '../../components/ui/Select';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Avatar } from '../../components/ui/Avatar';
-import { Modal } from '../../components/ui/Modal';
+import { Modal } from '../../components/feedback/Modal';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/feedback/ToastContext';
 import API from '../../services/api';

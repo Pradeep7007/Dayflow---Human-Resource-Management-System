@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const User = require('./models/User');
 const Attendance = require('./models/Attendance');
+const Leave = require('./models/Leave');
 
 dotenv.config({ path: require('path').resolve(__dirname, '.env') });
 
@@ -9,7 +10,7 @@ const seedUsersAndAttendance = async () => {
   try {
     await connectDB();
 
-    console.log('[Seed] Clearing existing demo users and attendance records...');
+    console.log('[Seed] Clearing existing demo users, attendance, and leave records...');
     await User.deleteMany({
       email: {
         $in: [
@@ -26,6 +27,7 @@ const seedUsersAndAttendance = async () => {
       },
     });
     await Attendance.deleteMany({});
+    await Leave.deleteMany({});
 
     console.log('[Seed] Seeding Indian Workforce Accounts...');
 
@@ -177,15 +179,11 @@ const seedUsersAndAttendance = async () => {
     console.log('[Seed] Seeding Attendance History Records...');
 
     const attendanceEntries = [];
-    const statuses = ['Present', 'Present', 'Present', 'Half-day', 'Leave', 'Absent'];
-
-    // Generate 10 days of attendance history for each user
     for (let dayOffset = 0; dayOffset < 10; dayOffset++) {
       const date = new Date();
       date.setDate(date.getDate() - dayOffset);
       date.setHours(0, 0, 0, 0);
 
-      // Skip weekends
       if (date.getDay() === 0 || date.getDay() === 6) continue;
 
       users.forEach((user, index) => {
@@ -201,11 +199,6 @@ const seedUsersAndAttendance = async () => {
           workingHours = 4.5;
         } else if (dayOffset === 2 && index === 3) {
           status = 'Leave';
-          checkIn = null;
-          checkOut = null;
-          workingHours = 0;
-        } else if (dayOffset === 3 && index === 4) {
-          status = 'Absent';
           checkIn = null;
           checkOut = null;
           workingHours = 0;
@@ -228,7 +221,67 @@ const seedUsersAndAttendance = async () => {
 
     await Attendance.insertMany(attendanceEntries);
 
-    console.log('[Seed] Seeding Complete! Demo Accounts with Indian Names Ready.');
+    console.log('[Seed] Seeding Sample Leave Requests...');
+
+    const tharun = users.find((u) => u.email === 'tharun@dayflow.com');
+    const ananya = users.find((u) => u.email === 'ananya@dayflow.com');
+    const rajesh = users.find((u) => u.email === 'rajesh@dayflow.com');
+
+    await Leave.create([
+      {
+        user: tharun._id,
+        employeeId: tharun.employeeId,
+        employeeName: tharun.name,
+        department: tharun.department,
+        leaveType: 'Paid',
+        startDate: new Date('2026-09-10'),
+        endDate: new Date('2026-09-12'),
+        daysCount: 3,
+        reason: 'Attending family wedding in Chennai.',
+        status: 'Pending',
+      },
+      {
+        user: tharun._id,
+        employeeId: tharun.employeeId,
+        employeeName: tharun.name,
+        department: tharun.department,
+        leaveType: 'Sick',
+        startDate: new Date('2026-08-05'),
+        endDate: new Date('2026-08-06'),
+        daysCount: 2,
+        reason: 'Viral flu and doctor prescribed rest.',
+        status: 'Approved',
+        adminComment: 'Get well soon!',
+        reviewedBy: 'Kishore M',
+        reviewedAt: new Date('2026-08-05'),
+      },
+      {
+        user: ananya._id,
+        employeeId: ananya.employeeId,
+        employeeName: ananya.name,
+        department: ananya.department,
+        leaveType: 'Paid',
+        startDate: new Date('2026-09-15'),
+        endDate: new Date('2026-09-19'),
+        daysCount: 5,
+        reason: 'Annual vacation to Kerala.',
+        status: 'Pending',
+      },
+      {
+        user: rajesh._id,
+        employeeId: rajesh.employeeId,
+        employeeName: rajesh.name,
+        department: rajesh.department,
+        leaveType: 'Unpaid',
+        startDate: new Date('2026-08-25'),
+        endDate: new Date('2026-08-26'),
+        daysCount: 2,
+        reason: 'Personal urgent business in Delhi.',
+        status: 'Pending',
+      },
+    ]);
+
+    console.log('[Seed] Seeding Complete! Accounts, Attendance & Leave Workspace Ready.');
     process.exit(0);
   } catch (error) {
     console.error('[Seed Error]:', error);

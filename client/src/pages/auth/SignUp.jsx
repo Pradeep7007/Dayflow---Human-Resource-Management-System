@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, User, CreditCard, Shield, CheckCircle, ArrowRight } from 'lucide-react';
-import { Button } from '../../components/ui/Button';
-import { Input } from '../../components/ui/Input';
-import { PasswordInput } from '../../components/ui/PasswordInput';
-import { Select } from '../../components/ui/Select';
-import { Card, CardBody } from '../../components/ui/Card';
+import { User, Mail, Lock, CreditCard, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/feedback/ToastContext';
 import { ROUTES } from '../../constants/routes';
@@ -24,33 +19,17 @@ export const SignUp = () => {
     role: 'employee',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [createdUser, setCreatedUser] = useState(null);
-  const [demoVerificationToken, setDemoVerificationToken] = useState(null);
 
   const generateRandomEmployeeId = () => {
     const prefix = formData.role === 'admin' ? 'ADM' : formData.role === 'hr' ? 'HR' : 'EMP';
     const num = Math.floor(1000 + Math.random() * 9000);
     setFormData((prev) => ({ ...prev, employeeId: `${prefix}-${num}` }));
   };
-
-  const calculatePasswordStrength = (pass) => {
-    if (!pass) return { score: 0, label: '', color: '' };
-    let score = 0;
-    if (pass.length >= 6) score++;
-    if (pass.length >= 8) score++;
-    if (/[A-Z]/.test(pass)) score++;
-    if (/[0-9]/.test(pass)) score++;
-    if (/[^A-Za-z0-9]/.test(pass)) score++;
-
-    if (score <= 2) return { score: 33, label: 'Weak', color: 'bg-red-500' };
-    if (score <= 4) return { score: 66, label: 'Medium', color: 'bg-amber-500' };
-    return { score: 100, label: 'Strong', color: 'bg-emerald-500' };
-  };
-
-  const passwordStrength = calculatePasswordStrength(formData.password);
 
   const validateForm = () => {
     const newErrors = {};
@@ -60,19 +39,19 @@ export const SignUp = () => {
     }
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Full Name is required';
+      newErrors.name = 'Full name is required';
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Work Email is required';
+      newErrors.email = 'Work email is required';
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'Enter a valid email address';
     }
 
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters long';
+      newErrors.password = 'Must be at least 6 characters';
     }
 
     if (formData.password !== formData.confirmPassword) {
@@ -88,16 +67,17 @@ export const SignUp = () => {
     if (!validateForm()) return;
 
     setIsLoading(true);
+    setErrors({});
+
     try {
       const res = await signup(formData);
       setIsLoading(false);
       setIsSuccess(true);
       setCreatedUser(res.user);
-      setDemoVerificationToken(res.emailVerificationToken);
 
       addToast({
-        title: 'Account Registered',
-        message: 'Your account has been created successfully.',
+        title: 'Account Created',
+        message: 'Your DayFlow profile has been registered.',
         type: 'success',
       });
     } catch (err) {
@@ -105,175 +85,202 @@ export const SignUp = () => {
       const serverMessage = err.message || 'Registration failed.';
 
       if (serverMessage.toLowerCase().includes('email')) {
-        setErrors((prev) => ({ ...prev, email: serverMessage }));
+        setErrors({ email: serverMessage });
       } else if (serverMessage.toLowerCase().includes('employee id')) {
-        setErrors((prev) => ({ ...prev, employeeId: serverMessage }));
+        setErrors({ employeeId: serverMessage });
       } else {
-        addToast({ title: 'Registration Error', message: serverMessage, type: 'error' });
+        setErrors({ form: serverMessage });
       }
     }
   };
 
   return (
-    <div className="w-full">
-      <div className="mb-6">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Create DayFlow Account
-        </h2>
-        <p className="text-slate-500 text-sm mt-1">
-          Register your employee or administrative profile into the DayFlow system.
-        </p>
+    <div className="df-auth-card">
+      {/* Header */}
+      <div className="df-auth-card-header">
+        <h2 className="df-auth-card-title">Create your DayFlow account</h2>
+        <p className="df-auth-card-subtitle">Set up your HRMS account to get started.</p>
       </div>
 
-      <Card>
-        <CardBody className="p-6">
-          {isSuccess ? (
-            <div className="text-center py-4 space-y-4">
-              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                <CheckCircle size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900">Registration Successful!</h3>
-              <p className="text-sm text-slate-600">
-                Welcome, <strong className="text-slate-900">{createdUser?.name}</strong>! An email verification request has been dispatched to{' '}
-                <strong className="text-slate-900">{createdUser?.email}</strong>.
-              </p>
-
-              {demoVerificationToken && (
-                <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-lg text-left text-xs text-indigo-900">
-                  <div className="font-semibold text-indigo-950 mb-1">Direct Email Verification Link:</div>
-                  <Link
-                    to={`/verify-email/${demoVerificationToken}`}
-                    className="text-indigo-600 underline font-mono break-all hover:text-indigo-800"
-                  >
-                    Click to Verify Email Now ({demoVerificationToken.substring(0, 12)}...)
-                  </Link>
-                </div>
-              )}
-
-              <Button
-                variant="primary"
-                className="w-full mt-2"
-                onClick={() =>
-                  navigate(createdUser?.role === 'employee' ? ROUTES.EMPLOYEE.DASHBOARD : ROUTES.ADMIN.DASHBOARD)
-                }
-              >
-                Go to Dashboard
-              </Button>
+      {isSuccess ? (
+        <div style={{ textAlign: 'center', padding: '1rem 0' }}>
+          <div style={{ width: '3rem', height: '3rem', borderRadius: '9999px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#34d399', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem auto' }}>
+            <CheckCircle size={28} />
+          </div>
+          <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.5rem' }}>
+            Registration Complete!
+          </h3>
+          <p style={{ fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+            Welcome, <strong style={{ color: '#ffffff' }}>{createdUser?.name}</strong>! Your account has been registered successfully.
+          </p>
+          <button
+            type="button"
+            className="df-auth-btn-primary"
+            onClick={() => navigate(createdUser?.role === 'employee' ? ROUTES.EMPLOYEE.DASHBOARD : ROUTES.ADMIN.DASHBOARD)}
+          >
+            Go to Dashboard <ArrowRight size={16} />
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          {errors.form && (
+            <div className="df-auth-error-banner">
+              <AlertCircle size={15} style={{ flexShrink: 0 }} />
+              <span>{errors.form}</span>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="flex gap-2 items-end">
-                <div className="flex-1">
-                  <Input
-                    label="Employee ID"
-                    placeholder="e.g. EMP-1002"
-                    value={formData.employeeId}
-                    onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-                    error={errors.employeeId}
-                    leftIcon={<CreditCard size={18} />}
-                    required
-                  />
-                </div>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  size="sm"
-                  onClick={generateRandomEmployeeId}
-                  className="mb-0.5 text-xs whitespace-nowrap"
-                >
-                  Auto ID
-                </Button>
-              </div>
+          )}
 
-              <Input
-                label="Full Name"
+          {/* Employee ID Field */}
+          <div className="df-auth-field-group">
+            <div style={{ display: 'flex', justifyBetween: 'space-between', alignItems: 'center', marginBottom: '0.375rem' }}>
+              <label className="df-auth-label" htmlFor="employee-id-input" style={{ marginBottom: 0 }}>Employee ID</label>
+              <button
+                type="button"
+                onClick={generateRandomEmployeeId}
+                style={{ fontSize: '0.6875rem', color: '#818cf8', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer' }}
+              >
+                Auto Generate
+              </button>
+            </div>
+            <div className="df-auth-input-wrapper">
+              <CreditCard size={16} className="df-auth-input-icon" />
+              <input
+                id="employee-id-input"
+                type="text"
+                placeholder="EMP-1002"
+                value={formData.employeeId}
+                onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
+                className="df-auth-input"
+                required
+              />
+            </div>
+            {errors.employeeId && <p style={{ color: '#f87171', fontSize: '0.6875rem', marginTop: '0.25rem' }}>{errors.employeeId}</p>}
+          </div>
+
+          {/* Full Name Field */}
+          <div className="df-auth-field-group">
+            <label className="df-auth-label" htmlFor="name-input">Full Name</label>
+            <div className="df-auth-input-wrapper">
+              <User size={16} className="df-auth-input-icon" />
+              <input
+                id="name-input"
+                type="text"
                 placeholder="Alex Morgan"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                error={errors.name}
-                leftIcon={<User size={18} />}
+                className="df-auth-input"
                 required
               />
+            </div>
+            {errors.name && <p style={{ color: '#f87171', fontSize: '0.6875rem', marginTop: '0.25rem' }}>{errors.name}</p>}
+          </div>
 
-              <Input
-                label="Work Email Address"
+          {/* Work Email Field */}
+          <div className="df-auth-field-group">
+            <label className="df-auth-label" htmlFor="signup-email-input">Work Email Address</label>
+            <div className="df-auth-input-wrapper">
+              <Mail size={16} className="df-auth-input-icon" />
+              <input
+                id="signup-email-input"
                 type="email"
                 placeholder="alex.morgan@dayflow.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                error={errors.email}
-                leftIcon={<Mail size={18} />}
+                className="df-auth-input"
                 required
               />
+            </div>
+            {errors.email && <p style={{ color: '#f87171', fontSize: '0.6875rem', marginTop: '0.25rem' }}>{errors.email}</p>}
+          </div>
 
-              <Select
-                label="Assigned System Role"
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                options={[
-                  { value: 'employee', label: 'Employee (Standard Self-Service Portal)' },
-                  { value: 'hr', label: 'HR Manager (Workforce Governance)' },
-                  { value: 'admin', label: 'System Administrator (Full Control)' },
-                ]}
+          {/* System Role Selection */}
+          <div className="df-auth-field-group">
+            <label className="df-auth-label" htmlFor="role-select">Assigned System Role</label>
+            <select
+              id="role-select"
+              value={formData.role}
+              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+              className="df-auth-input"
+              style={{ paddingLeft: '0.875rem', cursor: 'pointer' }}
+            >
+              <option value="employee">Employee (Self-Service Portal)</option>
+              <option value="hr">HR Manager (Workforce Governance)</option>
+              <option value="admin">System Administrator (Full Access)</option>
+            </select>
+          </div>
+
+          {/* Password Field */}
+          <div className="df-auth-field-group">
+            <label className="df-auth-label" htmlFor="signup-password-input">Password</label>
+            <div className="df-auth-input-wrapper">
+              <Lock size={16} className="df-auth-input-icon" />
+              <input
+                id="signup-password-input"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••••••"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                className="df-auth-input"
+                style={{ paddingRight: '2.5rem' }}
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="df-auth-eye-btn"
+                title={showPassword ? 'Hide password' : 'Show password'}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            {errors.password && <p style={{ color: '#f87171', fontSize: '0.6875rem', marginTop: '0.25rem' }}>{errors.password}</p>}
+          </div>
 
-              <div className="space-y-1">
-                <PasswordInput
-                  label="Password"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  error={errors.password}
-                  leftIcon={<Shield size={18} />}
-                  required
-                />
-                {formData.password && (
-                  <div className="space-y-1 pt-1">
-                    <div className="flex justify-between items-center text-xs text-slate-500">
-                      <span>Password Strength:</span>
-                      <span className="font-semibold">{passwordStrength.label}</span>
-                    </div>
-                    <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full transition-all duration-300 ${passwordStrength.color}`}
-                        style={{ width: `${passwordStrength.score}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <PasswordInput
-                label="Confirm Password"
+          {/* Confirm Password Field */}
+          <div className="df-auth-field-group">
+            <label className="df-auth-label" htmlFor="confirm-password-input">Confirm Password</label>
+            <div className="df-auth-input-wrapper">
+              <Lock size={16} className="df-auth-input-icon" />
+              <input
+                id="confirm-password-input"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••••••"
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                error={errors.confirmPassword}
-                leftIcon={<Shield size={18} />}
+                className="df-auth-input"
                 required
               />
+            </div>
+            {errors.confirmPassword && <p style={{ color: '#f87171', fontSize: '0.6875rem', marginTop: '0.25rem' }}>{errors.confirmPassword}</p>}
+          </div>
 
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                className="w-full mt-4"
-                isLoading={isLoading}
-                rightIcon={<ArrowRight size={18} />}
-              >
-                Create DayFlow Account
-              </Button>
+          {/* Primary CTA */}
+          <button
+            type="submit"
+            className="df-auth-btn-primary"
+            disabled={isLoading}
+            style={{ marginTop: '1rem' }}
+          >
+            {isLoading ? (
+              <span>Creating Account...</span>
+            ) : (
+              <>
+                <span>Create Account</span>
+                <ArrowRight size={16} />
+              </>
+            )}
+          </button>
+        </form>
+      )}
 
-              <p className="text-center text-xs text-slate-500 mt-4">
-                Already have an account?{' '}
-                <Link to={ROUTES.AUTH.LOGIN} className="font-semibold text-indigo-600 hover:text-indigo-700">
-                  Sign In
-                </Link>
-              </p>
-            </form>
-          )}
-        </CardBody>
-      </Card>
+      {/* Footer Link */}
+      <p className="df-auth-footer-text">
+        Already have an account?{' '}
+        <Link to={ROUTES.AUTH.LOGIN} className="df-auth-link">
+          Sign In
+        </Link>
+      </p>
     </div>
   );
 };

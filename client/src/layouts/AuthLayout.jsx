@@ -1,72 +1,95 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { ShieldCheck, Users, Clock, Award } from 'lucide-react';
+import { Outlet, Link } from 'react-router-dom';
+import { ShieldCheck, Users, Clock, Award, CheckCircle2 } from 'lucide-react';
+import { ROUTES } from '../constants/routes';
+import '../styles/AuthPages.css';
 
 export const AuthLayout = () => {
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col lg:flex-row overflow-x-hidden">
-      {/* Left Branding Showcase Panel */}
-      <div className="lg:w-1/2 bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 p-6 sm:p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
-        {/* Glow backdrop decorative subtle circles */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="df-auth-page">
+      {/* LEFT BRANDING PANEL (Desktop >= 1024px) */}
+      <div className="df-auth-branding-panel">
+        <div className="df-auth-glow-1" />
+        <div className="df-auth-glow-2" />
 
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-6 lg:mb-10">
-            <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-extrabold text-xl lg:text-2xl shadow-lg">
-              D
+        {/* Top Branding Header */}
+        <div style={{ position: 'relative', zIndex: 10 }}>
+          <div className="df-auth-logo-badge">
+            <Link to={ROUTES.AUTH.LOGIN} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+              <div className="df-auth-logo-icon">D</div>
+              <div>
+                <span style={{ fontWeight: 800, fontSize: '1.375rem', color: '#ffffff', letterSpacing: '-0.02em' }}>DayFlow</span>
+                <span style={{ display: 'block', fontSize: '0.625rem', fontWeight: 700, color: '#818cf8', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                  HRMS & Workforce Platform
+                </span>
+              </div>
+            </Link>
+          </div>
+
+          <div>
+            <h1 className="df-auth-hero-title">
+              Automate workforce management with effortless intelligence.
+            </h1>
+            <p className="df-auth-hero-subtitle">
+              Unified employee profile management, automated attendance logging, multi-tier leave approval workflows, and Indian tax compliant payroll.
+            </p>
+          </div>
+        </div>
+
+        {/* Feature Highlights Showcase */}
+        <div className="df-auth-feature-list" style={{ position: 'relative', zIndex: 10 }}>
+          <div className="df-auth-feature-item">
+            <div className="df-auth-feature-icon" style={{ backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
+              <Users size={18} />
             </div>
             <div>
-              <span className="font-extrabold text-xl lg:text-2xl text-white tracking-tight">DayFlow</span>
-              <span className="block text-[10px] lg:text-xs font-semibold text-indigo-400 tracking-widest uppercase">HR & Workforce System</span>
+              <h4 style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.8125rem' }}>Employee Directory & Governance</h4>
+              <p style={{ color: '#94a3b8', fontSize: '0.6875rem', marginTop: '0.125rem' }}>Centralized profile records & role permissions.</p>
             </div>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight mb-3 lg:mb-4">
-            Streamline your organization's workforce & HR operations.
-          </h1>
-          <p className="text-slate-400 text-xs sm:text-sm lg:text-base max-w-md leading-relaxed hidden sm:block">
-            Enterprise-grade leave management, automated payroll, real-time attendance tracking, and intuitive employee self-service.
-          </p>
-        </div>
-
-        {/* Feature Highlights Grid */}
-        <div className="relative z-10 grid grid-cols-2 gap-3 lg:gap-4 my-6 lg:my-8 hidden sm:grid">
-          <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-700/50 backdrop-blur-xs">
-            <Users size={20} className="text-indigo-400 mb-1.5" />
-            <h4 className="text-white font-semibold text-xs lg:text-sm">Employee Directory</h4>
-            <p className="text-slate-400 text-[11px] mt-0.5">Unified records & profile governance.</p>
+          <div className="df-auth-feature-item">
+            <div className="df-auth-feature-icon" style={{ backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#34d399' }}>
+              <Clock size={18} />
+            </div>
+            <div>
+              <h4 style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.8125rem' }}>Real-Time Shift & Attendance Logging</h4>
+              <p style={{ color: '#94a3b8', fontSize: '0.6875rem', marginTop: '0.125rem' }}>Automated check-ins & weekly/monthly metrics.</p>
+            </div>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-700/50 backdrop-blur-xs">
-            <Clock size={20} className="text-emerald-400 mb-1.5" />
-            <h4 className="text-white font-semibold text-xs lg:text-sm">Real-time Attendance</h4>
-            <p className="text-slate-400 text-[11px] mt-0.5">Automated check-ins & shift tracking.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-700/50 backdrop-blur-xs">
-            <ShieldCheck size={20} className="text-purple-400 mb-1.5" />
-            <h4 className="text-white font-semibold text-xs lg:text-sm">Approval Workflows</h4>
-            <p className="text-slate-400 text-[11px] mt-0.5">Multi-tier leave & expense approval.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-700/50 backdrop-blur-xs">
-            <Award size={20} className="text-amber-400 mb-1.5" />
-            <h4 className="text-white font-semibold text-xs lg:text-sm">Payroll & Reports</h4>
-            <p className="text-slate-400 text-[11px] mt-0.5">Instant slip generation & audit logs.</p>
+          <div className="df-auth-feature-item">
+            <div className="df-auth-feature-icon" style={{ backgroundColor: 'rgba(168, 85, 247, 0.15)', color: '#c084fc' }}>
+              <ShieldCheck size={18} />
+            </div>
+            <div>
+              <h4 style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.8125rem' }}>Multi-Tier Leave Approval Workflows</h4>
+              <p style={{ color: '#94a3b8', fontSize: '0.6875rem', marginTop: '0.125rem' }}>Instant leave submission & HR governance queue.</p>
+            </div>
           </div>
         </div>
 
-        <div className="relative z-10 text-[11px] text-slate-500 hidden lg:block">
-          © {new Date().getFullYear()} DayFlow HRMS Platform. All rights reserved.
+        {/* Footer Security Badge */}
+        <div style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.6875rem', color: '#64748b', paddingTop: '1rem', borderTop: '1px solid rgba(30, 41, 59, 0.6)' }}>
+          <span>© {new Date().getFullYear()} DayFlow HRMS Platform</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: '#94a3b8' }}>
+            <CheckCircle2 size={13} style={{ color: '#34d399' }} /> Enterprise Certified
+          </span>
         </div>
       </div>
 
-      {/* Right Form Container */}
-      <div className="lg:w-1/2 bg-slate-50 flex items-center justify-center p-4 sm:p-8 lg:p-12 flex-1">
-        <div className="w-full max-w-md">
-          <Outlet />
+      {/* RIGHT AUTH FORM PANEL */}
+      <div className="df-auth-form-panel">
+        {/* Mobile Header Banner (<1024px) */}
+        <div className="df-auth-mobile-header">
+          <Link to={ROUTES.AUTH.LOGIN} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', textDecoration: 'none' }}>
+            <div className="df-auth-logo-icon" style={{ width: '2.25rem', height: '2.25rem', fontSize: '1.125rem' }}>D</div>
+            <span style={{ fontWeight: 800, fontSize: '1.125rem', color: '#ffffff' }}>DayFlow HRMS</span>
+          </Link>
         </div>
+
+        {/* Dynamic Auth Page Outlet */}
+        <Outlet />
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
-import { Modal } from '../../components/ui/Modal';
+import { Modal } from '../../components/feedback/Modal';
 import { useToast } from '../../components/feedback/ToastContext';
 import API from '../../services/api';
 

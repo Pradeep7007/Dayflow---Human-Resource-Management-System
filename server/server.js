@@ -5,6 +5,8 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes');
+const leaveRoutes = require('./routes/leaveRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 const { protect } = require('./middleware/authMiddleware');
 const { authorize } = require('./middleware/roleMiddleware');
 
@@ -23,6 +25,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/employees', employeeRoutes);
 app.use('/api/attendance', attendanceRoutes);
+app.use('/api/leaves', leaveRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Protected Backend Role Enforcement Test Routes
 app.get('/api/admin/dashboard-stats', protect, authorize('admin'), (req, res) => {
