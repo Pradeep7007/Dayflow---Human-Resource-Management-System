@@ -1,70 +1,130 @@
-# Getting Started with Create React App
+# 🏢 DayFlow — Human Resource Management System (HRMS)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18.x-339933?logo=nodedotjs)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express.js-4.x-000000?logo=express)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb)](https://www.mongodb.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?logo=tailwindcss)](https://tailwindcss.com/)
 
-## Available Scripts
+**DayFlow** is an enterprise-grade, modern Human Resource Management System designed to govern workforce attendance, time-off requests, administrative reviews, payroll disbursement, smart insights, health risk alerts, and organizational reporting through a high-contrast light-mode SaaS interface.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Key Features & Architectural Phases
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 1. 🎨 Design System & High-Contrast Light Mode
+* High-contrast design tokens (`bg-white` cards, `bg-slate-50` secondary containers, `border-slate-200` crisp borders, and `text-slate-900` deep black typography).
+* Accessible UI components: `Button`, `Card`, `Badge`, `Input`, `Select`, `Textarea`, `Modal`, `ConfirmationDialog`, `Avatar`, `Table`.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2. 🔐 Role-Based Authentication & Security
+* JWT-based authentication with `AuthContext` token persistence.
+* Role-gated route protection for `Admin`, `HR`, and `Employee` roles.
+* Interactive login, forgot password, and email verification screens.
 
-### `npm test`
+### 3. ⏱️ Shift Attendance & Time Tracking
+* Real-time **Check-In** and **Check-Out** attendance widget.
+* Working hours calculation and status breakdown (Present, Half-day, Absent, Leave).
+* Filterable monthly attendance history logs.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 4. 📅 Leave & Time-Off Approval Workspace
+* Employee leave applications featuring Start/End dates **plus mandatory From Time and To Time fields** (`type="time"`).
+* Interactive leave balance widgets (Paid, Sick, Unpaid).
+* Admin workspace with Pending, Approved, and Rejected queue tabs and administrative comment logs.
+* Bootstrap-style detailed leave review modal.
 
-### `npm run build`
+### 5. 👥 Employee Directory & Role-Gated Governance
+* Full employee catalog with dual rendering (Desktop table view & Mobile card grid).
+* **Strict Admin-only CRUD operations** (Add, Edit, and Delete employee records).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 6. 💰 Payroll & Salary Governance
+* Gross salary budgeting, net disbursement tracking, and statutory deduction calculations (PF & Income Tax TDS).
+* Interactive payslip generator with modal view.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 7. 📊 Smart Insights & Workforce Risk Alerts
+* Automated organizational health observations and department availability tracking.
+* Real-time risk alerts categorized by severity (Critical, Warning, Info) with action triggers.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 8. ❓ HR Help Center, Notifications & Reports
+* Searchable HR knowledge base, policy download cards, and support ticket submission form.
+* Real-time notification feed filtered by category.
+* Comprehensive analytics reports for attendance, leaves, and payroll budgets.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🛠️ Technology Stack
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* **Frontend**: React.js, Tailwind CSS, Lucide React Icons, React Router DOM
+* **Backend**: Node.js, Express.js, MongoDB (Mongoose ODM)
+* **Authentication**: JSON Web Tokens (JWT), BcryptJS password hashing
+* **Design & Fonts**: Plus Jakarta Sans, Inter, Modern SaaS Light-Mode Tokens
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📁 Repository Directory Structure
 
-## Learn More
+```
+dayflow/
+├── About.txt                         # Detailed text overview of DayFlow
+├── README.md                         # Full project documentation & instructions
+├── client/                           # React Frontend Client
+│   ├── public/                       # Public assets (logo.png, index.html)
+│   └── src/
+│       ├── components/               # UI design system components
+│       ├── context/                  # AuthContext global state
+│       ├── pages/                    # Application pages (Admin, Employee, Auth, Leave, Payroll, etc.)
+│       ├── routes/                   # AppRoutes navigation & ProtectedRoute wrappers
+│       └── services/                 # Axios API service instance
+└── server/                           # Express Backend Server
+    ├── controllers/                  # API Controllers (Leave, Attendance, Payroll, Employee, etc.)
+    ├── models/                       # Mongoose Schemas (User, Leave, Attendance, Payroll, etc.)
+    ├── routes/                       # Express Route Handlers
+    ├── middleware/                   # JWT Auth & Role Middleware
+    ├── seedUsers.js                  # Database seeder script
+    └── server.js                     # Express App Initialization Entry Point
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## ⚡ Quick Start & Setup Guide
 
-### Code Splitting
+### Prerequisites
+* Node.js (v16+ recommended)
+* MongoDB database instance (local or MongoDB Atlas)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 1. Clone & Setup Environment Variables
+Ensure `server/.env` contains your database URI and JWT secret:
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/dayflow
+JWT_SECRET=dayflow_super_secret_jwt_key
+```
 
-### Analyzing the Bundle Size
+### 2. Start the Backend Server
+```bash
+cd server
+npm install
+npm run dev
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 3. Start the Frontend Client
+```bash
+cd client
+npm install
+npm start
+```
+The client application will run automatically at `http://localhost:3000`.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🔑 Default Login Credentials
 
-### Advanced Configuration
+| Role | Email | Password |
+|---|---|---|
+| **Admin** | `admin@dayflow.com` | `admin123` |
+| **Employee** | `alex@dayflow.com` | `employee123` |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 📄 License
+This project is open-source under the [MIT License](LICENSE).

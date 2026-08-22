@@ -1,0 +1,92 @@
+================================================================================
+DayFlow - Enterprise Human Resource Management System (HRMS)
+================================================================================
+
+OVERVIEW
+--------
+DayFlow is a modern, full-stack Human Resource Management System built to streamline
+workforce governance, shift attendance tracking, leave/permission approvals,
+payroll processing, smart workforce analytics, and enterprise compliance.
+
+Designed with a high-contrast, professional light-mode SaaS aesthetic, DayFlow 
+provides seamless self-service experiences for employees alongside powerful administrative 
+and HR command controls.
+
+KEY FEATURES & MODULES
+----------------------
+1. Authentication & Security (Phase 2):
+   - Secure JWT-based session management with role-based routing (Admin, HR, Employee).
+   - Password reset and email verification workflows.
+
+2. Employee Dashboard (Phase 3):
+   - Real-time shift clock-in / clock-out widget.
+   - Leave balance breakdown cards (Paid, Sick, Unpaid).
+   - Recent request status tracking data table.
+
+3. Profile Management (Phase 4):
+   - Employee profiles with personal details, work title, department, contact info, and emergency contacts.
+
+4. Attendance Portal (Phase 5):
+   - Daily shift recording with working hours calculation.
+   - Shift status badges (Present, Half-day, Absent, Leave).
+   - Monthly performance metrics and filterable history logs.
+
+5. Leave & Time-Off Workspace (Phase 6):
+   - Leave request submission with Start/End Dates and mandatory From Time / To Time fields.
+   - Multi-tab queue pipeline for Admin/HR (Pending, Approved, Rejected).
+   - Detailed modal reviews with administrator feedback logging.
+
+6. Admin Dashboard & HR Command Center (Phase 7):
+   - Live workforce snapshot (Total headcount, active participation rates, leave counts).
+   - Quick command shortcuts for adding employees, reviewing leaves, and managing payroll.
+
+7. Employee Directory & Governance (Phase 8):
+   - Gated CRUD operations restricted exclusively to Admin roles.
+   - Dual layout rendering: Desktop structured table & mobile-responsive card view.
+
+8. Payroll & Salary Governance (Phase 9):
+   - Gross salary budgeting, statutory deductions (PF & Income Tax TDS).
+   - Net disbursement analytics and interactive payslip modal generation.
+
+9. Smart Insights & Workforce Alerts (Phases 10 & 11):
+   - Automated organizational health observations and department availability tracking.
+   - Real-time severity risk alerts (Critical, Warning, Info) with action triggers.
+
+10. HR Help Center & Knowledge Base (Phase 12):
+    - Policy documentation shortcuts, searchable FAQs, support ticket submission.
+
+11. Notifications & Reports (Phases 13 & 14):
+    - Category-filtered real-time notification feeds.
+    - Exportable attendance, leave utilization, and payroll analytics reports.
+
+TECHNOLOGY STACK
+----------------
+- Frontend: React.js, React Router, Tailwind CSS, Lucide Icons, Google Fonts (Plus Jakarta Sans)
+- Backend: Node.js, Express.js, MongoDB / Mongoose, JWT (JSON Web Tokens), BcryptJS
+- Deployment: RESTful API architecture with CORS & environment security.
+
+DEFAULT CREDENTIALS FOR TESTING
+--------------------------------
+Admin User:
+  Email: admin@dayflow.com
+  Password: admin123
+
+Standard Employee User:
+  Email: alex@dayflow.com
+  Password: employee123
+
+DEVELOPMENT RUN INSTRUCTIONS
+----------------------------
+1. Server Setup:
+   cd server
+   npm install
+   npm run dev
+
+2. Client Setup:
+   cd client
+   npm install
+   npm start
+
+================================================================================
+Developed for Odoo Hackathon - DayFlow HRMS
+================================================================================

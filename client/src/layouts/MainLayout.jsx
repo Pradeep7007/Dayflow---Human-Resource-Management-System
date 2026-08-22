@@ -8,30 +8,19 @@ export const MainLayout = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
 
-  // Automatically collapse sidebar on small viewports
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setIsSidebarCollapsed(true);
-        setIsMobileOpen(false);
-      }
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   // Close mobile sidebar on route change
   useEffect(() => {
     setIsMobileOpen(false);
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex overflow-x-hidden relative">
       {/* Sidebar Navigation */}
       <Sidebar
         isCollapsed={isSidebarCollapsed}
         onToggleCollapse={() => setIsSidebarCollapsed((prev) => !prev)}
+        isMobileOpen={isMobileOpen}
+        onCloseMobile={() => setIsMobileOpen(false)}
       />
 
       {/* Main Content Area */}
@@ -41,7 +30,10 @@ export const MainLayout = () => {
         }`}
       >
         {/* Header Bar */}
-        <Header isSidebarCollapsed={isSidebarCollapsed} />
+        <Header
+          isSidebarCollapsed={isSidebarCollapsed}
+          onToggleMobileMenu={() => setIsMobileOpen((prev) => !prev)}
+        />
 
         {/* Page Main View Container */}
         <main className="flex-1 pt-20 pb-10 px-4 sm:px-6 max-w-7xl w-full mx-auto">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Search, Bell, Sparkles, LogOut, CheckCheck, ArrowRight, Clock, Shield } from 'lucide-react';
+import { Search, Bell, Sparkles, LogOut, CheckCheck, ArrowRight, Clock, Shield, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '../ui/Avatar';
 import { Badge } from '../ui/Badge';
@@ -8,7 +8,7 @@ import { Button } from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
 import { ROUTES } from '../../constants/routes';
 
-export const Header = ({ isSidebarCollapsed }) => {
+export const Header = ({ isSidebarCollapsed, onToggleMobileMenu }) => {
   const navigate = useNavigate();
   const { user, logout, role } = useAuth();
 
@@ -98,18 +98,27 @@ export const Header = ({ isSidebarCollapsed }) => {
 
   return (
     <header
-      className={`fixed top-0 right-0 h-16 bg-white border-b border-slate-200 z-20 transition-all duration-300 flex items-center justify-between px-6 ${
-        isSidebarCollapsed ? 'left-20' : 'left-64'
+      className={`fixed top-0 right-0 h-16 bg-white border-b border-slate-200 z-20 transition-all duration-300 flex items-center justify-between px-3 sm:px-6 left-0 ${
+        isSidebarCollapsed ? 'md:left-20' : 'md:left-64'
       }`}
     >
-      {/* Search Bar */}
-      <div className="flex items-center gap-4 flex-1 max-w-md">
+      {/* Mobile Menu Button & Search Bar */}
+      <div className="flex items-center gap-2 sm:gap-4 flex-1 max-w-md">
+        <button
+          type="button"
+          onClick={onToggleMobileMenu}
+          className="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors border-0 cursor-pointer flex-shrink-0"
+          aria-label="Toggle Mobile Menu"
+        >
+          <Menu size={22} />
+        </button>
+
         <div className="relative w-full">
           <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Search employees, attendance, payroll..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-800 placeholder-slate-400 font-medium"
+            placeholder="Search employees, attendance..."
+            className="w-full pl-9 pr-3 py-1.5 sm:py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-800 placeholder-slate-400 font-medium"
           />
         </div>
       </div>
