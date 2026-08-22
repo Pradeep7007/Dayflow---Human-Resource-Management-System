@@ -132,8 +132,6 @@ export const Login = () => {
             Forgot Password?
           </Link>
         </div>
-
-        {/* Primary CTA Button */}
         <button
           type="submit"
           className="df-auth-btn-primary"
