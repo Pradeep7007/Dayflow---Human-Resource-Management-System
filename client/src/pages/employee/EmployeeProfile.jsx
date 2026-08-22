@@ -22,7 +22,8 @@ import {
   Clock,
   AlertCircle,
   FileCheck,
-  KeyRound
+  KeyRound,
+  MessageSquarePlus
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
@@ -34,6 +35,7 @@ import { Modal } from '../../components/feedback/Modal';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/feedback/ToastContext';
 import { AdminResetPasswordModal } from '../../components/employee/AdminResetPasswordModal';
+import { ProfileChangeRequestModal } from '../../components/employee/ProfileChangeRequestModal';
 import API from '../../services/api';
 
 export const EmployeeProfile = () => {
@@ -56,6 +58,7 @@ export const EmployeeProfile = () => {
   const [newDoc, setNewDoc] = useState({ name: '', type: 'Offer Letter', fileUrl: '#' });
   const [isUploadingDoc, setIsUploadingDoc] = useState(false);
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
+  const [isChangeRequestModalOpen, setIsChangeRequestModalOpen] = useState(false);
 
   // Fetch Employee Profile Data
   const fetchProfile = async () => {
@@ -232,7 +235,7 @@ export const EmployeeProfile = () => {
             </div>
           </div>
 
-          {/* Edit / Save Actions */}
+          {/* Edit / Save / Request Actions */}
           <div className="flex items-center gap-3">
             {isAdmin && !isEditing && (
               <Button
@@ -244,33 +247,45 @@ export const EmployeeProfile = () => {
                 Reset Password
               </Button>
             )}
-            {!isEditing ? (
-              <Button
-                variant="primary"
-                onClick={() => setIsEditing(true)}
-                leftIcon={<Edit2 size={16} />}
-              >
-                Edit Profile
-              </Button>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="secondary"
-                  onClick={handleCancelEdit}
-                  disabled={isSaving}
-                  leftIcon={<X size={16} />}
-                >
-                  Cancel
-                </Button>
+
+            {isAdmin ? (
+              !isEditing ? (
                 <Button
                   variant="primary"
-                  onClick={handleSaveProfile}
-                  isLoading={isSaving}
-                  leftIcon={<Save size={16} />}
+                  onClick={() => setIsEditing(true)}
+                  leftIcon={<Edit2 size={16} />}
                 >
-                  Save Changes
+                  Edit Profile
                 </Button>
-              </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="secondary"
+                    onClick={handleCancelEdit}
+                    disabled={isSaving}
+                    leftIcon={<X size={16} />}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={handleSaveProfile}
+                    isLoading={isSaving}
+                    leftIcon={<Save size={16} />}
+                  >
+                    Save Changes
+                  </Button>
+                </div>
+              )
+            ) : (
+              <Button
+                variant="primary"
+                onClick={() => setIsChangeRequestModalOpen(true)}
+                leftIcon={<MessageSquarePlus size={16} />}
+                className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold"
+              >
+                Request Profile Change
+              </Button>
             )}
           </div>
         </div>
@@ -770,6 +785,13 @@ export const EmployeeProfile = () => {
       <AdminResetPasswordModal
         isOpen={isResetPasswordModalOpen}
         onClose={() => setIsResetPasswordModalOpen(false)}
+        employee={profile || currentUser}
+      />
+
+      {/* EMPLOYEE PROFILE CHANGE REQUEST MODAL */}
+      <ProfileChangeRequestModal
+        isOpen={isChangeRequestModalOpen}
+        onClose={() => setIsChangeRequestModalOpen(false)}
         employee={profile || currentUser}
       />
     </div>
