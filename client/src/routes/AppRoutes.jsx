@@ -14,6 +14,9 @@ import { Unauthorized } from '../pages/Unauthorized';
 // Dashboard & Business Pages
 import { AdminDashboard } from '../pages/admin/AdminDashboard';
 import { EmployeeDashboard } from '../pages/employee/EmployeeDashboard';
+import { EmployeeProfile } from '../pages/employee/EmployeeProfile';
+import { EmployeeAttendance } from '../pages/attendance/EmployeeAttendance';
+import { AdminAttendance } from '../pages/attendance/AdminAttendance';
 import { DesignSystemShowcase } from '../pages/DesignSystemShowcase';
 
 // Route Guards
@@ -46,8 +49,8 @@ export const AppRoutes = () => {
           {/* Admin & HR Protected Routes */}
           <Route element={<RoleProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.HR]} />}>
             <Route path={ROUTES.ADMIN.DASHBOARD} element={<AdminDashboard />} />
-            <Route path={ROUTES.ADMIN.EMPLOYEES} element={<DesignSystemShowcase />} />
-            <Route path={ROUTES.ADMIN.ATTENDANCE} element={<AdminDashboard />} />
+            <Route path={ROUTES.ADMIN.EMPLOYEES} element={<EmployeeProfile />} />
+            <Route path={ROUTES.ADMIN.ATTENDANCE} element={<AdminAttendance />} />
             <Route path={ROUTES.ADMIN.LEAVES} element={<AdminDashboard />} />
             <Route path={ROUTES.ADMIN.PAYROLL} element={<AdminDashboard />} />
             <Route path={ROUTES.ADMIN.DOCUMENTS} element={<DesignSystemShowcase />} />
@@ -58,11 +61,11 @@ export const AppRoutes = () => {
           {/* Employee Protected Routes */}
           <Route element={<RoleProtectedRoute allowedRoles={[ROLES.EMPLOYEE, ROLES.HR, ROLES.ADMIN]} />}>
             <Route path={ROUTES.EMPLOYEE.DASHBOARD} element={<EmployeeDashboard />} />
-            <Route path={ROUTES.EMPLOYEE.PROFILE} element={<EmployeeDashboard />} />
-            <Route path={ROUTES.EMPLOYEE.ATTENDANCE} element={<EmployeeDashboard />} />
+            <Route path={ROUTES.EMPLOYEE.PROFILE} element={<EmployeeProfile />} />
+            <Route path={ROUTES.EMPLOYEE.ATTENDANCE} element={<EmployeeAttendance />} />
             <Route path={ROUTES.EMPLOYEE.LEAVES} element={<EmployeeDashboard />} />
             <Route path={ROUTES.EMPLOYEE.PAYROLL} element={<EmployeeDashboard />} />
-            <Route path={ROUTES.EMPLOYEE.DOCUMENTS} element={<EmployeeDashboard />} />
+            <Route path={ROUTES.EMPLOYEE.DOCUMENTS} element={<EmployeeProfile />} />
           </Route>
         </Route>
       </Route>

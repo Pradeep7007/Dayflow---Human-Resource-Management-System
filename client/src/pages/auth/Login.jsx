@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Shield, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Mail, Shield, ArrowRight } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { PasswordInput } from '../../components/ui/PasswordInput';
@@ -16,22 +16,22 @@ export const Login = () => {
   const { addToast } = useToast();
 
   const [selectedRole, setSelectedRole] = useState(ROLES.ADMIN);
-  const [email, setEmail] = useState('admin@dayflow.com');
-  const [password, setPassword] = useState('adminPass123!');
+  const [email, setEmail] = useState('pradeep@dayflow.com');
+  const [password, setPassword] = useState('adminpass123');
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleRoleSelect = (role) => {
     setSelectedRole(role);
     if (role === ROLES.ADMIN) {
-      setEmail('admin@dayflow.com');
-      setPassword('adminPass123!');
+      setEmail('pradeep@dayflow.com');
+      setPassword('adminpass123');
     } else if (role === ROLES.HR) {
-      setEmail('hr@dayflow.com');
-      setPassword('hrPass123!');
+      setEmail('kishore@dayflow.com');
+      setPassword('hrpass123');
     } else {
-      setEmail('alex.morgan@dayflow.com');
-      setPassword('empPass123!');
+      setEmail('tharun@dayflow.com');
+      setPassword('emppass123');
     }
   };
 
@@ -186,7 +186,7 @@ export const Login = () => {
           {/* Quick Demo Credentials Panel */}
           <div className="mt-6 pt-6 border-t border-slate-100 bg-slate-50/50 -mx-6 -mb-6 p-4 rounded-b-xl">
             <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 text-center">
-              MongoDB Pre-Seeded Accounts
+              Pre-Seeded Accounts (Indian Credentials)
             </div>
             <div className="grid grid-cols-3 gap-1.5">
               <button
@@ -194,21 +194,21 @@ export const Login = () => {
                 onClick={() => handleRoleSelect(ROLES.ADMIN)}
                 className="py-1.5 px-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] rounded border border-indigo-200 font-medium transition-colors text-center"
               >
-                Admin
+                Pradeep (Admin)
               </button>
               <button
                 type="button"
                 onClick={() => handleRoleSelect(ROLES.HR)}
                 className="py-1.5 px-2 bg-purple-50 hover:bg-purple-100 text-purple-700 text-[11px] rounded border border-purple-200 font-medium transition-colors text-center"
               >
-                HR Manager
+                Kishore (HR)
               </button>
               <button
                 type="button"
                 onClick={() => handleRoleSelect(ROLES.EMPLOYEE)}
                 className="py-1.5 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[11px] rounded border border-emerald-200 font-medium transition-colors text-center"
               >
-                Employee
+                Tharun (Emp)
               </button>
             </div>
           </div>

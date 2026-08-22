@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const employeeRoutes = require('./routes/employeeRoutes');
+const attendanceRoutes = require('./routes/attendanceRoutes');
 const { protect } = require('./middleware/authMiddleware');
 const { authorize } = require('./middleware/roleMiddleware');
 
@@ -19,6 +21,8 @@ app.use(express.json());
 
 // API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/employees', employeeRoutes);
+app.use('/api/attendance', attendanceRoutes);
 
 // Protected Backend Role Enforcement Test Routes
 app.get('/api/admin/dashboard-stats', protect, authorize('admin'), (req, res) => {
