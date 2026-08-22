@@ -13,7 +13,8 @@ import {
   Building2,
   ChevronLeft,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Zap
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { ROUTES } from '../../constants/routes';
@@ -24,6 +25,7 @@ export const Sidebar = ({ isCollapsed, onToggleCollapse }) => {
 
   const adminNav = [
     { label: 'Dashboard', path: ROUTES.ADMIN.DASHBOARD, icon: LayoutDashboard },
+    { label: 'Smart Insights', path: ROUTES.ADMIN.INSIGHTS, icon: Zap },
     { label: 'Employees', path: ROUTES.ADMIN.EMPLOYEES, icon: Users },
     { label: 'Attendance', path: ROUTES.ADMIN.ATTENDANCE, icon: CalendarCheck },
     { label: 'Leave & Time-Off', path: ROUTES.ADMIN.LEAVES, icon: CalendarDays },

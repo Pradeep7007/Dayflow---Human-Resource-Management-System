@@ -1,6 +1,7 @@
 export const ROUTES = {
   HOME: '/',
   DESIGN_SYSTEM: '/design-system',
+  HELP_CENTER: '/help-center',
   AUTH: {
     LOGIN: '/login',
     SIGNUP: '/signup',
@@ -11,6 +12,8 @@ export const ROUTES = {
   },
   ADMIN: {
     DASHBOARD: '/admin/dashboard',
+    INSIGHTS: '/admin/insights',
+    ALERTS: '/admin/alerts',
     EMPLOYEES: '/admin/employees',
     ATTENDANCE: '/admin/attendance',
     LEAVES: '/admin/leaves',
@@ -26,5 +29,6 @@ export const ROUTES = {
     LEAVES: '/employee/leaves',
     PAYROLL: '/employee/payroll',
     DOCUMENTS: '/employee/documents',
+    HELP_CENTER: '/employee/help-center',
   },
 };

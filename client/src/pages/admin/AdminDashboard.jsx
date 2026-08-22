@@ -28,6 +28,7 @@ import { Avatar } from '../../components/ui/Avatar';
 import { useToast } from '../../components/feedback/ToastContext';
 import { ROUTES } from '../../constants/routes';
 import { CreateEmployeeModal } from '../../components/employee/CreateEmployeeModal';
+import { SmartInsightsWidget } from '../../components/dashboard/SmartInsightsWidget';
 
 export const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -258,6 +259,9 @@ export const AdminDashboard = () => {
         </CardBody>
       </Card>
 
+      {/* SMART INSIGHTS WIDGET */}
+      <SmartInsightsWidget />
+
       {/* QUESTION 1: WHAT IS HAPPENING TODAY? (TOP SUMMARY KPI METRICS) */}
       <div>
         <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-3 flex items-center gap-1.5">
@@ -351,7 +355,7 @@ export const AdminDashboard = () => {
                 attention.pendingLeaves.map((item) => (
                   <div
                     key={item._id}
-                    className="p-3.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-slate-600 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                    className="p-3.5 rounded-xl bg-slate-800 border border-slate-700 hover:border-slate-600 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
                   >
                     <div className="flex items-center gap-3">
                       <Avatar name={item.employeeName} size="md" />
@@ -379,7 +383,7 @@ export const AdminDashboard = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 text-xs font-bold py-1.5 px-3"
+                        className="bg-slate-700 text-slate-200 border border-slate-600 hover:bg-slate-600 text-xs font-bold py-1.5 px-3"
                         onClick={() => navigate(ROUTES.ADMIN.LEAVES)}
                       >
                         Review
@@ -403,7 +407,7 @@ export const AdminDashboard = () => {
               {attention.anomalies.map((anom) => (
                 <div
                   key={anom.id}
-                  className="p-3.5 rounded-xl bg-slate-900 border border-red-500/30 flex items-start gap-3"
+                  className="p-3.5 rounded-xl bg-slate-800 border border-red-500/40 flex items-start gap-3"
                 >
                   <ShieldAlert size={20} className="text-red-400 flex-shrink-0 mt-0.5" />
                   <div>
@@ -415,7 +419,7 @@ export const AdminDashboard = () => {
                 </div>
               ))}
 
-              <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl bg-slate-800 border border-amber-500/40 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <FileText size={20} className="text-amber-400 flex-shrink-0" />
                   <div>
@@ -452,7 +456,7 @@ export const AdminDashboard = () => {
                         <span className="text-white">{dept.department}</span>
                         <span className="text-slate-300 font-mono">{dept.count} members ({percentage}%)</span>
                       </div>
-                      <div className="w-full h-2.5 rounded-full bg-slate-900 border border-slate-700 overflow-hidden">
+                      <div className="w-full h-2.5 rounded-full bg-slate-700 border border-slate-600 overflow-hidden">
                         <div
                           className="h-full rounded-full bg-indigo-500 transition-all duration-500"
                           style={{ width: `${percentage}%` }}
@@ -472,7 +476,7 @@ export const AdminDashboard = () => {
                   </span>
                   <span className="text-xs font-medium text-slate-300">Weekly Shift Logs</span>
                 </div>
-                <div className="flex items-end justify-between gap-2.5 h-24 pt-3 px-3.5 bg-slate-900 rounded-xl border border-slate-700">
+                <div className="flex items-end justify-between gap-2.5 h-24 pt-3 px-3.5 bg-slate-800 rounded-xl border border-slate-700">
                   {overview.attendanceTrend.map((t, i) => {
                     const maxVal = Math.max(...overview.attendanceTrend.map((x) => x.presentCount || 1), 25);
                     const barHeight = Math.max(14, Math.round(((t.presentCount || 0) / maxVal) * 100));
@@ -495,9 +499,9 @@ export const AdminDashboard = () => {
               <div className="pt-3 border-t border-slate-700 flex items-center justify-between text-xs font-bold">
                 <span className="text-slate-300">Leave Mix this Month:</span>
                 <div className="flex items-center gap-3">
-                  <span className="text-indigo-300 bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-lg">Paid ({overview.leaveTrend.Paid})</span>
-                  <span className="text-amber-300 bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-lg">Sick ({overview.leaveTrend.Sick})</span>
-                  <span className="text-slate-300 bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-lg">Unpaid ({overview.leaveTrend.Unpaid})</span>
+                  <span className="text-indigo-300 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-lg">Paid ({overview.leaveTrend.Paid})</span>
+                  <span className="text-amber-300 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-lg">Sick ({overview.leaveTrend.Sick})</span>
+                  <span className="text-slate-300 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-lg">Unpaid ({overview.leaveTrend.Unpaid})</span>
                 </div>
               </div>
             </CardBody>
@@ -510,7 +514,7 @@ export const AdminDashboard = () => {
             <CardHeader title="Recent Audit Activity" subtitle="Chronological stream of system updates" />
             <CardBody className="p-4 space-y-3">
               {recentActivity.map((act) => (
-                <div key={act.id} className="flex items-start gap-3.5 p-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-slate-600 transition-all">
+                <div key={act.id} className="flex items-start gap-3.5 p-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-slate-600 transition-all">
                   <div className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center flex-shrink-0 font-bold text-xs mt-0.5">
                     <Activity size={16} />
                   </div>
@@ -518,7 +522,7 @@ export const AdminDashboard = () => {
                     <div className="text-xs font-bold text-white">{act.title}</div>
                     <p className="text-xs font-medium text-slate-200 mt-0.5">{act.subtitle}</p>
                   </div>
-                  <span className="text-[10px] font-bold text-slate-300 bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-full font-mono flex-shrink-0">
+                  <span className="text-[10px] font-bold text-slate-300 bg-slate-700 border border-slate-600 px-2.5 py-1 rounded-full font-mono flex-shrink-0">
                     {act.time}
                   </span>
                 </div>

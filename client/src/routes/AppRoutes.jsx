@@ -13,12 +13,18 @@ import { Unauthorized } from '../pages/Unauthorized';
 
 // Dashboard & Business Pages
 import { AdminDashboard } from '../pages/admin/AdminDashboard';
+import { SmartInsights } from '../pages/insights/SmartInsights';
+import { WorkforceHealthAlerts } from '../pages/alerts/WorkforceHealthAlerts';
+import { HelpCenter } from '../pages/help/HelpCenter';
+import { EmployeeList } from '../pages/admin/EmployeeList';
 import { EmployeeDashboard } from '../pages/employee/EmployeeDashboard';
 import { EmployeeProfile } from '../pages/employee/EmployeeProfile';
 import { EmployeeAttendance } from '../pages/attendance/EmployeeAttendance';
 import { AdminAttendance } from '../pages/attendance/AdminAttendance';
 import { EmployeeLeave } from '../pages/leave/EmployeeLeave';
 import { AdminLeaveWorkspace } from '../pages/leave/AdminLeaveWorkspace';
+import { AdminPayroll } from '../pages/payroll/AdminPayroll';
+import { EmployeePayroll } from '../pages/payroll/EmployeePayroll';
 import { DesignSystemShowcase } from '../pages/DesignSystemShowcase';
 
 // Route Guards
@@ -47,16 +53,19 @@ export const AppRoutes = () => {
         <Route element={<MainLayout />}>
           <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.ADMIN.DASHBOARD} replace />} />
           <Route path={ROUTES.DESIGN_SYSTEM} element={<DesignSystemShowcase />} />
+          <Route path={ROUTES.HELP_CENTER} element={<HelpCenter />} />
 
           {/* Admin & HR Protected Routes */}
           <Route element={<RoleProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.HR]} />}>
             <Route path={ROUTES.ADMIN.DASHBOARD} element={<AdminDashboard />} />
-            <Route path={ROUTES.ADMIN.EMPLOYEES} element={<EmployeeProfile />} />
+            <Route path={ROUTES.ADMIN.INSIGHTS} element={<SmartInsights />} />
+            <Route path={ROUTES.ADMIN.ALERTS} element={<WorkforceHealthAlerts />} />
+            <Route path={ROUTES.ADMIN.EMPLOYEES} element={<EmployeeList />} />
             <Route path={ROUTES.ADMIN.ATTENDANCE} element={<AdminAttendance />} />
             <Route path={ROUTES.ADMIN.LEAVES} element={<AdminLeaveWorkspace />} />
-            <Route path={ROUTES.ADMIN.PAYROLL} element={<AdminDashboard />} />
+            <Route path={ROUTES.ADMIN.PAYROLL} element={<AdminPayroll />} />
             <Route path={ROUTES.ADMIN.DOCUMENTS} element={<DesignSystemShowcase />} />
-            <Route path={ROUTES.ADMIN.REPORTS} element={<AdminDashboard />} />
+            <Route path={ROUTES.ADMIN.REPORTS} element={<SmartInsights />} />
             <Route path={ROUTES.ADMIN.SETTINGS} element={<DesignSystemShowcase />} />
           </Route>
 
@@ -66,8 +75,9 @@ export const AppRoutes = () => {
             <Route path={ROUTES.EMPLOYEE.PROFILE} element={<EmployeeProfile />} />
             <Route path={ROUTES.EMPLOYEE.ATTENDANCE} element={<EmployeeAttendance />} />
             <Route path={ROUTES.EMPLOYEE.LEAVES} element={<EmployeeLeave />} />
-            <Route path={ROUTES.EMPLOYEE.PAYROLL} element={<EmployeeDashboard />} />
+            <Route path={ROUTES.EMPLOYEE.PAYROLL} element={<EmployeePayroll />} />
             <Route path={ROUTES.EMPLOYEE.DOCUMENTS} element={<EmployeeProfile />} />
+            <Route path={ROUTES.EMPLOYEE.HELP_CENTER} element={<HelpCenter />} />
           </Route>
         </Route>
       </Route>
