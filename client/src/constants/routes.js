@@ -3,8 +3,11 @@ export const ROUTES = {
   DESIGN_SYSTEM: '/design-system',
   AUTH: {
     LOGIN: '/login',
+    SIGNUP: '/signup',
     FORGOT_PASSWORD: '/forgot-password',
-    RESET_PASSWORD: '/reset-password',
+    RESET_PASSWORD: '/reset-password/:token',
+    VERIFY_EMAIL: '/verify-email/:token',
+    UNAUTHORIZED: '/unauthorized',
   },
   ADMIN: {
     DASHBOARD: '/admin/dashboard',
