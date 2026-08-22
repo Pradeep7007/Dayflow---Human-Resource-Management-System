@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+//const mongoose =require('mongoose');
 
 const leaveSchema = new mongoose.Schema(
   {
@@ -73,7 +74,6 @@ const leaveSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
-);
+  });
 
 module.exports = mongoose.model('Leave', leaveSchema);
