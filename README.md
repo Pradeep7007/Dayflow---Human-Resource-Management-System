@@ -127,5 +127,3 @@ The client application will run automatically at `http://localhost:3000`.
 ---
 
 
-## 📄 License
-This project is open-source under the [MIT License](LICENSE).
